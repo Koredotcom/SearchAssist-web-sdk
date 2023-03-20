@@ -1,0 +1,141 @@
+.search-temp-one.list-snippet-temp {
+	.list-temp-block {
+		.list-temp-header {
+			color: #2D2F33;
+			font-weight: 500;
+			font-size: 16px;
+			line-height: 19px;
+			padding-top: 10px;
+			overflow: hidden;
+            white-space: nowrap;
+    		text-overflow: ellipsis;
+		}
+		.list-temp-ul {
+			color: #2D2F33;
+			font-weight: 400;
+			font-size: 13px;
+			line-height: 20px;
+			padding: 0 0 0 15px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			.list-temp-li {
+				list-style-type: decimal !important;
+				list-style-position: outside !important;
+				&:nth-child(n+8) {
+					display: none;
+				}
+			}
+		}
+		.list-temp-ul.show-all-list {
+			.list-temp-li {
+				&:nth-child(n+8) {
+					display: list-item;
+				}
+			}
+		}
+		.desc-read-more {
+			color: #0D6EFD;
+			font-weight: 400;
+			font-size: 14px;
+			line-height: 20px;
+			cursor: pointer;
+			display: none !important;
+			align-items: center;
+			margin-right: 6px;
+			img {
+				margin-right: 6px;
+			}
+		}
+		.desc-read-less {
+			color: #0D6EFD;
+			font-weight: 400;
+			font-size: 14px;
+			line-height: 20px;
+			cursor: pointer;
+			display: none !important;
+			align-items: center;
+			margin-right: 6px;
+			img {
+				position: relative;
+				transform: rotate(180deg);
+				top: -2px;
+				margin-right: 6px;
+			}
+		}
+	}
+}
+.top-down-search-background-div {
+	.all-product-details {
+		position: relative;
+		overflow-anchor: none;
+		max-height: calc(100vh - 148px);
+	}
+}
+.sdk-top-down-interface {
+	.search-temp-one {
+		margin-left: 30px;
+		width: 96%;
+	}
+}
+
+
+.top-down-search-background-div {
+	.total-search-results-block {
+		.tsrb-right-filters {
+			.top-down-customize-btns.custom-header-container-center {
+				position: initial;
+				margin: 0px 0px 0px 16px;
+				right: auto;
+				top: auto;
+				z-index: 8 !important;
+			}
+			.dropdown_sortable_filter {
+				position: initial;
+				top: auto;
+				right: auto;
+			}
+		}
+	}
+}
+.sdk-top-down-interface {
+	.all-product-details {
+		.total-search-results-block {
+			
+			.tsrb-header-sec {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				position: sticky;
+				top: 0;
+				z-index: 8;
+				background: #fff;
+			}
+            .tsrb-right-filters {
+                display: flex;
+                align-items: center;
+            }
+		}
+	}
+}
+
+
+.sdk-tooltip-container {
+    color: #fff;
+    background: #000000;
+    position: absolute;
+    padding: 8px;
+    top: -32px;
+    font-size: 10px;
+    font-weight: normal;
+    z-index: 99999;
+    border-radius: 8px;
+    .sa-tooltip-arrow{
+        background: #000000;
+        position: absolute;
+        padding: 6px;
+        left: 50%;
+        bottom: -5px;
+        z-index: 99999;
+        transform: rotate(45deg) !important;
+    }
+}

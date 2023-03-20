@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SearchAssist SDK</title>
+</head>
+
+<body>
+    <script src="../../../dist/umd/kore-web-sdk-umd-search.js"></script>
+
+    <script>
+        //chat window declaration
+        var findlyConfig = KoreSearchSDK.KRSearchConfig;
+        var findlyChatWindow = KoreSearchSDK.KRSearch;
+
+        //create chat window instance
+        var chatWindowInstance = new findlyChatWindow();
+
+        //configure bot configurations
+        var botOptions = findlyConfig.botOptions;
+
+        botOptions.JWTUrl = "PLEASE_ENTER_JWTURL_HERE";
+        botOptions.userIdentity = 'PLEASE_ENTER_USER_EMAIL_ID' // Provide users email id here
+        botOptions.botInfo = {
+            chatBot: "PLEASE_ENTER_APP_NAME",
+            taskBotId: "PLEASE_ENTER_APP_ID",
+        };
+        botOptions.clientId = "PLEASE_ENTER_CLIENT_ID";
+        botOptions.clientSecret = "PLEASE_ENTER_CLIENT_SECRET";
+        botOptions.searchIndexID = "PLEASE_ENTER_SEARCHINDEX_ID";
+
+        //OR  Enter API_key
+        botOptions.API_KEY_CONFIG = { 'KEY': "YOUR_API_KEY" }
+        //show chatwindow
+        chatWindowInstance.show(findlyConfig);
+
+    </script>
+</body>
+
+</html>

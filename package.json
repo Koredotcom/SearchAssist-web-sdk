@@ -1,0 +1,83 @@
+{
+  "name": "kore-web-sdk",
+  "version": "1.0.0",
+  "description": "Kore.ai offers Bots SDKs as a set of platform-specific client libraries that provide a quick and convenient way to integrate Kore.ai Bots chat capability into custom applications",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-umd": "webpack --env=kore_env=prod --env=target_module=umd",
+    "build": "webpack --env=kore_env=prod  --env=target_module=esm",
+    "serve-umd": "webpack-dev-server --env=kore_env=dev  --env=component=chat  --env=target_module=umd",
+    "serve": "webpack-dev-server --env=kore_env=dev --env=component=chat --env=target_module=esm --mode development",
+    "doc": "jsdoc -c jsdoc.json",
+    "eslint": "./node_modules/.bin/eslint 'src/**/*.{ts,js}'",
+    "eslint-fix": "./node_modules/.bin/eslint --fix 'src/**/*.{ts,js}'",
+    "prettier": "./node_modules/.bin/prettier --check 'src/**/*.{ts,js}'",
+    "prettier-v": "./node_modules/.bin/prettier --debug-check 'src/**/*.{ts,js}'",
+    "prettier-fix": "./node_modules/.bin/prettier --write 'src/**/*.{ts,js}'"
+  },
+  "main": "dist/kore-web-sdk.esm.browser.js",
+  "bin": {
+    "kore-web-sdk": "dist/kore-web-sdk.esm.browser.js"
+  },
+  "module": "dist/kore-web-sdk.esm.browser.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Koredotcom/SearchAssist-web-sdk#1.0.0"
+  },
+  "author": "Pavan Kumar Ichapurapu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Koredotcom/SearchAssist-web-sdk/issues"
+  },
+  "homepage": "https://github.com/Koredotcom/SearchAssist-web-sdk#readme",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
+  "dependencies": {
+    "@types/jquery": "^3.5.6",
+    "@types/pubsub-js": "^1.8.3",
+    "aws-sdk": "^2.1102.0",
+    "d3": "^7.1.1",
+    "express": "^4.18.2",
+    "jquery": "^3.6.0",
+    "jquery-ui": "^1.13.2",
+    "jquery.tmpl": "0.0.2",
+    "moment": "^2.29.4",
+    "perfect-scrollbar": "^1.5.2",
+    "pubsub-js": "^1.9.4",
+    "util": "^0.12.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-proposal-class-static-block": "^7.16.7",
+    "@babel/preset-env": "^7.15.6",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/node": "^17.0.45",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^6.3.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-webpack-plugin": "^3.1.1",
+    "google-charts": "^2.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "imports-loader": "^3.0.0",
+    "jsdoc": "^3.6.10",
+    "postcss": "^8.3.7",
+    "postcss-css-variables": "^0.18.0",
+    "postcss-loader": "^6.1.1",
+    "prettier": "^2.6.0",
+    "sass": "^1.42.1",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.3.0",
+    "terser-webpack-plugin": "^5.3.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.3",
+    "webpack": "^5.54.0",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
