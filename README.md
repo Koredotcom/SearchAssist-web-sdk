@@ -17,7 +17,7 @@ npm install --save git+ssh://github.com/Koredotcom/SearchAssist-web-sdk#1.0.0
 Get KRSearch and KRSearchConfig
 
 ```js
-import { KRSearch, KRSearchConfig } from 'kore-web-sdk';
+import { KRSearch, KRSearchConfig } from 'search-assist-web-sdk';
 
 ```
 Configure KRSearchConfig

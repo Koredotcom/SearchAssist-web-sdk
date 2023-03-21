@@ -14,7 +14,7 @@ Graph Templates Plugin is a collection of Line-chart template, Bar-chart templat
 
 ```js
 
-import { GraphTemplatesPlugin } from 'kore-web-sdk';
+import { GraphTemplatesPlugin } from 'search-assist-web-sdk';
 
 chatWindowInstance.installPlugin(new GraphTemplatesPlugin());
 
