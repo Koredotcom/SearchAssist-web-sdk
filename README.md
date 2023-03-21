@@ -71,17 +71,6 @@ KRSearchInstance.templateManager.installTemplate(new customTemplateComponent());
 ```
 Other framework UI components like angular and react can also be injected with this
 
-## 💡 Plugins
 
-Kore's chatwindow functionlity can be extended with the help of plugins.Newly created plugins can be installed with *installPlugin* method
-
-```bash
-class KoreCustomPlugin{
-  
-}
-
-KRSearchInstance.installPlugin(new KoreCustomPlugin());
-```
-Kore offered plugins are listed [here](./docs/plugins)
 
 
