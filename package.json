@@ -1,5 +1,5 @@
 {
-  "name": "kore-web-sdk",
+  "name": "search-assist-web-sdk",
   "version": "1.0.0",
   "description": "Kore.ai offers SearchAssist SDKs as a set of platform-specific client libraries that provide a quick and convenient way to integrate Kore.ai search assist chat capability into custom applications",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "main": "dist/kore-web-sdk.esm.browser.js",
   "bin": {
-    "kore-web-sdk": "dist/kore-web-sdk.esm.browser.js"
+    "search-assist-web-sdk": "dist/kore-web-sdk.esm.browser.js"
   },
   "module": "dist/kore-web-sdk.esm.browser.js",
   "repository": {
