@@ -7216,7 +7216,14 @@ FindlySDK.prototype.handleSearchRes = function (res) {
             res.graph_answer.payload.center_panel.data[0].snippet_content = res?.graph_answer?.payload?.center_panel?.data[0]?.answer;
             if(res?.graph_answer?.payload?.center_panel?.data[0]?.title)
             res.graph_answer.payload.center_panel.data[0].snippet_title = res?.graph_answer?.payload?.center_panel?.data[0]?.title;
+            if(res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content && Array.isArray(res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content) && res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content.length){
+              res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content.forEach((content)=>{
+                content = helpers.convertMDtoHTML(content);
+              })
+              listSnippetData =res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content;
+            }else{
               listSnippetData =res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content?helpers.convertMDtoHTML(res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content) : '';
+            }
             }
             let title = res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_title?helpers.convertMDtoHTML(res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_title) : '';
             snippetObj = {'title':title,
