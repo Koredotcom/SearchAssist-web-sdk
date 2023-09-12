@@ -3830,9 +3830,9 @@ display: block;
 .sdk-body .carousel{
     margin: 0 !important;
 }
-.skelton-load-img img{
-    content: url(https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/images/skeletonImage.png);
-}
+// .skelton-load-img img{
+//     content: url(https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/images/skeletonImage.png);
+// }
 
 .sdk-body .purejscarousel-dots-container {
 display: none !important;
@@ -3855,6 +3855,10 @@ display: none !important;
     cursor: pointer;
     background-color: #fff;
     box-shadow: 14px 4px 64px 12px rgb(18 61 101 / 40%), -16px -16px 64px 0 rgb(255 255 255 / 80%), inset -8px -6px 80px 0 rgb(255 255 255 / 18%);
+    img{
+        width: 40px;
+    height: 40px;
+    }
 }
 //Feedback CSS Starts
 .builder-sdk .feedback-template-positions{
@@ -3970,3 +3974,76 @@ display: none !important;
             }
         }
     }
+.sa-loading-container {
+    padding: 20px;
+    background-color: #ffff;
+    height: 100%;
+    .row {
+        margin-bottom: 20px;
+        margin-left: 0px !important;
+    }
+}
+
+.sa-loading {
+    color: transparent;
+    background: #eceff1;
+    height: 100px;
+    width: 100px;
+    border-radius: 5px;
+}
+
+.sa-loading-list {
+    color: transparent;
+    background: #eceff1;
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
+}
+
+.sa-loading-list-para {
+    color: transparent;
+    background: #eceff1;
+    height: 250px;
+    width: 100px;
+    border-radius: 5px;
+}
+
+.sa-loading-2 {
+    color: transparent;
+    background: #eceff1;
+    height: 20px;
+    width: 100%;
+    margin-bottom: 6px;
+    border-radius: 5px;
+}
+
+.sa-loading-tab {
+    color: transparent;
+    background: #eceff1;
+    height: 20px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -800px 0
+    }
+
+    100% {
+        background-position: 800px 0
+    }
+}
+
+.sa-animated-background {
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background-color: #f6f7f8;
+    background: linear-gradient(to right, #eeeeee 8%, #bbbbbb 18%, #eeeeee 33%);
+    background-size: 800px 104px;
+    position: relative;
+}
+        

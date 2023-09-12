@@ -14,6 +14,7 @@ class ListWidgetTemplate {
         'tempdata': msgData.message[0].component.payload,
         'dataItems': msgData.message[0].component.payload.elements || {},
         'viewmore': null,
+         langTranslator: msgData.message[0].component.payload.langTranslator
       });
       me.bindEvents(me.messageHtml, 'listWidget');
       return me.messageHtml;
@@ -375,7 +376,7 @@ class ListWidgetTemplate {
                            {{/if}}\
                          {{/each}}\
                          {{if msgItem.details.length > 3}}\
-                         <span class="wid-temp-showMore" id="showMoreContents">Show more <span class="show-more"></span></span>\
+                         <div class="searchassist-show-more-button"><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_show_more">{{html langTranslator("sa_sdk_show_more")}}</span> <img src="{{if devMode}}assets/web-kore-sdk/demo/{{/if}}images/show_more.png" height="6" width="10" /></div>\
                          {{/if}}\
                        </div>\
                        <div class="wid-temp-showMoreBottom hide">\

@@ -12,46 +12,24 @@
 		width: 96%;
 	}
 }
+.search-temp-one .temp-data-desc{
+    position: relative;
+}
+
+.search-temp-one .temp-data-desc .read-more-less{
+    position: absolute;
+    right: 4px;
+    bottom: 0px;
+    background: #fff;
+    padding: 0 0px 0 0;
+    color: #0D6EFD;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+}
 
 
-.top-down-search-background-div {
-	.total-search-results-block {
-		.tsrb-right-filters {
-			.top-down-customize-btns.custom-header-container-center {
-				position: initial;
-				margin: 0px 0px 0px 16px;
-				right: auto;
-				top: auto;
-				z-index: 8 !important;
-			}
-			.dropdown_sortable_filter {
-				position: initial;
-				top: auto;
-				right: auto;
-			}
-		}
-	}
-}
-.sdk-top-down-interface {
-	.all-product-details {
-		.total-search-results-block {
-			
-			.tsrb-header-sec {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				position: sticky;
-				top: 0;
-				z-index: 8;
-				background: #fff;
-			}
-            .tsrb-right-filters {
-                display: flex;
-                align-items: center;
-            }
-		}
-	}
-}
 .search-temp-one .snippet-source-block .snippet-source-file-name{
     font-style: normal;
 font-weight: 600;
@@ -143,4 +121,14 @@ margin-bottom: 10px;
         z-index: 99999;
         transform: rotate(45deg) !important;
     }
+}
+.search-temp-one .paragraph-temp-title{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #2D2F33;
 }
