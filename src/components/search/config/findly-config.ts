@@ -11,7 +11,7 @@ declare global {
 let botOptionsFindly: any = {};
 botOptionsFindly.logLevel = "debug";
 var serverUrl = window.location.href;
-var paramUrl="searchassist-pilot.kore.ai";
+var paramUrl="searchassist.kore.ai";
 var httpStart = 'https://';
 var wssUrl = "wss";
 if(serverUrl && (serverUrl.includes("https://") || serverUrl.includes("http://"))){
