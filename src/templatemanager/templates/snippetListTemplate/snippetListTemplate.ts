@@ -25,14 +25,14 @@ class SnippetListTemplate {
         var snippetListTemplate = '<script type="text/x-jqury-tmpl">\
         <div class="search-temp-one list-snippet-temp">\
         <div class="top-header">\
-            <div class="top-header-with-img">\
-                <span class="logo-span"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/snippet-avathar.svg"/></span>\
-                <div class="btn-chip sdk-i18n-lang" sdk-i18n-key="sa_sdk_Suggested_answer">{{html langTranslator("sa_sdk_Suggested_answer")}}</div>\
-                </div>\
-            {{if snippetData && snippetData.source === "Answered by AI"}}\
-            <div class="btn-link"><span class="bot-bg-purple"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/bot.svg"/></span><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_answered_by_ai">{{html langTranslator("sa_sdk_answered_by_ai")}}</span>\</div>\
-            {{/if}}\
-        </div>\
+          <!--<div class="top-header-with-img">\
+              <span class="logo-span"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/snippet-avathar.svg"/></span>\
+              <div class="btn-chip sdk-i18n-lang" sdk-i18n-key="sa_sdk_Suggested_answer">{{html langTranslator("sa_sdk_Suggested_answer")}}</div>\
+              </div>-->\
+              {{if snippetData && snippetData.snippet_type === "generative_model"}}\
+          <div class="btn-link"><span class="bot-bg-purple"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/bot.svg"/></span><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_answered_by_ai">{{html langTranslator("sa_sdk_answered_by_ai")}}</span>\</div>\
+          {{/if}}\
+      </div>\
         <div class="list-temp-block">\
             <div class="list-temp-header sa-sdk-title" data-title="${snippetData?.title}">{{html helpers.convertMDtoHTML(snippetData?.title)}}</div>\
                 <ol type="1" class="list-temp-ul">\

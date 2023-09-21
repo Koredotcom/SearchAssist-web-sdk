@@ -7,6 +7,7 @@ import SnippetListTemplate from '../../templates/snippetListTemplate/snippetList
 import SnippetParagraphTemplate from '../../templates/snippetParagraphTemplate/snippetParagraphTemplate';
 import SnippetImageTemplate from '../../templates/snippetImageTemplate/snippetImageTemplate';
 import SnippetCitationTemplate from '../../templates/snippetCitationTemplate/snippetCitationTemplate';
+import SnippetImageAnswerTemplate from '../../templates/snippetImageAnswerTemplate/snippetImageAnswerTemplate';
 import SnippetActiveCitationTemplate from '../../templates/snippetActiveCitationTemplate/snippetActiveCitationTemplate';
 import korejquery from "../../../libs/korejquery";
 import FeedBackFormTemplate from '../feedBackFormTemplate/feedBackFormTemplate';
@@ -24,6 +25,7 @@ class FullSearchResultTopdownTemplate {
       me.messageFullResultHtml = $(FullSearchResultTopdownTemplate.prototype.getTemplateString(msgData.message[0].component.payload.template_type)).tmpl(msgData.message[0].component.payload);
       me.snippetListTemplateObj = new SnippetListTemplate();
       me.snippetParagraphTemplateObj = new SnippetParagraphTemplate();
+      me.snippetImageAnswerTemplateObj = new SnippetImageAnswerTemplate();
       me.snippetImageTemplateObj = new SnippetImageTemplate();
       me.snippetCitationTemplateObj = new SnippetCitationTemplate();
       me.snippetActiveCitationTemplateObj = new SnippetActiveCitationTemplate();
@@ -291,7 +293,8 @@ class FullSearchResultTopdownTemplate {
         });
         var dataHTML = $(FullSearchResultTopdownTemplate.prototype.getSearchFacetsTopDownTemplate('top')).tmpl({
           searchFacets: facetData,
-          position: "top"
+          position: "top",
+          langTranslator : msgData.message[0].component.payload.langTranslator
         });
         $(messageHtml).find("#filters-center-sec")
           .empty()
@@ -323,6 +326,7 @@ class FullSearchResultTopdownTemplate {
         var dataHTML = $(FullSearchResultTopdownTemplate.prototype.getSearchFacetsTopDownTemplate('left')).tmpl({
           searchFacets: facetData,
           position: "left",
+          langTranslator : msgData.message[0].component.payload.langTranslator
         });
         $(messageHtml).find("#filters-left-sec")
           .empty()
@@ -965,6 +969,8 @@ class FullSearchResultTopdownTemplate {
     $(messageHtml).find('#snippet-demo-template').empty().append(me.snippetParagraphTemplateObj.renderMessage.bind(me, snippetMsgData));
   }else if(['image_snippet'].includes(msgData.message[0].component.payload.snippetData.template_type)){
     $(messageHtml).find('#snippet-demo-template').empty().append(me.snippetImageTemplateObj.renderMessage.bind(me, snippetMsgData));
+  }else if(['image_answer_snippet'].includes(msgData.message[0].component.payload.snippetData.template_type)){
+    $(messageHtml).find('#snippet-demo-template').empty().append(me.snippetImageAnswerTemplateObj.renderMessage.bind(me, snippetMsgData));
   }else if(['citation_snippet'].includes(msgData.message[0].component.payload.snippetData.template_type)){
     $(messageHtml).find('#snippet-demo-template').empty().append(me.snippetCitationTemplateObj.renderMessage.bind(me, snippetMsgData));
   }else if(['active_citation_snippet'].includes(msgData.message[0].component.payload.snippetData.template_type)){

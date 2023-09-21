@@ -299,6 +299,7 @@
                 font-size: 14px;
                 line-height: 17px;
                 margin-bottom: 17px;
+                text-transform: capitalize;
             }
             .kr-sg-checkbox{
                 margin-bottom: 10px;
@@ -492,6 +493,10 @@
                     z-index: 1;
                     padding: 3px 5px;
                     cursor: pointer;
+                    img{
+                        width: 13px;
+                        height: 13px;
+                    }
               }
             }
         }

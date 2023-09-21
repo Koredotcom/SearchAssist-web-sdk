@@ -92,12 +92,14 @@ body{
                 justify-content: center;
             }
             .search-input-box {
-                width: 500px;
+                            // width: 500px;
+                            width: 759px;
                 .search-box-container-data {
                     .search-bar {
                         .search-input{
+                            width: 759px;
                             height: 34px;
-                            width: 500px;
+                            // width: 500px;
                             border: 1px solid #B9BCBF;
                             border-radius: 150px !important;
                         }
@@ -105,10 +107,12 @@ body{
                 }
             }
             .live_search_result_box{
-                width: 500px;
+                            width: 759px;
+                            // width: 500px;
             }
             .frequently_searched_box{
-                width: 500px;
+                            width: 759px;
+                            // width: 500px;
             }
         }
         .search-input-box {
@@ -118,6 +122,7 @@ body{
                     padding: 3px 5px;
                     cursor: pointer;
                     right: 6px !important;
+                    
                 }
             }
         }
@@ -5212,5 +5217,13 @@ li{
         left:12px;
         right: 12px;
         }
+    }
+}
+.debug-results{
+    display: none;
+}
+.builder-sdk{
+    .debug-results{
+        display: block;
     }
 }

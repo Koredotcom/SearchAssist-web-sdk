@@ -275,6 +275,61 @@ class FinalResultsTemplate {
             </div>\
         </div>\
         {{/if}}\
+        {{if snippetData.template_type =="image_answer_snippet"}}\
+          <div class="search-temp-one snippet-margin sa-image-answer-temp"  data-query = "${snippetData?.searchQuery}">\
+            <div class="top-header">\
+                <div class="top-header-with-img">\
+                    <span class="logo-span"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/snippet-avathar.svg"/></span>\
+                    <div class="btn-chip"><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_Suggested_answer">{{html langTranslator("sa_sdk_Suggested_answer")}}</span>\</div>\
+                </div>\
+                {{if snippetData && snippetData.snippet_type === "generative_model"}}\
+                <div class="btn-link"><span class="bot-bg-purple"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/bot.svg"/></span><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_answered_by_ai">{{html langTranslator("sa_sdk_answered_by_ai")}}</span>\</div>\
+                {{/if}}\
+            </div>\
+            {{if snippetData && snippetData.title}}\
+              <div class="img-temp-title">{{html helpers.convertMDtoHTML(snippetData?.title)}}</div>\
+              {{/if}}\
+              <div class="img-text-container">\
+              {{if snippetData && snippetData.image_url}}\
+              <div class="snippet-image-block {{if snippetData.title==""}}snippet_margin_top_0{{/if}}"><img src="${snippetData.image_url}"/></div>\
+              {{/if}}\
+              <div class="img-text-source">\
+              {{if snippetData && snippetData.answer}}\
+              <div class="img-temp-data-desc">\
+              <div class="temp-data-desc">\
+              {{each(key, data) snippetData.answer}}\
+              {{html helpers.convertMDtoHTML(data.answer_fragment)}}\
+              {{/each}}\
+              </div>\
+              <span class="read-more-less desc-read-more">Read More</span>\
+              <span class="desc-read-less">Show Less</span>\
+              </div>\
+              {{if snippetData && snippetData.source}}\
+              <div class="snippet-source-block">\
+              <span class="snippet-source-header">Source: </span><span class="sa-sdk-title" data-title="${snippetData?.page_url}"><a class="snippet-source-url-name" href="${snippetData?.page_url}" target="_blank" target="_blank">{{html snippetData.source}}</a></span>\
+              </div>\
+              {{/if}}\
+              {{/if}}\
+              </div>\
+              </div>\
+            <div class="temp-footer-block">\
+                <div class="temp-footer {{if snippetData && snippetData.snippet_type!== "generative_model"}} justify-content-end {{/if}}">\
+                    {{if snippetData && snippetData.snippet_type === "generative_model"}}\
+                    <div class="btn-link"><span class="bot-bg-purple"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/bot.svg"/></span><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_answered_by_ai">{{html langTranslator("sa_sdk_answered_by_ai")}}</span>\</div>\
+                    {{/if}}\
+                    {{if snippetData.displayFeedback == true}}\
+                    <div class="temp-right">\
+                        <div class="is-it-usefull">Is it useful?</div>\
+                        <div class="temp-fotter-actions">\
+                            <img  class="snippet-feedback  snippet-like-img" src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/like-gray.svg" />\
+                            <img class="snippet-feedback  snippet-dislike-img" src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/dislike-gary.svg" />\
+                        </div>\
+                    </div>\
+                    {{/if}}\
+                </div>\
+            </div>\
+        </div>\
+        {{/if}}\
         {{if snippetData.template_type =="citation_snippet"}}\
         <div class="search-temp-one snippet-margin"  data-query = "${snippetData?.searchQuery}">\
         <div class="top-header">\
@@ -291,7 +346,7 @@ class FinalResultsTemplate {
         {{/if}}\
         <div class="citation-data-desc {{if snippetData.title==""}}snippet_padding_top_0{{/if}}">\
         {{each(key, data) snippetData.answer}}\
-        <span class="snippet-answer-fragment">{{html helpers.convertMDtoHTML(data.answer_fragment)}}</span>{{each(sourceKey, source) data.sources}}<sup class="snippet-citation"><a href="${source.url}" target="_blank">[${source._id}]</a></sup>{{/each}}. </span>\
+        <span class="snippet-answer-fragment">{{html helpers.convertMDtoHTML(data.answer_fragment)}}{{each(sourceKey, source) data.sources}}<sup class="snippet-citation"><a href="${source.url}" target="_blank">[${source._id}]</a></sup>{{/each}}. </span>\
         {{/each}}\
         </div>\
         <div class="snippet-referene-block">\
@@ -465,6 +520,16 @@ class FinalResultsTemplate {
         $(messageHtml).find('.desc-read-more').removeClass('display-none').addClass('display-block');
       });
     }
+    $(messageHtml).find('.snippet-image-block').off('click', 'img').on('click', 'img', function (event:any) {
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      const src = event?.currentTarget?.closest('[src]')?.getAttribute('src');
+      $('body').append(`<div id="snippet-preview-img"> <img src="${src}"/> <span class="preview-close-icon"> X </span></div>`);
+      $('#snippet-preview-img').off('click', '.preview-close-icon').on('click', '.preview-close-icon', function (event:any) {
+      $('#snippet-preview-img').remove();
+      });
+      return;
+      });
     FinalResultsTemplate.prototype.bindFragmentHoverEvent(me,messageHtml)
     $(messageHtml).off('click', '#sa-sdk-show-more-results-btn').on('click', '#sa-sdk-show-more-results-btn', function (event:any) {
       $(event.currentTarget).parent().next().closest('.finalResults').removeClass('display-none');
