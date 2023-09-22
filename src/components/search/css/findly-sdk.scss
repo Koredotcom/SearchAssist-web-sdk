@@ -3977,7 +3977,7 @@ display: none !important;
 .sa-loading-container {
     padding: 20px;
     background-color: #ffff;
-    height: 100%;
+    height: calc(100vh - 137px);
     .row {
         margin-bottom: 20px;
         margin-left: 0px !important;

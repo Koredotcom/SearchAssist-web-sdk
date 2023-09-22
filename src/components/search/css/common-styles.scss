@@ -60,36 +60,19 @@ body{
         .skelton-load-img{
             height:100%;
             margin-top: 12px;
-        }
-        .all-result-container {
-            .full-results-data-container {
-                .back-search{
-                    width: 28px;
-                    height: 28px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    left: 20px;
-                    right: auto;
-                    top: 14px;
-                    img{
-                        content: url('/src/components/search/images/carrot-icon.svg');
-                    }
-                }
-            }
-        }
-        .topdown-search-main-container {
-            .debug-results{
-                background: #fff;
-                width: 35px;
-                height: 35px;
-                position: absolute;
-                align-items: center !important;
-                right: 32px;
-                top: 18px;
-                border-radius: 100%;
+            .sa-loading-container{
                 display: flex;
                 justify-content: center;
+                align-items: center;
+                .loading-text{
+                  padding-left:12px;
+                }
+              }
+        }
+        
+        .topdown-search-main-container {
+            .debug-results{
+                display: none;
             }
             .search-input-box {
                             // width: 500px;
@@ -124,6 +107,52 @@ body{
                     right: 6px !important;
                     
                 }
+            }
+        }
+        .all-result-container {
+            .full-results-data-container {
+                .back-search{
+                   display: none;
+                }
+            }
+        }
+        &.builder-sdk{
+            .all-result-container {
+                .full-results-data-container {
+                    .back-search{
+                        width: 28px;
+                        height: 28px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        left: 20px;
+                        right: auto;
+                        top: 14px;
+                        img{
+                            content: url('/src/components/search/images/carrot-icon.svg');
+                        }
+                    }
+                }
+            }
+            .topdown-search-main-container {
+                .debug-results{
+                    background: #fff;
+                    width: 35px;
+                    height: 35px;
+                    position: absolute;
+                    align-items: center !important;
+                    right: 32px;
+                    top: 18px;
+                    border-radius: 100%;
+                    display: flex;
+                    justify-content: center;
+                }
+            }
+            &.debug{
+                .skelton-load-img{
+                    margin-left: 59%;
+                }
+                
             }
         }
     }
@@ -5227,3 +5256,6 @@ li{
         display: block;
     }
 }
+  .pointer-events-none{
+        pointer-events:none;
+    }

@@ -5,7 +5,7 @@ interface JWT_OBJ {
 
 declare global {
   interface Window {
-      JWT_OBJ?: JWT_OBJ;
+      JWT_OBJ: JWT_OBJ;
   }
 }
 let botOptionsFindly: any = {};
@@ -15,14 +15,14 @@ var paramUrl="searchassist.kore.ai";
 var httpStart = 'https://';
 var wssUrl = "wss";
 if(serverUrl && (serverUrl.includes("https://") || serverUrl.includes("http://"))){
-    paramUrl=serverUrl.split('/')[2];
-    if(serverUrl.includes("https://")){
-      httpStart = "https://";
-      wssUrl = "wss";
-    }else{
-      httpStart = "http://";
-      wssUrl = "ws";
-    }
+paramUrl=serverUrl.split('/')[2];
+if(serverUrl.includes("https://")){
+httpStart = "https://";
+wssUrl = "wss";
+}else{
+httpStart = "http://";
+wssUrl = "ws";
+}
 }  
 if(window?.JWT_OBJ && window?.JWT_OBJ?.koreAPIUrl){
   paramUrl=window.JWT_OBJ.koreAPIUrl.split("/")[2].split(':')[0];
