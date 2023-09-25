@@ -55,7 +55,7 @@ class SnippetImageAnswerTemplate {
       </div>\
       {{if snippetData && snippetData.source}}\
       <div class="snippet-source-block">\
-      <span class="snippet-source-header">Source: </span><span class="sa-sdk-title" data-title="${snippetData?.page_url}"><a class="snippet-source-url-name " href="${snippetData?.page_url}" target="_blank" target="_blank" >{{html snippetData.source}}</a></span>\
+      <span class="snippet-source-header">Source: </span><span class="sa-sdk-title" data-title="${snippetData?.page_url}"><a class="snippet-source-url-name {{if !snippetData.page_url}} pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" target="_blank" >{{html snippetData.source}}</a></span>\
       </div>\
       {{/if}}\
       {{/if}}\

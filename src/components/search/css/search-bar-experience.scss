@@ -344,6 +344,14 @@ body::-webkit-scrollbar {
     .skelton-load-img{
         height:100%;
         margin-top: 12px;
+        .sa-loading-container{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .loading-text{
+            padding-left:12px;
+          }
+        }
     }
     .all-result-container {
         .full-results-data-container {
@@ -1190,15 +1198,12 @@ body::-webkit-scrollbar {
 }
 .debug {
   .topdown-search-main-container #top-down-full-results-container{
-    width: 40%;
+    width: 40.9%;
     float: right;
     transition: width 1s;
   }
   #heading{
-    margin-left: 62%;
-  }
-  .debug-results{
-    display: none !important;
+    margin-left: 61.2%;
   }
   .close-top-down-search-outer{
     display: none;

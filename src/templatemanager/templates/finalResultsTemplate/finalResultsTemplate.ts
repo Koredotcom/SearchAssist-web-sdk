@@ -161,7 +161,7 @@ class FinalResultsTemplate {
             {{if snippetData && snippetData.source}}\
             <div class="snippet-source-block">\
               <div class="snippet-source-file-name sa-sdk-title {{if !snippetData.source}} display-none{{/if}}" data-title="${snippetData.source}">{{html snippetData.source}}</div>\
-              <a href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name sa-sdk-title" data-title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
+              <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name sa-sdk-title" data-title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
             </div>\
             {{/if}}\
             <div class="temp-footer-block">\
@@ -208,7 +208,7 @@ class FinalResultsTemplate {
         {{if snippetData && snippetData.source}}\
           <div class="snippet-source-block">\
             <div class="snippet-source-file-name sa-sdk-title  {{if !snippetData.source}} display-none {{/if}}" data-title="${snippetData.source}">{{html snippetData?.source}}</div>\
-            <a href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none {{/if}}"><span class="snippet-source-url-name">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/> </div></a>\
+            <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none {{/if}}"><span class="snippet-source-url-name">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/> </div></a>\
           </div>\
         {{/if}}\
         <div class="temp-footer-block">\
@@ -254,7 +254,7 @@ class FinalResultsTemplate {
             {{if snippetData && snippetData.source}}\
             <div class="snippet-source-block">\
               <div class="snippet-source-file-name {{if !snippetData.source}} display-none{{/if}}">{{html snippetData.source}}</div>\
-              <a href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
+              <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
             </div>\
             {{/if}}\
             <div class="temp-footer-block">\
@@ -306,7 +306,7 @@ class FinalResultsTemplate {
               </div>\
               {{if snippetData && snippetData.source}}\
               <div class="snippet-source-block">\
-              <span class="snippet-source-header">Source: </span><span class="sa-sdk-title" data-title="${snippetData?.page_url}"><a class="snippet-source-url-name" href="${snippetData?.page_url}" target="_blank" target="_blank">{{html snippetData.source}}</a></span>\
+              <span class="snippet-source-header">Source: </span><span class="sa-sdk-title" data-title="${snippetData?.page_url}"><a class="snippet-source-url-name {{if !snippetData.page_url}} pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" target="_blank">{{html snippetData.source}}</a></span>\
               </div>\
               {{/if}}\
               {{/if}}\
@@ -346,21 +346,21 @@ class FinalResultsTemplate {
         {{/if}}\
         <div class="citation-data-desc {{if snippetData.title==""}}snippet_padding_top_0{{/if}}">\
         {{each(key, data) snippetData.answer}}\
-        <span class="snippet-answer-fragment">{{html helpers.convertMDtoHTML(data.answer_fragment)}}{{each(sourceKey, source) data.sources}}<sup class="snippet-citation"><a href="${source.url}" target="_blank">[${source._id}]</a></sup>{{/each}}. </span>\
+        <span class="snippet-answer-fragment">{{html helpers.convertMDtoHTML(data.answer_fragment)}}{{each(sourceKey, source) data.sources}}<sup class="snippet-citation"><a class="{{if !source.url}}pointer-events-none {{/if}}" href="${source.url}" target="_blank">[${source._id}]</a></sup>{{/each}}. </span>\
         {{/each}}\
         </div>\
         <div class="snippet-referene-block">\
           <div class="reference-block-header">References: </div>\
           <ol type="1" class="reference-list-temp-ul">\
                   {{each(key, item) snippetData.reference}}\
-                      <li class="reference-list-temp-li" title="{{html helpers.convertMDtoHTML(item.title)}}"><a  href="${item.url}" target="_blank"><span>{{html helpers.convertMDtoHTML(item.title)}}</span></a></li>\
+                      <li class="reference-list-temp-li" title="{{html helpers.convertMDtoHTML(item.title)}}"><a class="{{if !item.url}}pointer-events-none {{/if}}"  href="${item.url}" target="_blank"><span>{{html helpers.convertMDtoHTML(item.title)}}</span></a></li>\
                       {{/each}}\
                   </ol>\
         </div>\
         {{if snippetData && snippetData.source}}\
         <div class="snippet-source-block">\
           <div class="snippet-source-file-name {{if !snippetData.source}} display-none{{/if}}">{{html snippetData.source}}</div>\
-          <a href="${snippetData?.page_url}" target="_blank" ><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
+          <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" ><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
         </div>\
         {{/if}}\
         <div class="temp-footer-block">\
@@ -398,21 +398,21 @@ class FinalResultsTemplate {
         <div class="citation-data-desc {{if snippetData.title==""}}snippet_padding_top_0{{/if}}">\
         {{each(key, data) snippetData.answer}}\
         <span class="snippet-answer-fragment-block fragment-hover-event {{each(itemKey, item) data.sources}} fragment-${item._id} {{/each}}"\
-          fragment="{{each(itemKey, item) data.sources}} .fragment-${item._id}, {{/each}}"><span class="sub-fragment"><span class="snippet-answer-fragment">{{html  helpers.convertMDtoHTML(data.answer_fragment)}}</span>{{each(sourceKey, source) data.sources}}<span class="snippet-citation"><a href="${source.url}" target="_blank"><span class="reference-no">${source._id}</span></a></span>{{/each}}</span></span></span>\
+          fragment="{{each(itemKey, item) data.sources}} .fragment-${item._id}, {{/each}}"><span class="sub-fragment"><span class="snippet-answer-fragment">{{html  helpers.convertMDtoHTML(data.answer_fragment)}}</span>{{each(sourceKey, source) data.sources}}<span class="snippet-citation"><a class="{{if !source.url}}pointer-events-none {{/if}}" href="${source.url}" target="_blank"><span class="reference-no">${source._id}</span></a></span>{{/each}}</span></span></span>\
         {{/each}}\
         </div>\
         <div class="active-snippet-referene-block">\
           <div class="active-reference-block-header">Sources </div>\
           <div class="active-reference-list-temp-block">\
                   {{each(key, item) snippetData.reference}}\
-                      <div class="active-reference-list-temp fragment-hover-event fragment-${key+1}"  title="{{html item.title}}" fragment=".fragment-${key+1},"><a href="${item.url}" target="_blank"><span class="reference-no">${key+1}</span><span class="reference-title">{{html helpers.convertMDtoHTML(item.title)}}</span></a></div>\
+                      <div class="active-reference-list-temp fragment-hover-event fragment-${key+1}"  title="{{html item.title}}" fragment=".fragment-${key+1},"><a class="{{if !item.url}}pointer-events-none {{/if}}" href="${item.url}" target="_blank"><span class="reference-no">${key+1}</span><span class="reference-title">{{html helpers.convertMDtoHTML(item.title)}}</span></a></div>\
                       {{/each}}\
                   </div>\
         </div>\
         {{if snippetData && snippetData.source}}\
         <div class="snippet-source-block">\
           <div class="snippet-source-file-name {{if !snippetData.source}} display-none{{/if}}">{{html snippetData.source}}</div>\
-          <a href="${snippetData?.page_url}" target="_blank" ><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
+          <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" ><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
         </div>\
         {{/if}}\
         <div class="temp-footer-block">\

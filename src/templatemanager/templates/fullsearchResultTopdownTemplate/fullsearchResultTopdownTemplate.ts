@@ -855,7 +855,6 @@ class FullSearchResultTopdownTemplate {
     $(messageHtml).off("click", ".back-search").on("click", ".back-search", function (e: any) {
     hostWindowInstance.backToSearchClickEvent();
     $("body").removeClass('.debug');
-    $(".debug-results").css("display","none");
     });
   }
   feedBackResultEvents(me: any, messageHtml: any,msgData:any){
