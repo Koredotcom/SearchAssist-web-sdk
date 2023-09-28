@@ -23719,7 +23719,7 @@ if(res?.graph_answer?.payload?.center_panel){
     let title = res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_title?helpers.convertMDtoHTML(res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_title) : '';
     snippetObj = {'title':title,
     'answer':listSnippetData, page_url:res?.graph_answer?.payload?.center_panel?.data[0]?.url,
-    'source':undefined, //res?.graph_answer?.payload?.center_panel?.data[0]?.source_title || res?.graph_answer?.payload?.center_panel?.data[0]?.source,
+    'source':res?.graph_answer?.payload?.center_panel?.data[0]?.source_title || res?.graph_answer?.payload?.center_panel?.data[0]?.source || '',
     'template_type':res?.graph_answer?.payload?.center_panel?.type, 
     'image_url':(res?.graph_answer?.payload?.center_panel?.data[0]?.image_url ||''),
     'searchQuery': _self.vars.searchObject.searchText,
