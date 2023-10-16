@@ -23682,7 +23682,7 @@ if(res?.graph_answer?.payload?.center_panel){
     if(res?.graph_answer?.payload?.center_panel?.data[0]?.title)
     res.graph_answer.payload.center_panel.data[0].snippet_title = res?.graph_answer?.payload?.center_panel?.data[0]?.title;
       res.graph_answer.payload.center_panel.data[0].snippet_content.forEach((item)=>{
-        snippetReference = [...snippetReference,...item.sources];
+        if (item?.sources[0].title) snippetReference = [...snippetReference, ...item.sources];
       })
       var set = new Set();
       var unionArray =  snippetReference.filter(item => {
