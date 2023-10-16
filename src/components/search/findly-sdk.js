@@ -23681,9 +23681,7 @@ if(res?.graph_answer?.payload?.center_panel){
     res.graph_answer.payload.center_panel.data[0].snippet_content = res?.graph_answer?.payload?.center_panel?.data[0]?.answer;
     if(res?.graph_answer?.payload?.center_panel?.data[0]?.title)
     res.graph_answer.payload.center_panel.data[0].snippet_title = res?.graph_answer?.payload?.center_panel?.data[0]?.title;
-      res.graph_answer.payload.center_panel.data[0].snippet_content.forEach((item)=>{
-        snippetReference = [...snippetReference,...item.sources];
-      })
+    snippetReference = res.graph_answer.payload.center_panel.data[0].snippet_content.flatMap((item) => item.sources.filter(source => source.title))
       var set = new Set();
       var unionArray =  snippetReference.filter(item => {
         if (!set.has(item.title)) {
