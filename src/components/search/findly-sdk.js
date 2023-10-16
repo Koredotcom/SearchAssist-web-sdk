@@ -21715,6 +21715,18 @@ FindlySDK.prototype.getMergedData = function (settingData, responseData, searchT
           if (obj[mapping.icon]) {
             item.icon = obj[mapping.icon];
           }
+          if(obj[mapping.label1]){
+            item.label1 = obj[mapping.label1];
+          }
+          if(obj[mapping.label2]){
+            item.label2 = obj[mapping.label2];
+          }
+          if(obj[mapping.rating]){
+            item.rating = obj[mapping.rating];
+          }
+          if(obj[mapping.strikedOffRate]){
+            item.strike_off = obj[mapping.strikedOffRate];
+          }
           if (obj[mapping.chips]) {
             item.chips = obj[mapping.chips];
           }

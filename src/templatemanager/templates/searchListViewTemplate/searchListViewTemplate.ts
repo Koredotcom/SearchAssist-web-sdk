@@ -518,17 +518,17 @@ class SearchListViewTemplate {
                   <div class="slide-gride cosmetics-product-view" style="width:100%">\
                     <div class="inner-content-data">\
                       <div class="img-block">\
-                        <img class="banner-img" src="${data.ecommerce_image}">\
+                      {{if (data.ecommerce_image) || (data.img) }}\<img class="banner-img" src="${data.ecommerce_image || data.img}">\{{/if}}\
                       </div>\
                       <div class="content-block">\
                         <div class="type-tag {{if data.ecommerce_bestseller == true}} display-inline-block{{else}}display-none{{/if}}">Best Seller</div>\
-                        <div class="type-tag offer">${data.ecommerce_percentage_offer}</div>\
+                        {{if (data.ecommerce_percentage_offer) || (data.label1) }}\<div class="type-tag offer">${data.ecommerce_percentage_offer || data.label1)} </div>{{/if}}\
                         <div class="title">{{html helpers.convertMDtoHTML(data.heading)}}</div>\
                         <div class="text-desc">{{html helpers.convertMDtoHTML(data.description)}}</div>\
                         <div class="price-and-rating">\
                         <div>\
-                        <div class="amount-info">${data.ecommerce_price}</div>\
-                        <div class="amount-info strike-text">${data.ecommerce_original_price}</div>\
+                        {{if (data.ecommerce_price) || (data.label2) }}\<div class="amount-info">${data.ecommerce_price || data.label2}</div>\{{/if}}\
+                        {{if (data.ecommerce_original_price) || (data.strike_off) }}\<div class="amount-info strike-text">${data.ecommerce_original_price || data.strike_off}</div>\{{/if}}\
                         </div>\
                         <div class="rating-flex">{{each(key, review) data.ecommerce_ratingArr}}\{{if review == "fill"}}\
                         <div class="rating-star-pd"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMCAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAuMzUwMjc4IDMuNTI0TDMuMzk1ODkgMy4xOTMwNkw0LjYzOTgyIDAuMjM5OTE0QzQuNzc0NTYgLTAuMDc5OTcxNCA1LjIyNzg1IC0wLjA3OTk3MTQgNS4zNjI1OSAwLjIzOTkxNEw2LjYwNjUyIDMuMTkzMDZMOS42NDk3NiAzLjUyNEM5Ljk4MjMgMy41NjAxNiAxMC4xMTk4IDMuOTY5MzMgOS44NzY1NyA0LjE5ODk3TDcuNTg2ODcgNi4zNjA4TDguMjMxNzkgOS41MzAyNkM4LjMwMDA0IDkuODY1NjkgNy45MzU4NSAxMC4xMjE0IDcuNjQzNTIgOS45NDMzNUw1LjAwMTIxIDguMzMzNzRMMi4zNTYzNiA5Ljk0MzQ0QzIuMDYzOSAxMC4xMjE0IDEuNjk5NzcgOS44NjU0NCAxLjc2ODI4IDkuNTNMMi40MTU1NSA2LjM2MDhMMC4xMjM1ODIgNC4xOTkxMUMtMC4xMTk4NDQgMy45Njk1MyAwLjAxNzYyMDkgMy41NjAxNCAwLjM1MDI3OCAzLjUyNFoiIGZpbGw9IiNGNUIyNEQiLz4KPC9zdmc+Cg==" /></div>\
