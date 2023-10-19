@@ -15,7 +15,7 @@ var SearchListViewTemplate = /** @class */ (function () {
     function SearchListViewTemplate() {
     }
     SearchListViewTemplate.prototype.renderMessage = function (msgData) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
         var me = this;
         var $ = me.hostInstance.$;
         me.helpersObj = _utils_helpers__WEBPACK_IMPORTED_MODULE_1__["default"] === null || _utils_helpers__WEBPACK_IMPORTED_MODULE_1__["default"] === void 0 ? void 0 : _utils_helpers__WEBPACK_IMPORTED_MODULE_1__["default"].helpers;
@@ -26,6 +26,9 @@ var SearchListViewTemplate = /** @class */ (function () {
             if (!((_g = (_f = msgData === null || msgData === void 0 ? void 0 : msgData.message[0].component) === null || _f === void 0 ? void 0 : _f.payload) === null || _g === void 0 ? void 0 : _g.helpers)) {
                 msgData.message[0].component.payload['helpers'] = me.helpersObj;
             }
+            if (!((_j = (_h = msgData === null || msgData === void 0 ? void 0 : msgData.message[0].component) === null || _h === void 0 ? void 0 : _h.payload) === null || _j === void 0 ? void 0 : _j.langTranslator)) {
+                msgData.message[0].component.payload['langTranslator'] = (_l = (_k = msgData === null || msgData === void 0 ? void 0 : msgData.message[0].component) === null || _k === void 0 ? void 0 : _k.payload) === null || _l === void 0 ? void 0 : _l.langTranslator;
+            }
             var isSearchSDK = document.body.className.match('sdk-body');
             if (isSearchSDK !== null) {
                 msgData.message[0].component.payload.isSearchSDK = true;
@@ -33,7 +36,7 @@ var SearchListViewTemplate = /** @class */ (function () {
             else {
                 msgData.message[0].component.payload.isSearchSDK = false;
             }
-            me.messageListHtml = $(SearchListViewTemplate.prototype.getTemplateString((_j = (_h = msgData === null || msgData === void 0 ? void 0 : msgData.message[0].component) === null || _h === void 0 ? void 0 : _h.payload) === null || _j === void 0 ? void 0 : _j.template_type)).tmpl((_k = msgData === null || msgData === void 0 ? void 0 : msgData.message[0].component) === null || _k === void 0 ? void 0 : _k.payload);
+            me.messageListHtml = $(SearchListViewTemplate.prototype.getTemplateString((_o = (_m = msgData === null || msgData === void 0 ? void 0 : msgData.message[0].component) === null || _m === void 0 ? void 0 : _m.payload) === null || _o === void 0 ? void 0 : _o.template_type)).tmpl((_p = msgData === null || msgData === void 0 ? void 0 : msgData.message[0].component) === null || _p === void 0 ? void 0 : _p.payload);
             setTimeout(function () {
                 SearchListViewTemplate.prototype.bindEvents(me, me.messageListHtml);
             }, 500);
@@ -174,7 +177,7 @@ var SearchListViewTemplate = /** @class */ (function () {
         });
         //Tour RR 
         //me.hostWindowInstance.sendMessage() //bindAllResultRankingOperations
-        $(messageHtml)
+        $('.parent-list-template')
             .off("click", ".show-more-list")
             .on("click", ".show-more-list", function (e) {
             var showMoreData = {
@@ -199,9 +202,12 @@ var SearchListViewTemplate = /** @class */ (function () {
                 }
                 var listHTML = $(SearchListViewTemplate.prototype.getTemplateString(result === null || result === void 0 ? void 0 : result.message[0].component.payload.template_type)).tmpl(result === null || result === void 0 ? void 0 : result.message[0].component.payload);
                 $(listHTML).find(".show-more-list").remove();
-                $(".full-search-data-container [templateName=" +
-                    showMoreData.templateName +
-                    "]").before($(listHTML).find(".parent-list-template").children());
+                if (result.message[0].component.payload.isDemoTemplate !== "cosmeticsTemplate") {
+                    $(".full-search-data-container [templateName=" + showMoreData.templateName + "]").before($(listHTML).find(".parent-list-template").children());
+                }
+                else {
+                    $(".full-search-data-container [templateName=" + showMoreData.templateName + "]").before($(listHTML).find(".arrivals-grids-template").parent());
+                }
                 if ((Number($(".full-search-data-container [templateName=" + showMoreData.templateName + "]").attr('pageNumber')) + 1) * 5 >= (result === null || result === void 0 ? void 0 : result.message[0].component.payload.doc_count)) {
                     $(".full-search-data-container [templateName=" + showMoreData.templateName + "]").hide();
                 }
@@ -222,7 +228,7 @@ var SearchListViewTemplate = /** @class */ (function () {
         $('.parent-list-template').off("click", ".click-log-metrics").on("click", ".click-log-metrics", function (e) {
             hostWindowInstance === null || hostWindowInstance === void 0 ? void 0 : hostWindowInstance.captureClickAnalytics(e, $(e.currentTarget).closest(".click-log-metrics").attr("contentType"), "click", $(e.currentTarget).closest(".click-log-metrics").attr("contentId"), $(e.currentTarget).closest(".click-log-metrics").attr("id"), $(e.currentTarget).closest(".click-log-metrics").attr("data-title") || $(e.currentTarget).attr("title"));
         });
-        $(messageHtml)
+        $('.parent-list-template')
             .off("click", ".accordion")
             .on("click", ".accordion", function (evet) {
             $(evet.target).closest(".accordion").toggleClass("acc-active");
@@ -374,9 +380,7 @@ var SearchListViewTemplate = /** @class */ (function () {
         {{/if}}\
         {{if isSearchSDK}}\
         <div class="show-more-data {{if doc_count==0 || doc_count<6 || isLiveSearch || isSearch}}display-none{{/if}} show-more-list" groupName="${groupName}" templateName="${templateName}" pageNumber="${pageNumber}" fieldName="${fieldName}">\
-           <div class="searchassist-show-more-button">Show more\
-           <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDEwIDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNS4zNjQzNyA1LjE0OTQ5QzUuMTc0OTcgNS4zMzgzNyA0Ljg3NDgxIDUuMzQ5NDggNC42NzIzOSA1LjE4MjgyTDQuNjM1NjMgNS4xNDk0OUwwLjE1MDkyNyAwLjg3NzI2NUMtMC4wNTAzMDkxIDAuNjc2NTc5IC0wLjA1MDMwOTEgMC4zNTEyMDIgMC4xNTA5MjcgMC4xNTA1MTVDMC4zNDAzMjYgLTAuMDM4MzY2NCAwLjY0MDQ4IC0wLjA0OTQ3NzMgMC44NDI5MDkgMC4xMTcxODNMMC44Nzk2NjggMC4xNTA1MTVMNSA0LjA1OTI4TDkuMTIwMzMgMC4xNTA1MTVDOS4zMDk3MyAtMC4wMzgzNjY0IDkuNjA5ODggLTAuMDQ5NDc3MyA5LjgxMjMxIDAuMTE3MTgzTDkuODQ5MDcgMC4xNTA1MTVDMTAuMDM4NSAwLjMzOTM5NyAxMC4wNDk2IDAuNjM4NzMxIDkuODgyNSAwLjg0MDYwN0w5Ljg0OTA3IDAuODc3MjY1TDUuMzY0MzcgNS4xNDk0OVoiIGZpbGw9IiM1RjYzNjgiLz4KPC9zdmc+Cg==">\
-           </div>\
+        <div class="searchassist-show-more-button"><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_show_more">{{html langTranslator("sa_sdk_show_more")}}</span> <img src="{{if devMode}}assets/web-kore-sdk/demo/{{/if}}images/show_more.png" height="6" width="10" /></div>\
         </div>\
         {{/if}}\
     </div>\
@@ -418,34 +422,34 @@ var SearchListViewTemplate = /** @class */ (function () {
     {{/each}}\
     {{if isSearchSDK}}\
     <div class="show-more-data {{if doc_count==0 || doc_count<6 || isLiveSearch || isSearch}}display-none{{/if}} show-more-list" groupName="${groupName}" templateName="${templateName}" pageNumber="${pageNumber}" fieldName="${fieldName}">\
-    <div class="searchassist-show-more-button">Show more\
-    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDEwIDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNS4zNjQzNyA1LjE0OTQ5QzUuMTc0OTcgNS4zMzgzNyA0Ljg3NDgxIDUuMzQ5NDggNC42NzIzOSA1LjE4MjgyTDQuNjM1NjMgNS4xNDk0OUwwLjE1MDkyNyAwLjg3NzI2NUMtMC4wNTAzMDkxIDAuNjc2NTc5IC0wLjA1MDMwOTEgMC4zNTEyMDIgMC4xNTA5MjcgMC4xNTA1MTVDMC4zNDAzMjYgLTAuMDM4MzY2NCAwLjY0MDQ4IC0wLjA0OTQ3NzMgMC44NDI5MDkgMC4xMTcxODNMMC44Nzk2NjggMC4xNTA1MTVMNSA0LjA1OTI4TDkuMTIwMzMgMC4xNTA1MTVDOS4zMDk3MyAtMC4wMzgzNjY0IDkuNjA5ODggLTAuMDQ5NDc3MyA5LjgxMjMxIDAuMTE3MTgzTDkuODQ5MDcgMC4xNTA1MTVDMTAuMDM4NSAwLjMzOTM5NyAxMC4wNDk2IDAuNjM4NzMxIDkuODgyNSAwLjg0MDYwN0w5Ljg0OTA3IDAuODc3MjY1TDUuMzY0MzcgNS4xNDk0OVoiIGZpbGw9IiM1RjYzNjgiLz4KPC9zdmc+Cg==">\
+    <div class="searchassist-show-more-button"><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_show_more">{{html langTranslator("sa_sdk_show_more")}}</span>\
+    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDEwIDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNS4zNjQzNyA1LjE0OTQ5QzUuMTc0OTcgNS4zMzgzNyA0Ljg3NDgxIDUuMzQ5NDggNC42NzIzOSA1LjE4MjgyTDQuNjM1NjMgNS4xNDk0OUwwLjE1MDkyNyAwLjg3NzI2NUMtMC4wNTAzMDkxIDAuNjc2NTc5IC0wLjA1MDMwOTEgMC4zNTEyMDIgMC4xNTA5MjcgMC4xNTA1MTVDMC4zNDAzMjYgLTAuMDM4MzY2NCAwLjY0MDQ4IC0wLjA0OTQ3NzMgMC44NDI5MDkgMC4xMTcxODNMMC44Nzk2NjggMC4xNTA1MTVMNSA0LjA1OTI4TDkuMTIwMzMgMC4xNTA1MTVDOS4zMDk3MyAtMC4wMzgzNjY0IDkuNjA5ODggLTAuMDQ5NDc3MyA5LjgxMjMxIDAuMTE3MTgzTDkuODQ5MDcgMC4xNTA1MTVDMTAuMDM4NSAwLjMzOTM5NyAxMC4wNDk2IDAuNjM4NzMxIDkuODgyNSAwLjg0MDYwN0w5Ljg0OTA3IDAuODc3MjY1TDUuMzY0MzcgNS4xNDk0OVoiIGZpbGw9IiM1RjYzNjgiLz4KPC9zdmc+Cg==" height="6" width="10" />\
     </div>\
- </div>\
+    </div>\
         {{/if}}\
      </div>\
     </div>\
     {{/if}}\
     {{if isDemoTemplate == "cosmeticsTemplate"}}\
-    <div class="cosmetics-grid-template2">\
+    <div class="cosmetics-grid-template2 parent-list-template">\
                 <div class="arrivals-grids-template">\
                 {{each(key, data) structuredData.slice(0, maxSearchResultsAllowed)}}\
                   <div class="slide-gride cosmetics-product-view" style="width:100%">\
                     <div class="inner-content-data">\
-                        <div class="img-block">\
-                        {{if (data.ecommerce_image) || (data.img) }}\<img class="banner-img" src="${data.ecommerce_image || data.img}">\{{/if}}\
-                    </div>\
-                    <div class="content-block">\
-                      <div class="type-tag {{if (data.ecommerce_bestseller == true || data.label1) }} display-inline-block{{else}}display-none{{/if}}">{{if (data.label1) }}${data.label1}{{/if}}{{if (data.ecommerce_bestseller == true) }}Best Seller{{/if}}</div>\
-                      {{if (data.ecommerce_percentage_offer || data.label2)}}<div class="type-tag offer">${data.ecommerce_percentage_offer || data.label2}</div>\{{/if}}\
-                      <div class="title">{{html helpers.convertMDtoHTML(data.heading)}}</div>\
-                      <div class="text-desc">{{html helpers.convertMDtoHTML(data.description)}}</div>\
-                      <div class="price-and-rating">\
-                      <div>\
-                      <div class="amount-info">${data.ecommerce_price || data.price}</div>\
-                      <div class="amount-info strike-text">${data.ecommerce_original_price || data.strike_off}</div>\
+                      <div class="img-block">\
+                        <img class="banner-img" src="${data.ecommerce_image}">\
                       </div>\
-                   <div class="rating-flex">{{each(key, review) (data.ecommerce_ratingArr || data.rating )}}\{{if review == "fill"}}\
+                      <div class="content-block">\
+                        <div class="type-tag {{if data.ecommerce_bestseller == true}} display-inline-block{{else}}display-none{{/if}}">Best Seller</div>\
+                        <div class="type-tag offer">${data.ecommerce_percentage_offer}</div>\
+                        <div class="title">{{html helpers.convertMDtoHTML(data.heading)}}</div>\
+                        <div class="text-desc">{{html helpers.convertMDtoHTML(data.description)}}</div>\
+                        <div class="price-and-rating">\
+                        <div>\
+                        <div class="amount-info">${data.ecommerce_price}</div>\
+                        <div class="amount-info strike-text">${data.ecommerce_original_price}</div>\
+                        </div>\
+                        <div class="rating-flex">{{each(key, review) data.ecommerce_ratingArr}}\{{if review == "fill"}}\
                         <div class="rating-star-pd"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxMCAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAuMzUwMjc4IDMuNTI0TDMuMzk1ODkgMy4xOTMwNkw0LjYzOTgyIDAuMjM5OTE0QzQuNzc0NTYgLTAuMDc5OTcxNCA1LjIyNzg1IC0wLjA3OTk3MTQgNS4zNjI1OSAwLjIzOTkxNEw2LjYwNjUyIDMuMTkzMDZMOS42NDk3NiAzLjUyNEM5Ljk4MjMgMy41NjAxNiAxMC4xMTk4IDMuOTY5MzMgOS44NzY1NyA0LjE5ODk3TDcuNTg2ODcgNi4zNjA4TDguMjMxNzkgOS41MzAyNkM4LjMwMDA0IDkuODY1NjkgNy45MzU4NSAxMC4xMjE0IDcuNjQzNTIgOS45NDMzNUw1LjAwMTIxIDguMzMzNzRMMi4zNTYzNiA5Ljk0MzQ0QzIuMDYzOSAxMC4xMjE0IDEuNjk5NzcgOS44NjU0NCAxLjc2ODI4IDkuNTNMMi40MTU1NSA2LjM2MDhMMC4xMjM1ODIgNC4xOTkxMUMtMC4xMTk4NDQgMy45Njk1MyAwLjAxNzYyMDkgMy41NjAxNCAwLjM1MDI3OCAzLjUyNFoiIGZpbGw9IiNGNUIyNEQiLz4KPC9zdmc+Cg==" /></div>\
                         {{else}}\
                         <div class="rating-star-pd"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTUuMzYyNTkgMC4yMzk5MjNDNS4yMjc4MiAtMC4wNzk5NDAzIDQuNzc0NDggLTAuMDc5OTg3MiA0LjYzOTY3IDAuMjM5ODU5QzQuMTUzNjkgMS4zOTI5MyAzLjM5NTc2IDMuMTkyNzEgMy4zOTU3NiAzLjE5MjcxTDAuMzUwNjAxIDMuNTIzNTJDMC4wMTc2Mzc5IDMuNTU5NjkgLTAuMTE5OTU0IDMuOTY5MzUgMC4xMjM2OTYgNC4xOTkxTDIuNDE1MzMgNi4zNTk5N0wxLjc2ODE2IDkuNTI3OTZDMS42OTk1OSA5Ljg2MzYzIDIuMDY0MDUgMTAuMTE5OCAyLjM1Njc4IDkuOTQxNjhMNS4wMDEyIDguMzMyNjJMNy42NDMwOSA5Ljk0MTU5QzcuOTM1NyAxMC4xMTk4IDguMzAwMjIgOS44NjM4OCA4LjIzMTkgOS41MjgyMkw3LjU4NzA4IDYuMzU5OTdMOS44NzY0NSA0LjE5ODk2QzEwLjExOTkgMy45NjkxNiA5Ljk4MjI4IDMuNTU5NzEgOS42NDk0MyAzLjUyMzUyTDYuNjA2NjUgMy4xOTI3MUw1LjM2MjU5IDAuMjM5OTIzWk01LjAwMTIgMS40MDA3OEw2LjA2NDM1IDMuOTIxNzNMOC43MjM3NiA0LjIwOTY2TDYuNzMyMjcgNi4wOTA0Mkw3LjI4Mzc2IDguODA0MzRMNS4wMDEyIDcuNDEzNjhMMi43MTU1OSA4LjgwNDM0TDMuMjcwMTQgNi4wOTA0MkwxLjI4MTcxIDQuMjA5NjZMMy45MzgwNiAzLjkyMTczTDUuMDAxMiAxLjQwMDc4WiIgZmlsbD0iI0Y1QjI0RCIvPgo8L3N2Zz4K" /></div>\
@@ -457,6 +461,13 @@ var SearchListViewTemplate = /** @class */ (function () {
                   </div>\
                 {{/each}}\
                 </div>\
+                {{if isSearchSDK}}\
+                <div class="show-more-data {{if doc_count==0 || doc_count<6 || isLiveSearch || isSearch}}display-none{{/if}} show-more-list" groupName="${groupName}" templateName="${templateName}" pageNumber="${pageNumber}" fieldName="${fieldName}">\
+                <div class="searchassist-show-more-button"><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_show_more">{{html langTranslator("sa_sdk_show_more")}}</span>\
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDEwIDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNS4zNjQzNyA1LjE0OTQ5QzUuMTc0OTcgNS4zMzgzNyA0Ljg3NDgxIDUuMzQ5NDggNC42NzIzOSA1LjE4MjgyTDQuNjM1NjMgNS4xNDk0OUwwLjE1MDkyNyAwLjg3NzI2NUMtMC4wNTAzMDkxIDAuNjc2NTc5IC0wLjA1MDMwOTEgMC4zNTEyMDIgMC4xNTA5MjcgMC4xNTA1MTVDMC4zNDAzMjYgLTAuMDM4MzY2NCAwLjY0MDQ4IC0wLjA0OTQ3NzMgMC44NDI5MDkgMC4xMTcxODNMMC44Nzk2NjggMC4xNTA1MTVMNSA0LjA1OTI4TDkuMTIwMzMgMC4xNTA1MTVDOS4zMDk3MyAtMC4wMzgzNjY0IDkuNjA5ODggLTAuMDQ5NDc3MyA5LjgxMjMxIDAuMTE3MTgzTDkuODQ5MDcgMC4xNTA1MTVDMTAuMDM4NSAwLjMzOTM5NyAxMC4wNDk2IDAuNjM4NzMxIDkuODgyNSAwLjg0MDYwN0w5Ljg0OTA3IDAuODc3MjY1TDUuMzY0MzcgNS4xNDk0OVoiIGZpbGw9IiM1RjYzNjgiLz4KPC9zdmc+Cg==">\
+                </div>\
+                 </div>\
+                    {{/if}}\
                 </div>\
     {{/if}}\
     {{if isDemoTemplate == "bankingTemplate"}}\
@@ -537,23 +548,23 @@ var SearchListViewTemplate = /** @class */ (function () {
       <div class="total-structured-data-wrap {{if viewType=="Customize"&&devMode==true}}{{if isFullResults == true}}customization{{/if}}{{/if}} {{if maxSearchResultsAllowed ==0}}display-none{{/if}}">\
         {{if tour && isFullResults == true && viewType=="Customize" && devMode==true}}\
           <div class="tours-information sdk-tours-info-start">\
-            <div class="tourtitle">Customize</div>\
-            <div class="tour-info">Start Customizing your search results by hovering on the matched content and performing below actions:</div>\
-            <div class="tour-action-info"><b>HIDE</b> - Hide the search result</div>\
-            <div class="tour-action-info"><b>PIN</b> - Pin results in a specific position</div>\
-            <div class="tour-action-info"><b>BOOST</b> - Boost the relevance score</div>\
-            <div class="tour-action-info"><b>LOWER</b> - Lower the relevance score</div>\
-            <div class="footer-tour">\
+          <div class="tourtitle sdk-i18n-lang" sdk-i18n-key="sa_sdk_customize">{{html langTranslator("sa_sdk_customize")}}</div>\
+          <div class="tour-info sdk-i18n-lang" sdk-i18n-key="sa_sdk_start_customixing_your_search_results_by_hovering">{{html langTranslator("sa_sdk_start_customixing_your_search_results_by_hovering")}}</div>\
+          <div class="tour-action-info"><b class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_hide_caps">{{html langTranslator("sa_sdk_hide_caps")}}</b> - <span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_hide_the_search_result">{{html langTranslator("sa_sdk_hide_the_search_result")}}</span></div>\
+          <div class="tour-action-info"><b class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_pin_caps">{{html langTranslator("sa_sdk_pin_caps")}}</b> - <span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_pin_results_in_a_specific_position">{{html langTranslator("sa_sdk_pin_results_in_a_specific_position")}}</span></div>\
+          <div class="tour-action-info"><b class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_boost_caps">{{html langTranslator("sa_sdk_boost_caps")}}</b> - <span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_boost_the_relevance_score">{{html langTranslator("sa_sdk_boost_the_relevance_score")}}</span></div>\
+          <div class="tour-action-info"><b class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_lower_caps">{{html langTranslator("sa_sdk_lower_caps")}}</b> - <span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_lower_the_relelavance_score">{{html langTranslator("sa_sdk_lower_the_relelavance_score")}}</span></div>\
+          <div class="footer-tour">\
               <div class="tour-length">1 of 2</div>\
               <div class="tour-btns">\
-                  <button class="next-btn sdk-tours-info-nxt">Next</button>\
-                  <button class="close-btn sdk-tours-info-close">Close</button>\
-              </div>\
+              <button class="next-btn sdk-tours-info-nxt sdk-i18n-lang" sdk-i18n-key="sa_sdk_next">{{html langTranslator("sa_sdk_next")}}</button>\
+              <button class="close-btn sdk-tours-info-close sdk-i18n-lang" sdk-i18n-key="sa_sdk_close">{{html langTranslator("sa_sdk_close")}}</button>\
+             </div>\
             </div>\
           </div>\
           <div class="tours-information tour-customization-info sdk-tours-info-end hide">\
-            <div class="tourtitle">Customize</div>\
-            <div class="tour-info mb-2 pb-1">You can order the results by clicking on this icon and dragging up and down.</div>\
+            <div class="tourtitle"><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_customize">{{html langTranslator("sa_sdk_customize")}}</span>\</div>\
+            <div class="tour-info mb-2 pb-1 sdk-i18n-lang" sdk-i18n-key="sa_sdk_you_can_order_the_results_by_clicking">{{html langTranslator("sa_sdk_you_can_order_the_results_by_clicking")}}</div>\
             <div class="footer-tour">\
               <div class="tour-length">2 of 2</div>\
               <div class="tour-btns">\
@@ -564,7 +575,7 @@ var SearchListViewTemplate = /** @class */ (function () {
           </div>\
           {{/if}}\
           {{if isFullResults == true || isSearch == true || isLiveSearch == true}}\
-            <ul class="tile-with-text-parent tasks-wrp structured-data-outer-wrap {{if isDropdownEnabled == true && isFullResults == false}}panel p-0{{/if}} {{if isClickable == false}}with-accordion{{/if}} {{if isFullResults == true}}results-wrap{{/if}}" style="{{if isDropdownEnabled == true && isFullResults == false}}max-height: 100% !important; overflow : initial !important;{{/if}}">\
+            <ul class="tile-with-text-parent tasks-wrp  parent-list-template structured-data-outer-wrap {{if isDropdownEnabled == true && isFullResults == false}}panel p-0{{/if}} {{if isClickable == false}}with-accordion{{/if}} {{if isFullResults == true}}results-wrap{{/if}}" style="{{if isDropdownEnabled == true && isFullResults == false}}max-height: 100% !important; overflow : initial !important;{{/if}}">\
               {{each(key, data) structuredData.slice(0, maxSearchResultsAllowed)}}\
                 <li class="task-wrp faqs-shadow structure-data-wrp {{if viewType=="Customize" && isFullResults == true}}{{if data.config.visible == false || (data.config.visible == true && !data.addedResult && (data.config.pinIndex < 0))}}ui-state-disabled{{/if}}{{/if}} {{if viewType != "Customize" && config.visible == false}}display-none{{/if}}" boost="${data.config.boost}" pinIndex="${data.config.pinIndex}" visible="${data.config.visible}" contentId="${data.contentId}" contentType="${data.sys_content_type}" manuallyAdded="${data.addedResult}" id="${key}">\
                     {{if isClickable == true}}\
@@ -588,11 +599,11 @@ var SearchListViewTemplate = /** @class */ (function () {
                                 <div class="actions-content">\
                                   <span class="action-item visibility" type="{{if data.config.visible == true}}Hide{{/if}}{{if data.config.visible == false}}UnHide{{/if}}">\
                                     <span class="tooltiptext">\
-                                      <span class="_hide {{if data.config.visible == true}}display-block{{else}}display-none{{/if}}">\
-                                          Hide\
+                                      <span class="_hide sdk-i18n-lang {{if data.config.visible == true}}display-block{{else}}display-none{{/if}}" sdk-i18n-key="sa_sdk_hide">\
+                                      {{html langTranslator("sa_sdk_hide")}}\
                                       </span>\
-                                      <span class="unhide {{if data.config.visible == false}}display-block{{else}}display-none{{/if}}">\
-                                          UnHide\
+                                      <span class="unhide sdk-i18n-lang {{if data.config.visible == false}}display-block{{else}}display-none{{/if}}" sdk-i18n-key="sa_sdk_unhide">\
+                                      {{html langTranslator("sa_sdk_unhide")}}\
                                       </span>\
                                     </span>\
                                     <span class="img_hide {{if data.config.visible == true}}display-block{{else}}display-none{{/if}}">\
@@ -604,11 +615,11 @@ var SearchListViewTemplate = /** @class */ (function () {
                                   </span>\
                                   <span class="action-item pinning" type="{{if data.config.pinIndex >= 0}}UnPin{{/if}}{{if data.config.pinIndex < 0}}Pin{{/if}}">\
                                     <span class="tooltiptext">\
-                                      <span class="unpin {{if data.config.pinIndex >= 0}}display-block{{else}}display-none{{/if}}">\
-                                        UnPin\
+                                      <span class="unpin sdk-i18n-lang {{if data.config.pinIndex >= 0}}display-block{{else}}display-none{{/if}}" sdk-i18n-key="sa_sdk_unpin_caps">\
+                                      {{html langTranslator("sa_sdk_unpin_caps")}}\
                                       </span>\
-                                      <span class="pin {{if data.config.pinIndex < 0}}display-block{{else}}display-none{{/if}}">\
-                                        Pin\
+                                      <span class="pin sdk-i18n-lang {{if data.config.pinIndex < 0}}display-block{{else}}display-none{{/if}}" sdk-i18n-key="sa_sdk_pin">\
+                                      {{html langTranslator("sa_sdk_pin")}}\
                                       </span>\
                                     </span>\
                                     <span class="img_unpin {{if data.config.pinIndex >= 0}}display-block{{else}}display-none{{/if}}">\
@@ -619,12 +630,12 @@ var SearchListViewTemplate = /** @class */ (function () {
                                     </span>\
                                   </span>\
                                   <span class="action-item boosting">\
-                                    <span class="tooltiptext">Boost</span>\
-                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADCSURBVHgBfY/BCcJAEEVnNiKKrGgHKSElmA7swBxFJEkHYgfRg3jTTtKCHSQdKIIoMTtjNhgI65o5fh5//gMwbhxyJNfl3MyFAW0YKAaBJxnywgp+oeBdFD6VygegxIRrSIYqGyyfbpONVoVXZdcGxnbT6zjM2wUaFj0nrR7Hglh5Nkjf49C/1DOYZmCz1l/MHC3WgU6Rxfm+x22ntYPCZ6Tgp9lmPYnZlZHKGrjTWsOKKUWCnSAop/+sbwnmeoYCBR8N24MPhSbzYAAAAABJRU5ErkJggg==">\
+                                  <span class="tooltiptext">{{html langTranslator("sa_sdk_boost")}}</span>\
+                                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADCSURBVHgBfY/BCcJAEEVnNiKKrGgHKSElmA7swBxFJEkHYgfRg3jTTtKCHSQdKIIoMTtjNhgI65o5fh5//gMwbhxyJNfl3MyFAW0YKAaBJxnywgp+oeBdFD6VygegxIRrSIYqGyyfbpONVoVXZdcGxnbT6zjM2wUaFj0nrR7Hglh5Nkjf49C/1DOYZmCz1l/MHC3WgU6Rxfm+x22ntYPCZ6Tgp9lmPYnZlZHKGrjTWsOKKUWCnSAop/+sbwnmeoYCBR8N24MPhSbzYAAAAABJRU5ErkJggg==">\
                                   </span>\
                                   <span class="action-item burying {{if data.config.boost == 0}}disabled{{/if}} {{if data.score <= 0}}disabled{{/if}}">\
-                                    <span class="tooltiptext">Lower</span>\
-                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADJSURBVHgBdZDRDYIwEIZbEFKDTRiBEVzBSfDRmBRxA11BX3xTJ3AE4ghOgE7ggyaalvbskZCUWP633n253neUC31USm6/h/GdeJKWkDXG5AFQ84jiuGKLT+aDNJiKEEPbwqRQG17o2oUR4itdYw/ftGtggZIgV1LOGGMEJwGY83sX9UEXxqoLeYNwImT51+DCXHwiXZKlnOJlrLW+DVkjFIxCaw3XQet2UqGfXDTzQeswCNN2EsD6tR+demDP2p7RhfzLW+PuOzc/5PRxOXt0QzUAAAAASUVORK5CYII=">\
+                                  <span class="tooltiptext">{{html langTranslator("sa_sdk_lower")}}</span>\
+                                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADJSURBVHgBdZDRDYIwEIZbEFKDTRiBEVzBSfDRmBRxA11BX3xTJ3AE4ghOgE7ggyaalvbskZCUWP633n253neUC31USm6/h/GdeJKWkDXG5AFQ84jiuGKLT+aDNJiKEEPbwqRQG17o2oUR4itdYw/ftGtggZIgV1LOGGMEJwGY83sX9UEXxqoLeYNwImT51+DCXHwiXZKlnOJlrLW+DVkjFIxCaw3XQet2UqGfXDTzQeswCNN2EsD6tR+demDP2p7RhfzLW+PuOzc/5PRxOXt0QzUAAAAASUVORK5CYII=">\
                                   </span>\
                                 </div>\
                               {{/if}}\
@@ -641,35 +652,35 @@ var SearchListViewTemplate = /** @class */ (function () {
                               <div class="appearences-count count">\
                                 <span class="tooltip-appearnces">\
                                   <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADqSURBVHgBTU/BTcNAEJzxnRDiAyVQAukASuALj+APPG0qcFIB+BVFPI4IIp4pAVMBLbgE54eSnIc9FKPs47Q7M7czS+xrFt4uPV0l6ALgGYFG0uI+v31NfJael8VH5ZiteukrajPaSqOdiUBWiUsazsLyzhkQxStgd24fxmljVKwB3zr231H9debJMaTpXrSCuJawdnSfCbO+tr7yKdMWeDyiezLr+iG/mSSreVi2hC97oHRQYRnZnGDTCujsgBb/pc5Rp8f46WxoOMDz8F6SWWHZ8jSbXUiRhquJgzK7CYnib584tRjPA/cLSnRp8KbGJuoAAAAASUVORK5CYII=">\
-                                <span class="tooltip_text">Appearances</span>\
-                                </span>\
+                                  <span class="tooltip_text sdk-i18n-lang"  sdk-i18n-key="sa_sdk_appearances">{{html langTranslator("sa_sdk_appearances")}}</span>\
+                                  </span>\
                                 <span class="count">${data.feedback?.appearances}</span>\
                               </div>\
                               <div class="appearences-count count">\
                               <span class="tooltip-appearnces-clicks">\
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAOCAYAAAD0f5bSAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEMSURBVHgBnZK/bcJQEMbvniFJmRGSDZINnA2SEijgioConA1iNkgqlKS4IASUwAaMABPgEWgBoeMOyQiZh0F8hU86v9/9+d5DyOivM/gUkRgR4/dqqQUeuWzCgI3go0U4IedLNqmUQI4cXKFC3s/f/74gwEQAwsMdcyHbLUCZ7yLIXIvsDHLmllW0mIXS3dKYGoQGrEWei4isVUaWrNfKmDeyU4+/DdAqbwq8wgVydap8iMBMZx8aqLnpWcg+DSrXtMv4APSPxvykIdnfU4MqcQoy872XwrtIz3SOFv7hntla1V1bG1hNmkRJm/mhgLeR3VdRli9el9rcDQMMIn2JoZa3rol1uIHVFxEttjVMjEnBcNKUAAAAAElFTkSuQmCC">\
-                                <span class="tooltip_text">Clicks</span>\
-                              </span>\
+                                <span class="tooltip_text sdk-i18n-lang" sdk-i18n-key="sa_sdk_clicks">{{html langTranslator("sa_sdk_clicks")}}</span>\
+                                </span>\
                               <span class="count">${data.feedback?.clicks}</span>\
                               </div>\
                               {{if !data.addedResult || data.addedResult == false}}\
-                                <div class="appearences-count customize-chips bg-data record-status-pinned" style="display : {{if data.config.pinIndex >= 0}}block{{else}}none{{/if}}">\
-                                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAD7SURBVHgBhZB/asJQDMeTZy0dW0eP0N1Aj9ATjJ1A9p8MVnYEvcFgMPxTT6A38Aj2BnqEgojSviYm/oAnvmLg8SD5fpNPgtASyQ8nDdGqrqrsMHnaXPMG2iORl3bDcBkN9+lDAxG8I2IBzGPXFPjEcc4DBhpR3WS7/7CIvy2oCYb7DF1eF4fsWfz8VfVM0JlfEMsTUvmLpXScaZKJPjvGvKlYGqWmK2LBkuX7ku+ji/KS1yMEM9DLRFFUNixTicfbv2DqXZotL3SK8lpre8AArvjGcGVVdsVDY+aee5yv5Ig/lF1SheCB4t05VBznzVp/X+3O8JrTyltoiSM5w31qLIEkiwAAAABJRU5ErkJggg==">\
-                                  <span class="count">PINNED</span>\
-                                </div>\
-                                <div class="appearences-count customize-chips bg-data record-status-hidden" style="display : {{if data.config.visible == false}}block{{else}}none{{/if}}">\
-                                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEgSURBVHgB3VLRTcNADLUv4VREI90IYQPYACagnaDwh1ALHaGZAFQkxF9H6AjABGSEbEBQQaDcnc25JSgqCPWvVS1Z8vme37MtA6zbcDnR7tsjiNQJMnTCM12AMGfm3Noq+7zfLZp49YtSqWtgerVVdTwbRyjunTsD4KdY66kZsoHNM5l776I6WBUfxkiTvpMdLXYQlmSiOJ6sSuCZHkKR+SEgooIhsA7o3yXJX3LlJ8BgyFM+F5ekJ3om57sYYwdB9YA5E8D7nZ6DWucfqdatHgMNiX0GHh5VHE0jpQ6xZi5vsJRYFJg4BUSD33fAAEUgLQN5ObtV3WYNLrcYunkJN7AvB9O+tCPJv413RnWnolqL/WnSbh0nA3cq3hSA7bMvciOL7FwWG34AAAAASUVORK5CYII=">\
-                                  <span class="count">HIDDEN</span>\
-                                </div>\
-                                <div class="appearences-count customize-chips bg-data record-status-boosted {{if data.config.boost > 1}}display-block{{/if}}">\
-                                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADCSURBVHgBfY/BCcJAEEVnNiKKrGgHKSElmA7swBxFJEkHYgfRg3jTTtKCHSQdKIIoMTtjNhgI65o5fh5//gMwbhxyJNfl3MyFAW0YKAaBJxnywgp+oeBdFD6VygegxIRrSIYqGyyfbpONVoVXZdcGxnbT6zjM2wUaFj0nrR7Hglh5Nkjf49C/1DOYZmCz1l/MHC3WgU6Rxfm+x22ntYPCZ6Tgp9lmPYnZlZHKGrjTWsOKKUWCnSAop/+sbwnmeoYCBR8N24MPhSbzYAAAAABJRU5ErkJggg==">\
-                                  <span class="count boosted">${data.config.boost}X BOOSTED</span>\
-                                </div>\
-                                <div class="appearences-count customize-chips bg-data record-status-lowered {{if data.config.boost < 1}}display-block{{/if}}">\
-                                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADJSURBVHgBdZDRDYIwEIZbEFKDTRiBEVzBSfDRmBRxA11BX3xTJ3AE4ghOgE7ggyaalvbskZCUWP633n253neUC31USm6/h/GdeJKWkDXG5AFQ84jiuGKLT+aDNJiKEEPbwqRQG17o2oUR4itdYw/ftGtggZIgV1LOGGMEJwGY83sX9UEXxqoLeYNwImT51+DCXHwiXZKlnOJlrLW+DVkjFIxCaw3XQet2UqGfXDTzQeswCNN2EsD6tR+demDP2p7RhfzLW+PuOzc/5PRxOXt0QzUAAAAASUVORK5CYII=">\
-                                  <span class="count lowered">${data.config.boost}X LOWERED</span>\
-                                </div>\
-                              {{/if}}\
+                              <div class="appearences-count customize-chips bg-data record-status-pinned" style="display : {{if data.config.pinIndex >= 0}}block{{else}}none{{/if}}">\
+                              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAD7SURBVHgBhZB/asJQDMeTZy0dW0eP0N1Aj9ATjJ1A9p8MVnYEvcFgMPxTT6A38Aj2BnqEgojSviYm/oAnvmLg8SD5fpNPgtASyQ8nDdGqrqrsMHnaXPMG2iORl3bDcBkN9+lDAxG8I2IBzGPXFPjEcc4DBhpR3WS7/7CIvy2oCYb7DF1eF4fsWfz8VfVM0JlfEMsTUvmLpXScaZKJPjvGvKlYGqWmK2LBkuX7ku+ji/KS1yMEM9DLRFFUNixTicfbv2DqXZotL3SK8lpre8AArvjGcGVVdsVDY+aee5yv5Ig/lF1SheCB4t05VBznzVp/X+3O8JrTyltoiSM5w31qLIEkiwAAAABJRU5ErkJggg==">\
+                              <span class="count sdk-i18n-lang" sdk-i18n-key="sa_sdk_pinned_caps">{{html langTranslator("sa_sdk_pinned_caps")}}</span>\
+                            </div>\
+                            <div class="appearences-count customize-chips bg-data record-status-hidden" style="display : {{if data.config.visible == false}}block{{else}}none{{/if}}">\
+                              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEgSURBVHgB3VLRTcNADLUv4VREI90IYQPYACagnaDwh1ALHaGZAFQkxF9H6AjABGSEbEBQQaDcnc25JSgqCPWvVS1Z8vme37MtA6zbcDnR7tsjiNQJMnTCM12AMGfm3Noq+7zfLZp49YtSqWtgerVVdTwbRyjunTsD4KdY66kZsoHNM5l776I6WBUfxkiTvpMdLXYQlmSiOJ6sSuCZHkKR+SEgooIhsA7o3yXJX3LlJ8BgyFM+F5ekJ3om57sYYwdB9YA5E8D7nZ6DWucfqdatHgMNiX0GHh5VHE0jpQ6xZi5vsJRYFJg4BUSD33fAAEUgLQN5ObtV3WYNLrcYunkJN7AvB9O+tCPJv413RnWnolqL/WnSbh0nA3cq3hSA7bMvciOL7FwWG34AAAAASUVORK5CYII=">\
+                              <span class=" count sdk-i18n-lang"  sdk-i18n-key="sa_sdk_hidden_caps" >{{html langTranslator("sa_sdk_hidden_caps")}}</span>\
+                            </div>\
+                            <div class="appearences-count customize-chips bg-data record-status-boosted {{if data.config.boost > 1}}display-block{{/if}}">\
+                              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADCSURBVHgBfY/BCcJAEEVnNiKKrGgHKSElmA7swBxFJEkHYgfRg3jTTtKCHSQdKIIoMTtjNhgI65o5fh5//gMwbhxyJNfl3MyFAW0YKAaBJxnywgp+oeBdFD6VygegxIRrSIYqGyyfbpONVoVXZdcGxnbT6zjM2wUaFj0nrR7Hglh5Nkjf49C/1DOYZmCz1l/MHC3WgU6Rxfm+x22ntYPCZ6Tgp9lmPYnZlZHKGrjTWsOKKUWCnSAop/+sbwnmeoYCBR8N24MPhSbzYAAAAABJRU5ErkJggg==">\
+                              <span class="count boosted">${data.config.boost}X <span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_boosted_caps">{{html langTranslator("sa_sdk_boosted_caps")}}</span></span>\
+                            </div>\
+                            <div class="appearences-count customize-chips bg-data record-status-lowered {{if data.config.boost < 1}}display-block{{/if}}">\
+                              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADJSURBVHgBdZDRDYIwEIZbEFKDTRiBEVzBSfDRmBRxA11BX3xTJ3AE4ghOgE7ggyaalvbskZCUWP633n253neUC31USm6/h/GdeJKWkDXG5AFQ84jiuGKLT+aDNJiKEEPbwqRQG17o2oUR4itdYw/ftGtggZIgV1LOGGMEJwGY83sX9UEXxqoLeYNwImT51+DCXHwiXZKlnOJlrLW+DVkjFIxCaw3XQet2UqGfXDTzQeswCNN2EsD6tR+demDP2p7RhfzLW+PuOzc/5PRxOXt0QzUAAAAASUVORK5CYII=">\
+                              <span class="count lowered">${data.config.boost}X <span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_lowered_caps">{{html langTranslator("sa_sdk_lowered_caps")}}</span></span>\
+                            </div>\
+                             {{/if}}\
                               {{if data.addedResult && data.addedResult == true}}\
                                 <div class="appearences-count bg-data">\
                                   <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAD5SURBVHgBhZAxTgMxEEX/rBeJcnuE2NwgdAhSTBR6lBOsuAl03AI4QaCjIlOt6JIbkCMkXaSs15mJtJKjeBVL1kie9+3nIfQsZi52cAsPP/4TWXXnWV9gCxQElA5ufsdcng3kcE9algHhNQ65FPzAk4oQ3lq001rmP9flYJMhe78qb74p9u0CChcKj2uR5T3zkOBmChYBWB+URGRNoE86ePvnHO3AYNMw2LQa+NsL3RSrjPjxRZuVTeZSb7NXDa7l9yP56RbNl+nYJxvkQ2vG8FGgczV30wPCDMnpRXCAn5q7jVP1tITqJGGwjvHfaqp3EhjxZJFs9Kw9ezRmCkd+ZkUAAAAASUVORK5CYII=">\
@@ -680,16 +691,16 @@ var SearchListViewTemplate = /** @class */ (function () {
                                 </div>\
                               {{/if}}\
                               {{if data.sys_content_type === "faq"}}\
-                                <div class="tag-ref">FAQ Response</div>\
+                              <div class="tag-ref sdk-i18n-lang" sdk-i18n-key="sa_sdk_faq_response">{{html langTranslator("sa_sdk_faq_response")}}</div>\
                               {{/if}}\
                               {{if data.sys_content_type === "web"}}\
-                                <div class="tag-ref">WEB Response</div>\
+                              <div class="tag-ref sdk-i18n-lang" sdk-i18n-key="sa_sdk_web_response">{{html langTranslator("sa_sdk_web_response")}}</div>\
                               {{/if}}\
                               {{if data.sys_content_type === "file"}}\
-                                <div class="tag-ref">FILE Response</div>\
+                              <div class="tag-ref sdk-i18n-lang" sdk-i18n-key="sa_sdk_file_response">{{html langTranslator("sa_sdk_file_response")}}</div>\
                               {{/if}}\
                               {{if data.sys_content_type === "data"}}\
-                                <div class="tag-ref">DATA Response</div>\
+                              <div class="tag-ref sdk-i18n-lang" sdk-i18n-key="sa_sdk_data_response">{{html langTranslator("sa_sdk_data_response")}}</div>\
                               {{/if}}\
                           </div>\
                         </div>\
@@ -713,10 +724,8 @@ var SearchListViewTemplate = /** @class */ (function () {
                 </li>\
               {{/each}}\
               <div class="show-more-list {{if doc_count==0 || doc_count<6 || isLiveSearch || isSearch}}display-none{{/if}}" groupName="${groupName}" templateName="${templateName}" pageNumber="${pageNumber}" fieldName="${fieldName}">\
-              <div class="searchassist-show-more-button">Show more\
-              <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDEwIDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNS4zNjQzNyA1LjE0OTQ5QzUuMTc0OTcgNS4zMzgzNyA0Ljg3NDgxIDUuMzQ5NDggNC42NzIzOSA1LjE4MjgyTDQuNjM1NjMgNS4xNDk0OUwwLjE1MDkyNyAwLjg3NzI2NUMtMC4wNTAzMDkxIDAuNjc2NTc5IC0wLjA1MDMwOTEgMC4zNTEyMDIgMC4xNTA5MjcgMC4xNTA1MTVDMC4zNDAzMjYgLTAuMDM4MzY2NCAwLjY0MDQ4IC0wLjA0OTQ3NzMgMC44NDI5MDkgMC4xMTcxODNMMC44Nzk2NjggMC4xNTA1MTVMNSA0LjA1OTI4TDkuMTIwMzMgMC4xNTA1MTVDOS4zMDk3MyAtMC4wMzgzNjY0IDkuNjA5ODggLTAuMDQ5NDc3MyA5LjgxMjMxIDAuMTE3MTgzTDkuODQ5MDcgMC4xNTA1MTVDMTAuMDM4NSAwLjMzOTM5NyAxMC4wNDk2IDAuNjM4NzMxIDkuODgyNSAwLjg0MDYwN0w5Ljg0OTA3IDAuODc3MjY1TDUuMzY0MzcgNS4xNDk0OVoiIGZpbGw9IiM1RjYzNjgiLz4KPC9zdmc+Cg==">\
+              <div class="searchassist-show-more-button"><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_show_more">{{html langTranslator("sa_sdk_show_more")}}</span> <img src="{{if devMode}}assets/web-kore-sdk/demo/{{/if}}images/show_more.png" height="6" width="10" /></div>\
               </div>\
-            </div>\
             </ul>\
           {{/if}}\
       </div>\
@@ -762,7 +771,7 @@ var SearchListViewTemplate = /** @class */ (function () {
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ /* webpack/runtime/getFullHash */
 /******/ !function() {
-/******/ 	__webpack_require__.h = function() { return "88b6ddaa715f2e7bf169"; }
+/******/ 	__webpack_require__.h = function() { return "ce9cd4f8c78a8d2474d0"; }
 /******/ }();
 /******/ 
 /******/ }
