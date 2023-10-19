@@ -550,7 +550,8 @@ class SearchListViewTemplate {
      </div>\
         {{/if}}\
     </div>\
-{{/if}}\    {{if isDemoTemplate == "bankingTemplate"}}\
+{{/if}}\
+{{{if isDemoTemplate == "bankingTemplate"}}\
     <div class="banking-demo-list">\
               <div class="banking-list-template">\
                 <div class="title-heading-banking {{if data.subtitle}}display-block{{else}}display-none{{/if}}">${data.subtitle}</div>\
