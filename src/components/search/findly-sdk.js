@@ -21722,17 +21722,12 @@ FindlySDK.prototype.getMergedData = function (settingData, responseData, searchT
             item.label2 = obj[mapping.label2];
           }
           if(obj[mapping.rating]){
-<<<<<<< Updated upstream
             item.price = obj[mapping.rating];
           }
           if(obj[mapping.rateField]){
             item.rating = obj[mapping.rating];
           }
           
-=======
-            item.rating = obj[mapping.rating];
-          }
->>>>>>> Stashed changes
           if(obj[mapping.strikedOffRate]){
             item.strike_off = obj[mapping.strikedOffRate];
           }
