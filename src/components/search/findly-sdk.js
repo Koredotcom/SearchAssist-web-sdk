@@ -2229,7 +2229,7 @@ FindlySDK.prototype.getSearchTemplate = function (type) {
                     <span id="${recent}" action-type="textTask" class="pointer recentText">${recent}</span>\
                   </div>-->\
                   <div class="recentSearch tile_with_header">\
-                    <span id="${recent}" action-type="textTask" class="pointer recentText"><img class="RecentIcon-bottomUp" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTMiIGhlaWdodD0iMTMiIHZpZXdCb3g9IjAgMCAxMyAxMyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYuNSAwQzIuOTE0MDYgMCAwIDIuOTE0MDYgMCA2LjVDMCAxMC4wODU5IDIuOTE0MDYgMTMgNi41IDEzQzEwLjA4NTkgMTMgMTMgMTAuMDg1OSAxMyA2LjVDMTMgNi4yMjM4NiAxMi43NzYxIDYgMTIuNSA2QzEyLjIyMzkgNiAxMiA2LjIyMzg2IDEyIDYuNUMxMiA5LjU0Mjk3IDkuNTQyOTcgMTIgNi41IDEyQzMuNDU3MDMgMTIgMSA5LjU0Mjk3IDEgNi41QzEgMy40NTcwMyAzLjQ1NzAzIDEgNi41IDFDOC4xNDA2MiAxIDkuNTk3NjYgMS43MjI2NiAxMC42MDU1IDIuODU5MzhMOS45NzY5OCAzLjQ4Nzg3QzkuNzg3OTkgMy42NzY4NiA5LjkyMTg0IDQgMTAuMTg5MSA0SDEyLjdDMTIuODY1NyA0IDEzIDMuODY1NjkgMTMgMy43VjEuMTg5MTFDMTMgMC45MjE4MzcgMTIuNjc2OSAwLjc4Nzk4NyAxMi40ODc5IDAuOTc2OTc2TDExLjMxMjUgMi4xNTIzNEMxMC4xMjExIDAuODM1OTM4IDguNDEwMTYgMCA2LjUgMFpNNi41IDJDNi4yMjM4NiAyIDYgMi4yMjM4NiA2IDIuNVY2SDQuNUM0LjIyMzg2IDYgNCA2LjIyMzg2IDQgNi41QzQgNi43NzYxNCA0LjIyMzg2IDcgNC41IDdINi43MjcyN0M2Ljg3NzkgNyA3IDYuODc3OSA3IDYuNzI3MjdWMi41QzcgMi4yMjM4NiA2Ljc3NjE0IDIgNi41IDJaIiBmaWxsPSIjMjAyMTI0Ii8+Cjwvc3ZnPgo=" alt="Recent search Icon">\${recent}</span>\
+                    <span id="${recent}" action-type="textTask" class="pointer recentText text-truncate text-truncate" title="${recent}"><img class="RecentIcon-bottomUp" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTMiIGhlaWdodD0iMTMiIHZpZXdCb3g9IjAgMCAxMyAxMyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYuNSAwQzIuOTE0MDYgMCAwIDIuOTE0MDYgMCA2LjVDMCAxMC4wODU5IDIuOTE0MDYgMTMgNi41IDEzQzEwLjA4NTkgMTMgMTMgMTAuMDg1OSAxMyA2LjVDMTMgNi4yMjM4NiAxMi43NzYxIDYgMTIuNSA2QzEyLjIyMzkgNiAxMiA2LjIyMzg2IDEyIDYuNUMxMiA5LjU0Mjk3IDkuNTQyOTcgMTIgNi41IDEyQzMuNDU3MDMgMTIgMSA5LjU0Mjk3IDEgNi41QzEgMy40NTcwMyAzLjQ1NzAzIDEgNi41IDFDOC4xNDA2MiAxIDkuNTk3NjYgMS43MjI2NiAxMC42MDU1IDIuODU5MzhMOS45NzY5OCAzLjQ4Nzg3QzkuNzg3OTkgMy42NzY4NiA5LjkyMTg0IDQgMTAuMTg5MSA0SDEyLjdDMTIuODY1NyA0IDEzIDMuODY1NjkgMTMgMy43VjEuMTg5MTFDMTMgMC45MjE4MzcgMTIuNjc2OSAwLjc4Nzk4NyAxMi40ODc5IDAuOTc2OTc2TDExLjMxMjUgMi4xNTIzNEMxMC4xMjExIDAuODM1OTM4IDguNDEwMTYgMCA2LjUgMFpNNi41IDJDNi4yMjM4NiAyIDYgMi4yMjM4NiA2IDIuNVY2SDQuNUM0LjIyMzg2IDYgNCA2LjIyMzg2IDQgNi41QzQgNi43NzYxNCA0LjIyMzg2IDcgNC41IDdINi43MjcyN0M2Ljg3NzkgNyA3IDYuODc3OSA3IDYuNzI3MjdWMi41QzcgMi4yMjM4NiA2Ljc3NjE0IDIgNi41IDJaIiBmaWxsPSIjMjAyMTI0Ii8+Cjwvc3ZnPgo=" alt="Recent search Icon">\${recent}</span>\
                     <span id="${recent}" class="recent-search-delete">\
                       <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxMCAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTUuNzA3MDMgNS4wMDAwN0w5Ljg1MzU1IDAuODUzNTM4QzEwLjA0ODggMC42NTgyNzUgMTAuMDQ4OCAwLjM0MTY5MyA5Ljg1MzU1IDAuMTQ2NDMxQzkuNjU4MjkgLTAuMDQ4ODMxIDkuMzQxNzEgLTAuMDQ4ODMwNyA5LjE0NjQ1IDAuMTQ2NDMxTDQuOTk5OTEgNC4yOTI5OEwwLjg1MzU1NSAwLjE0Njc5OEMwLjY1ODI4OCAtMC4wNDg0NTk3IDAuMzQxNzA2IC0wLjA0ODQ1MzMgMC4xNDY0NDggMC4xNDY4MTNDLTAuMDQ4ODEwNCAwLjM0MjA3OSAtMC4wNDg4MDQgMC42NTg2NjEgMC4xNDY0NjIgMC44NTM5Mkw0LjI5MjggNS4wMDAwOUwwLjE0NjQ0NyA5LjE0NjQ1Qy0wLjA0ODgxNTcgOS4zNDE3MSAtMC4wNDg4MTU1IDkuNjU4MjkgMC4xNDY0NDcgOS44NTM1NUMwLjM0MTcwOSAxMC4wNDg4IDAuNjU4MjkyIDEwLjA0ODggMC44NTM1NTMgOS44NTM1NUw0Ljk5OTkyIDUuNzA3MThMOS4xNDY0NiA5Ljg1MzU1QzkuMzQxNzMgMTAuMDQ4OCA5LjY1ODMxIDEwLjA0ODggOS44NTM1NyA5Ljg1MzU0QzEwLjA0ODggOS42NTgyNyAxMC4wNDg4IDkuMzQxNjkgOS44NTM1NSA5LjE0NjQzTDUuNzA3MDMgNS4wMDAwN1oiIGZpbGw9IiMyMDIxMjQiLz4KPC9zdmc+Cg==" alt="close-icon"/>\
                     </span>\
@@ -21727,10 +21727,12 @@ FindlySDK.prototype.getMergedData = function (settingData, responseData, searchT
           if(obj[mapping.rateField]){
             item.rating = obj[mapping.rating];
           }
-          
           if(obj[mapping.strikedOffRate]){
             item.strike_off = obj[mapping.strikedOffRate];
           }
+          if (obj[mapping.description1]) {
+            item.description1 = obj[mapping.description1];
+          }      
           if (obj[mapping.chips]) {
             item.chips = obj[mapping.chips];
           }
