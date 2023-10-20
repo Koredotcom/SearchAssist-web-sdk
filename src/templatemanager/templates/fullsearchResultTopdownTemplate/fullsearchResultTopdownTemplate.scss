@@ -299,7 +299,6 @@
                 font-size: 14px;
                 line-height: 17px;
                 margin-bottom: 17px;
-                text-transform: capitalize;
             }
             .kr-sg-checkbox{
                 margin-bottom: 10px;
@@ -493,11 +492,7 @@
                     z-index: 1;
                     padding: 3px 5px;
                     cursor: pointer;
-                    img{
-                        width: 13px;
-                        height: 13px;
-                    }
-              }
+                }
             }
         }
         .conversation-container{
@@ -680,9 +675,6 @@
                             background: var(--sdk-white-bg);
                             box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
                             border-radius: 50%;
-                            img{
-                                content: url('/src/components/search/images/carrot-icon.svg');
-                            }
                         }
                         .all-product-details {
                             .filters-added-data{
@@ -913,9 +905,9 @@
             border: 1px solid var(--sdk-border-mischka-color);
             box-sizing: border-box;
             border-radius: 8px;
-            margin-top: -5px;
+            margin-top: 8px;
             height: auto;
-            padding: 10px 10px;
+            padding: 14px 12px;
             display: inline-flex;
             align-items: center;
             .greeting-img {
@@ -1668,9 +1660,6 @@ $color_1: #9AA0A6;
             background: var(--sdk-white-bg);
             box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
             border-radius: 50%;
-            img{
-                content: url('/src/components/search/images/carrot-icon.svg');
-            }
         }
         .feedback-template-positions {
             background: #F3F8FF;

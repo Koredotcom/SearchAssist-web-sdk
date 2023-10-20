@@ -1,5 +1,5 @@
 {
-  "name": "search-assist-web-sdk",
+  "name": "kore-web-sdk",
   "version": "1.0.0",
   "description": "Kore.ai offers Bots SDKs as a set of platform-specific client libraries that provide a quick and convenient way to integrate Kore.ai Bots chat capability into custom applications",
   "scripts": {
@@ -24,7 +24,7 @@
     "type": "git",
     "url": "git@github.com:Koredotcom/SearchAssist-web-sdk#1.0.0"
   },
-  "author": "Pavan Kumar Ichapurapu",
+  "author": "Pavan Ichapurapu",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Koredotcom/SearchAssist-web-sdk/issues"
@@ -44,6 +44,7 @@
     "jquery-ui": "^1.13.2",
     "jquery.tmpl": "0.0.2",
     "moment": "^2.29.4",
+    "pdfjs-dist": "^3.11.174",
     "perfect-scrollbar": "^1.5.2",
     "pubsub-js": "^1.9.4",
     "util": "^0.12.4"

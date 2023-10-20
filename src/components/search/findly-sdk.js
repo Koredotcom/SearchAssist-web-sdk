@@ -23,6 +23,7 @@ import koJsonObj from '../../libs/languageConversion/i18n/ko.json'
 import './css/lang.scss'
 // import "../../../node_modules/jquery-ui/dist/jquery-ui.min";
 import '../../../node_modules/jquery-ui/ui/widgets/draggable.js';
+import SearchPDFJSTemplate from "../../templatemanager/templates/searchPDFJSTemplate/searchPDFJSTemplate";
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 // import './findly-demo.scss'
@@ -329,8 +330,6 @@ FindlySDK.prototype.initVariables = function () {
   vars.isHostedSdk = false;
   vars.isSocketReInitialize = true;
   vars.locationObject = {};
-  vars.allMessageData = {};
-  vars.isBuilder = false;
   vars.botConfig = {};
   vars.isCustomDataInitialize = false;
   vars.userContextData = {};
@@ -1511,9 +1510,6 @@ FindlySDK.prototype.getSearchTemplate = function (type) {
               <div class="custom-header-container-right">\
                 <img class="custom-refresh-icon display-none" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABxSURBVHgBxZLBDYAgDEW/TsIobgabOIJxAnQC3ahWJbFok/YkL3kXKJ8GCjwENrNkuJXai14ETOzKdoYzO0KB4Ie0Dn4hoX6PJDcH+Eja4VgWoy+jviy+2vKGfGjzCzJgga/9s2bXNgLuMbVGOUOM8gGN7ylbkPg3iwAAAABJRU5ErkJggg==">\
                 <img class="custom-expand-icon display-none" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABVSURBVHgBvZLLDQAhCEQfHdHZ2vGWwm6MGiVq1IOTcOAzZPgIYLQQ5/t8DLy/KWNoqrFM0AmpzhUCA5KPWa9bqPzAXOoFeEkPHUnbQx+tdflwwuZrfGu+IKjlYgIIAAAAAElFTkSuQmCC">\
-                <div class="bottom-up-debug debug-results"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDQiIGhlaWdodD0iNDQiIHZpZXdCb3g9IjAgMCA0NCA0NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiByeD0iMTQiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjQuNjIyMSAxOC44OTZDMjQuNTU0OCAxNy4zIDIzLjQyOCAxNiAyMiAxNkMyMC41NzIgMTYgMTkuNDQ1MiAxNy4zIDE5LjM3NzkgMTguODk1OUMxOC45NjI5IDE5LjI2OTQgMTguNjEzIDE5LjcyNDYgMTguMzQxIDIwLjIzNjlDMTguMzExOCAyMC4yMjg4IDE4LjI4MTYgMjAuMjIzMyAxOC4yNTA1IDIwLjIyMDVMMTguMjAzNiAyMC4yMTg0TDE3LjMwMDMgMjAuMjE4MUwxNi45NjM1IDE5LjYzMzJDMTYuODIxMiAxOS4zODYyIDE2LjUwNTYgMTkuMzAxMyAxNi4yNTg2IDE5LjQ0MzZDMTYuMDI2MSAxOS41Nzc1IDE1LjkzNzIgMTkuODY0OSAxNi4wNDYyIDIwLjEwNDJMMTYuMDY5IDIwLjE0ODRMMTYuNTU0OCAyMC45OTIxQzE2LjYzODYgMjEuMTM3NSAxNi43ODcyIDIxLjIzMjIgMTYuOTUyMiAyMS4yNDgyTDE3LjAwMjEgMjEuMjUwNkgxNy45MjhDMTcuNzcxIDIxLjc4MDMgMTcuNjg3MyAyMi4zNDU1IDE3LjY4NzMgMjIuOTI2N0MxNy42ODczIDIzLjc3MzggMTcuODY0MSAyNC41NzUyIDE4LjE3NzggMjUuMjgwM0gxNy4wMDIxTDE2Ljk1MjIgMjUuMjgyN0MxNi43ODcyIDI1LjI5ODcgMTYuNjM4NiAyNS4zOTM0IDE2LjU1NDggMjUuNTM4OUwxNi4wNjkgMjYuMzgyNUwxNi4wNDYyIDI2LjQyNjhDMTUuOTM3MiAyNi42NjYxIDE2LjAyNjEgMjYuOTUzNSAxNi4yNTg2IDI3LjA4NzRDMTYuNTA1NiAyNy4yMjk2IDE2LjgyMTIgMjcuMTQ0NyAxNi45NjM1IDI2Ljg5NzdMMTcuMzAwMyAyNi4zMTI4TDE4LjIwMzYgMjYuMzEyNkwxOC4yNTA1IDI2LjMxMDVDMTguNDA2NCAyNi4yOTY0IDE4LjU0MjMgMjYuMjEzIDE4LjYyNzIgMjYuMDkxNEMxOS40MTM1IDI3LjI1MiAyMC42MjU2IDI4IDIyIDI4QzIzLjM3NDQgMjggMjQuNTg2NSAyNy4yNTE5IDI1LjM3MjkgMjYuMDkxM0MyNS40NTc3IDI2LjIxMyAyNS41OTM2IDI2LjI5NjQgMjUuNzQ5NSAyNi4zMTA1TDI1Ljc5NjUgMjYuMzEyNkwyNi42OTk3IDI2LjMxMjhMMjcuMDM2NiAyNi44OTc3QzI3LjE3ODkgMjcuMTQ0NyAyNy40OTQ0IDI3LjIyOTYgMjcuNzQxNSAyNy4wODc0QzI3Ljk3MzkgMjYuOTUzNSAyOC4wNjI4IDI2LjY2NjEgMjcuOTUzOSAyNi40MjY4TDI3LjkzMTEgMjYuMzgyNUwyNy40NDUyIDI1LjUzODlDMjcuMzYxNSAyNS4zOTM0IDI3LjIxMjkgMjUuMjk4NyAyNy4wNDc5IDI1LjI4MjdMMjYuOTk4IDI1LjI4MDNIMjUuODIyMkMyNi4xMzU5IDI0LjU3NTIgMjYuMzEyNyAyMy43NzM4IDI2LjMxMjcgMjIuOTI2N0MyNi4zMTI3IDIyLjM0NTUgMjYuMjI5IDIxLjc4MDMgMjYuMDcyIDIxLjI1MDZIMjYuOTk4TDI3LjA0NzkgMjEuMjQ4MkMyNy4yMTI5IDIxLjIzMjIgMjcuMzYxNSAyMS4xMzc1IDI3LjQ0NTIgMjAuOTkyMUwyNy45MzExIDIwLjE0ODRMMjcuOTUzOSAyMC4xMDQyQzI4LjA2MjggMTkuODY0OSAyNy45NzM5IDE5LjU3NzUgMjcuNzQxNSAxOS40NDM2QzI3LjQ5NDQgMTkuMzAxMyAyNy4xNzg5IDE5LjM4NjIgMjcuMDM2NiAxOS42MzMyTDI2LjY5OTcgMjAuMjE4MUwyNS43OTY1IDIwLjIxODRMMjUuNzQ5NSAyMC4yMjA1QzI1LjcxODUgMjAuMjIzMyAyNS42ODgyIDIwLjIyODggMjUuNjU5IDIwLjIzNjlDMjUuMzg3MSAxOS43MjQ4IDI1LjAzNzIgMTkuMjY5NiAyNC42MjIxIDE4Ljg5NlpNMjMuNTQ1NiAxOC41NTc1QzIzLjM2OTggMTcuNjcwOCAyMi43Mjg1IDE3LjAzMjMgMjIgMTcuMDMyM0MyMS4yNzc4IDE3LjAzMjMgMjAuNjQxNCAxNy42NTk3IDIwLjQ1OTEgMTguNTM0NEwyMy41NDU2IDE4LjU1NzVaTTIwLjE4MzIgMTkuNTY0NUwyMy44NDkgMTkuNTkxOUwyMy44ODU0IDE5LjYyMjRDMjQuNzQ2OSAyMC4zNzAyIDI1LjI4MDQgMjEuNTg4OCAyNS4yODA0IDIyLjkyNjdDMjUuMjgwNCAyNS4xNzcyIDIzLjc4ODcgMjYuOTY3NyAyMiAyNi45Njc3QzIwLjIxMTMgMjYuOTY3NyAxOC43MTk2IDI1LjE3NzIgMTguNzE5NiAyMi45MjY3QzE4LjcxOTYgMjEuNTY5NSAxOS4yNjg3IDIwLjMzNTcgMjAuMTUwNiAxOS41OTE1TDIwLjE4MzIgMTkuNTY0NVoiIGZpbGw9IiMyMDIxMjQiLz4KPC9zdmc+Cg==">\
-                <span class="tooltip-debug">Debug</span>\
-                </div>\
                 <span class="refresh-sdk"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAExSURBVHgBpVPtVYNAEJyTK8ASLoH8xwrEDrADO0gJiR1oBSYVhA5CKhB/q48rwQIk6xxcgCToS8y+d49luZnZL4ALTQ0FjTHXQJDwc9xEpACq3Fr7dXj36gg8nkyhdEnwtJOhr4JXM45mXoAWps7X++DwBVsxwPcN1exBVozrFUliiPCoJcOZ7sBk38JY+3GHAXOE5LgnSdmvXLc1izywzkFwZwGV8ehf8l56YWpMtMY/zDex7vbmVJAxk9gd5/seqAxnmaTeKWoCa98LnGMKt+zZc5sB60/4SDw7+/25+A3bjNONuspbghqsMGvw1Qh/qusVJ7HcbWVvE8WSJHMXGpVjZTPipETeuCvzXdxnwF2XamFLtyzRnGu75mVLpU1bM1DvAMt72ksIw3We/DNdbD/vVnBY9mClrAAAAABJRU5ErkJggg==">\
                   <span class="tooltip-refresh">Refresh</span>\
                 </span>\
@@ -3126,7 +3122,7 @@ FindlySDK.prototype.prepAllSearchData = function (
     }
   }, 100);
 };
-FindlySDK.prototype.invokeSearch = function (showMoreData, fromBottomUP,searchQuery) {
+FindlySDK.prototype.invokeSearch = function (showMoreData, fromBottomUP) {
   if ($("body").hasClass("top-down")) {
     // $('#loaderDIV').show();
   }
@@ -3147,7 +3143,7 @@ FindlySDK.prototype.invokeSearch = function (showMoreData, fromBottomUP,searchQu
     currentDate.getSeconds();
 
   var payload = {
-    query: searchQuery?searchQuery:_self.vars.searchObject.searchText,
+    query: _self.vars.searchObject.searchText,
     // "maxNumOfResults": 9,
     maxNumOfResults: 5,
     userId: _self.API.uuid,
@@ -3210,7 +3206,7 @@ FindlySDK.prototype.invokeSearch = function (showMoreData, fromBottomUP,searchQu
   if (_self.vars.resultRankingActionPerformed == true) {
     _self.vars.resultRankingActionPerformed = false;
   }
-  payload["answerSearch"] = false;
+
   if (_self.vars.showingMatchedResults == true) {
     _self
       .getFrequentlySearched(url, "POST", JSON.stringify(payload))
@@ -5260,7 +5256,7 @@ FindlySDK.prototype.searchByFacetFilters = function (
     let filters = payload.filters;
   }
   // payload.isDev = _self.isDev;
-  payload["answerSearch"] = false;
+
   _self
     .getFrequentlySearched(url, "POST", JSON.stringify(payload))
     .then(function (res) {
@@ -5956,7 +5952,6 @@ FindlySDK.prototype.searchEventBinding = function (
           final_transcript = "";
           $(".recordingMicrophone").css("display", "none");
           $(".notRecordingMicrophone").css("display", "block");
-        
           if ($('body').hasClass('top-down')) {
             _self.vars.enteredQuery = $('.search-top-down').val();
           }
@@ -6065,13 +6060,7 @@ FindlySDK.prototype.searchEventBinding = function (
           } else {
             _self.bindLiveDataToChat();
           }
-          if($("body").hasClass("debug")){
-            var responseObject = {
-              type: "debugClick",
-              loading:true
-            };
-            _self.parentEvent(responseObject)
-          }
+
           // }
           if ($(".search-body:visible").length) {
             // if (!_self.vars.searchObject.recents.length || (_self.vars.searchObject.recents.length && _self.vars.searchObject.recents.indexOf(searchText.toLowerCase()) == -1)) {
@@ -6425,7 +6414,6 @@ FindlySDK.prototype.searchEventBinding = function (
                   )
                     ? $(".search-top-down").val()
                     : $(".bottom-up-search").val();
-                    payload["answerSearch"] = false;
                   _self
                     .getFrequentlySearched(url, "POST", JSON.stringify(payload))
                     .then(function (res) {
@@ -6511,7 +6499,6 @@ FindlySDK.prototype.searchEventBinding = function (
                                   payload: {
                                     infoText:'',
                                     template_type: "finalResultsTemplate",
-                                    query: _self.vars.searchObject.searchText,
                                     isDev: _self.isDev,
                                     devMode: devMode,
                                     viewType: viewType,
@@ -7154,7 +7141,7 @@ FindlySDK.prototype.bindLiveDataToChat = function (botAction) {
     payload.isBotAction = true;
   }
   payload.smallTalk = true;
-  payload["answerSearch"] = false;
+
   var url = _self.API.searchUrl; //'https://qa-bots.kore.ai/searchAssistant/liveSearch';
   var searchData;
   if (!botAction) {
@@ -7289,7 +7276,7 @@ FindlySDK.prototype.handleSearchRes = function (res) {
     $(".no-templates-defined-full-results-container").hide();
     if (
       ((res.results || {}).data || []).length || ((res.tasks|| []).length)||
-      (res.resultType == "grouped" && Object.keys(res.results).length) || (Object.keys(res.graph_answer).length)
+      (res.resultType == "grouped" && Object.keys(res.results).length)
     ) {
       var searchContainerName = $("body").hasClass("top-down")
         ? ".full-search-data-container"
@@ -7359,7 +7346,6 @@ FindlySDK.prototype.handleSearchRes = function (res) {
                     groupData: _self.vars.mergedData,
                     searchType: 'isSearch',
                     helpers: helpers,
-                    query: _self.vars.searchObject.searchText,
                     snippetData:snippetObj,
                     diaplayFeedback:_self.vars.feedBackExperience,
                     langTranslator:langTranslator
@@ -7475,11 +7461,6 @@ FindlySDK.prototype.handleSearchRes = function (res) {
           }
           var showAllHTML = _self.customTemplateObj.renderMessage(msgData);
           $("#top-down-full-results-container").empty().append(showAllHTML);
-          if(_self.isDev){
-            if($('body').hasClass('debug')){
-              $('.tsrb-right-filters').hide()
-            }
-          }
           $(".skelton-load-img").hide();
         });
       }
@@ -7524,7 +7505,7 @@ FindlySDK.prototype.handleSearchRes = function (res) {
               $('.feedback-template-positions.if-live-search-top-down.bottom-up-show-all').css('display', 'none');
             }
           }
-          if (!$('.search-data-container').last().children().length && !snippetObj?.template_type) {
+          if (!$('.search-data-container').last().children().length) {
             $('#searchChatContainer .messageBubble').last().remove();
             $('#searchChatContainer .finalResults').last().remove();
             _self.sendMessageToSearch('bot', '<span class="sdk-i18n-lang" sdk-i18n-key="sa-sdk-unable-to-find-results-at-this-moment">'+langTranslator("sa-sdk-unable-to-find-results-at-this-moment")+'</span>');
@@ -7830,9 +7811,6 @@ FindlySDK.prototype.handleSearchRes = function (res) {
           $(".skelton-load-img").hide();
           $(".empty-full-results-container").removeClass("hide");
           $(".no-templates-defined-full-results-container").hide();
-          if($('body').hasClass('debug')){
-            $('.tsrb-right-filters').hide()
-          }
         }
       } else {
         if ((res.tasks || []).length) {
@@ -7918,7 +7896,7 @@ FindlySDK.prototype.handleSearchRes = function (res) {
       }
       if (
         $(".search-container").hasClass("conversation") &&
-        !(res.tasks || []).length && !snippetObj?.template_type
+        !(res.tasks || []).length
       ) {
         $(".search-body").addClass("hide");
         $("#searchChatContainer").removeClass("bgfocus");
@@ -9145,8 +9123,6 @@ FindlySDK.prototype.initialize = function (findlyConfig, fromTopDown) {
   }
 
   window.koreWidgetSDKInstance = _self;
-  if($('body').find('#sa-sdk-loading')?.length)
-  $('body').find('#sa-sdk-loading').remove();
 };
 FindlySDK.prototype.initKorePicker = function (findlyConfig) {
   setTimeout(() => {
@@ -9764,14 +9740,8 @@ FindlySDK.prototype.addSearchText = function (config) {
         $("#live-search-result-box").hide();
         //$('#frequently-searched-box').show();
         $("#search").trigger("click");
-        // $("#closeDebugPreview").trigger("click");
-        $("body").removeClass('debug');
       }
     });
-    $(".debug-results").off("click").on("click", function (event) {
-      _self.debugClickEvents();
-    });
-
   _self.searchEventBinding(dataHTML, "search-container", {}, config);
 };
 var overrideDefaultPoisition = false;
@@ -10228,10 +10198,7 @@ FindlySDK.prototype.bindSocketEvents = function () {
     //     $('.kore-auth-popup .close-popup').trigger("click");
     // }
     var tempData = JSON.parse(message.data);
-    if(tempData && tempData.type === "bot_response"){
-      _self.vars.allMessageData = tempData?.message[0]?.component?.payload
-      _self.sendMessageToBuilder();
-    }
+
     if (tempData.from === "bot" && tempData.type === "bot_response") {
       if (
         (tempData || {}).message &&
@@ -16871,7 +16838,6 @@ FindlySDK.prototype.bindSearchContainerViewHadler = function () {
     $(".sdk-query-retry-icon")
       .off("click")
       .on("click", function (e) {
-      _self.closeDebug()
         let searchQuery = $(e.target)
           .closest(".sdk-query-retry-icon")
           .attr("searchQuery");
@@ -16896,7 +16862,6 @@ FindlySDK.prototype.bindSearchContainerViewHadler = function () {
   $(".refresh-sdk")
     .off("click")
     .on("click", function (e) {
-      _self.closeDebug();
       $("#show-all-results-container").hide();
       $(".search-container").removeClass("bottom-up-results-showing");
       websockeRrefreshed = true;
@@ -16915,7 +16880,6 @@ FindlySDK.prototype.bindSearchContainerViewHadler = function () {
   $(".kore-search-container-close-icon")
     .off("click")
     .on("click", function (e) {
-      _self.closeDebug();
       $("#show-all-results-container").hide();
       $(".search-container").removeClass("bottom-up-results-showing");
       websockeRrefreshed = true;
@@ -16931,12 +16895,6 @@ FindlySDK.prototype.bindSearchContainerViewHadler = function () {
         bottomUp: true,
       };
       _self.parentEvent(responseObject);
-    });
-    $(".debug-results").off("click").on("click", function (event) {
-      _self.debugClickEvents();
-    });
-    $(".debug-assistent").off("click").on("click", function (event) {
-      $('.show-all-results-outer-wrap').css('z-index','10000')
     });
   if (!$("body").hasClass("top-down")) {
     // if (searchConfigurationCopy.searchBarPlaceholderTextColor && searchConfigurationCopy.searchBarPlaceholderTextColor.length) {
@@ -16975,7 +16933,8 @@ FindlySDK.prototype.getSearchResultsConfig = function (url, type) {
   var _self = this;
   var bearer =
     "bearer " + this.bot?.options?.accessToken ||
-    this.API.jstBarrer ;
+    this.API.jstBarrer ||
+    "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.wrUCyDpNEwAaf4aU5Jf2-0ajbiwmTU3Yf7ST8yFJdqM";
   var headers = {};
 
   headers["Authorization"] = bearer;
@@ -17265,7 +17224,7 @@ FindlySDK.prototype.invokeSpecificSearch = function (selectedFacet) {
       // _self.vars.scrollPageNumber = 0;
     }
   }
-  payload["answerSearch"] = false;
+
   _self
     .getFrequentlySearched(url, "POST", JSON.stringify(payload))
     .then(function (res) {
@@ -18703,12 +18662,8 @@ FindlySDK.prototype.initializeTopSearchTemplate = function () {
       $(".top-down-suggestion").val("");
       $(".search-top-down").val("");
       $(".full-search-data-container").empty();
-      if(_self.vars.isDev){
-        $("body").removeClass('debug'); 
-      }
       $(".skelton-load-img").show();
       _self.destroy();
-      $('body').removeClass('answer-begug-data-sdk')
     });
 };
 FindlySDK.prototype.showSuggestionbox = function (suggestions) {
@@ -19398,7 +19353,6 @@ FindlySDK.prototype.getTopDownTemplate = function () {
                     <div id="conversation-box-container" class="conv"></div>\
                 </div>\
       <div class="topdown-search-main-container">
-      <div class="debug-results" ><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDQiIGhlaWdodD0iNDQiIHZpZXdCb3g9IjAgMCA0NCA0NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiByeD0iMTQiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjQuNjIyMSAxOC44OTZDMjQuNTU0OCAxNy4zIDIzLjQyOCAxNiAyMiAxNkMyMC41NzIgMTYgMTkuNDQ1MiAxNy4zIDE5LjM3NzkgMTguODk1OUMxOC45NjI5IDE5LjI2OTQgMTguNjEzIDE5LjcyNDYgMTguMzQxIDIwLjIzNjlDMTguMzExOCAyMC4yMjg4IDE4LjI4MTYgMjAuMjIzMyAxOC4yNTA1IDIwLjIyMDVMMTguMjAzNiAyMC4yMTg0TDE3LjMwMDMgMjAuMjE4MUwxNi45NjM1IDE5LjYzMzJDMTYuODIxMiAxOS4zODYyIDE2LjUwNTYgMTkuMzAxMyAxNi4yNTg2IDE5LjQ0MzZDMTYuMDI2MSAxOS41Nzc1IDE1LjkzNzIgMTkuODY0OSAxNi4wNDYyIDIwLjEwNDJMMTYuMDY5IDIwLjE0ODRMMTYuNTU0OCAyMC45OTIxQzE2LjYzODYgMjEuMTM3NSAxNi43ODcyIDIxLjIzMjIgMTYuOTUyMiAyMS4yNDgyTDE3LjAwMjEgMjEuMjUwNkgxNy45MjhDMTcuNzcxIDIxLjc4MDMgMTcuNjg3MyAyMi4zNDU1IDE3LjY4NzMgMjIuOTI2N0MxNy42ODczIDIzLjc3MzggMTcuODY0MSAyNC41NzUyIDE4LjE3NzggMjUuMjgwM0gxNy4wMDIxTDE2Ljk1MjIgMjUuMjgyN0MxNi43ODcyIDI1LjI5ODcgMTYuNjM4NiAyNS4zOTM0IDE2LjU1NDggMjUuNTM4OUwxNi4wNjkgMjYuMzgyNUwxNi4wNDYyIDI2LjQyNjhDMTUuOTM3MiAyNi42NjYxIDE2LjAyNjEgMjYuOTUzNSAxNi4yNTg2IDI3LjA4NzRDMTYuNTA1NiAyNy4yMjk2IDE2LjgyMTIgMjcuMTQ0NyAxNi45NjM1IDI2Ljg5NzdMMTcuMzAwMyAyNi4zMTI4TDE4LjIwMzYgMjYuMzEyNkwxOC4yNTA1IDI2LjMxMDVDMTguNDA2NCAyNi4yOTY0IDE4LjU0MjMgMjYuMjEzIDE4LjYyNzIgMjYuMDkxNEMxOS40MTM1IDI3LjI1MiAyMC42MjU2IDI4IDIyIDI4QzIzLjM3NDQgMjggMjQuNTg2NSAyNy4yNTE5IDI1LjM3MjkgMjYuMDkxM0MyNS40NTc3IDI2LjIxMyAyNS41OTM2IDI2LjI5NjQgMjUuNzQ5NSAyNi4zMTA1TDI1Ljc5NjUgMjYuMzEyNkwyNi42OTk3IDI2LjMxMjhMMjcuMDM2NiAyNi44OTc3QzI3LjE3ODkgMjcuMTQ0NyAyNy40OTQ0IDI3LjIyOTYgMjcuNzQxNSAyNy4wODc0QzI3Ljk3MzkgMjYuOTUzNSAyOC4wNjI4IDI2LjY2NjEgMjcuOTUzOSAyNi40MjY4TDI3LjkzMTEgMjYuMzgyNUwyNy40NDUyIDI1LjUzODlDMjcuMzYxNSAyNS4zOTM0IDI3LjIxMjkgMjUuMjk4NyAyNy4wNDc5IDI1LjI4MjdMMjYuOTk4IDI1LjI4MDNIMjUuODIyMkMyNi4xMzU5IDI0LjU3NTIgMjYuMzEyNyAyMy43NzM4IDI2LjMxMjcgMjIuOTI2N0MyNi4zMTI3IDIyLjM0NTUgMjYuMjI5IDIxLjc4MDMgMjYuMDcyIDIxLjI1MDZIMjYuOTk4TDI3LjA0NzkgMjEuMjQ4MkMyNy4yMTI5IDIxLjIzMjIgMjcuMzYxNSAyMS4xMzc1IDI3LjQ0NTIgMjAuOTkyMUwyNy45MzExIDIwLjE0ODRMMjcuOTUzOSAyMC4xMDQyQzI4LjA2MjggMTkuODY0OSAyNy45NzM5IDE5LjU3NzUgMjcuNzQxNSAxOS40NDM2QzI3LjQ5NDQgMTkuMzAxMyAyNy4xNzg5IDE5LjM4NjIgMjcuMDM2NiAxOS42MzMyTDI2LjY5OTcgMjAuMjE4MUwyNS43OTY1IDIwLjIxODRMMjUuNzQ5NSAyMC4yMjA1QzI1LjcxODUgMjAuMjIzMyAyNS42ODgyIDIwLjIyODggMjUuNjU5IDIwLjIzNjlDMjUuMzg3MSAxOS43MjQ4IDI1LjAzNzIgMTkuMjY5NiAyNC42MjIxIDE4Ljg5NlpNMjMuNTQ1NiAxOC41NTc1QzIzLjM2OTggMTcuNjcwOCAyMi43Mjg1IDE3LjAzMjMgMjIgMTcuMDMyM0MyMS4yNzc4IDE3LjAzMjMgMjAuNjQxNCAxNy42NTk3IDIwLjQ1OTEgMTguNTM0NEwyMy41NDU2IDE4LjU1NzVaTTIwLjE4MzIgMTkuNTY0NUwyMy44NDkgMTkuNTkxOUwyMy44ODU0IDE5LjYyMjRDMjQuNzQ2OSAyMC4zNzAyIDI1LjI4MDQgMjEuNTg4OCAyNS4yODA0IDIyLjkyNjdDMjUuMjgwNCAyNS4xNzcyIDIzLjc4ODcgMjYuOTY3NyAyMiAyNi45Njc3QzIwLjIxMTMgMjYuOTY3NyAxOC43MTk2IDI1LjE3NzIgMTguNzE5NiAyMi45MjY3QzE4LjcxOTYgMjEuNTY5NSAxOS4yNjg3IDIwLjMzNTcgMjAuMTUwNiAxOS41OTE1TDIwLjE4MzIgMTkuNTY0NVoiIGZpbGw9IiMyMDIxMjQiLz4KPC9zdmc+Cg=="></div>\
           <div id="heading" class="search-input-box">
               <div id="search-box-container" class="search-box-container-data">
               {{if searchConfig.freePlan}}\
@@ -19408,7 +19362,7 @@ FindlySDK.prototype.getTopDownTemplate = function () {
                 {{/if}}\
                   <div class="cancel-search">
                       <img
-                          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOCIgaGVpZ2h0PSI4IiB2aWV3Qm94PSIwIDAgOCA4IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPg0KPHBhdGggZD0iTTQuNDM0NzUgNC4wMDAxTDYuOTg2NDUgMS40NDgzOUM3LjEwNjYyIDEuMzI4MjMgNy4xMDY2MiAxLjEzMzQxIDYuOTg2NDUgMS4wMTMyNUM2Ljg2NjI5IDAuODkzMDg2IDYuNjcxNDcgMC44OTMwODYgNi41NTEzMSAxLjAxMzI1TDMuOTk5NTkgMy41NjQ5N0wxLjQ0Nzk5IDEuMDEzNDdDMS4zMjc4MyAwLjg5MzMxNCAxLjEzMzAxIDAuODkzMzE4IDEuMDEyODUgMS4wMTM0OEMwLjg5MjY5MiAxLjEzMzY1IDAuODkyNjk2IDEuMzI4NDcgMS4wMTI4NiAxLjQ0ODYyTDMuNTY0NDUgNC4wMDAxMUwxLjAxMjg1IDYuNTUxNzJDMC44OTI2ODkgNi42NzE4OCAwLjg5MjY4OSA2Ljg2NjcgMS4wMTI4NSA2Ljk4Njg2QzEuMTMzMDEgNy4xMDcwMiAxLjMyNzgzIDcuMTA3MDIgMS40NDc5OSA2Ljk4Njg2TDMuOTk5NiA0LjQzNTI1TDYuNTUxMzIgNi45ODY4NkM2LjY3MTQ5IDcuMTA3MDIgNi44NjYzMSA3LjEwNzAyIDYuOTg2NDYgNi45ODY4NUM3LjEwNjYyIDYuODY2NjkgNy4xMDY2MiA2LjY3MTg3IDYuOTg2NDYgNi41NTE3MUw0LjQzNDc1IDQuMDAwMVoiIGZpbGw9IiMyMDIxMjQiLz4NCjwvc3ZnPg0K" />
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADeSURBVHgBnZI/C8IwEMUviRUHkdKp0KWgBccu/QAOgrj1k2arbtLZJXtFOpVOpXtoYyKk+CeJ4BtCEt7vuHscwJ8i6timh3gZbvy+vfUuc5Ie01W4XigfVh+Dh/25hy9Jtk9dECKC6vcTrK4FEwA5Ao+aYA2JAeU1O9dTq0pdU7VBlJQICA2iuOyae/sJVaxg2o++qmfSCEAF8By4BybICL7CMAowQUozEwhcDSGnxhLH3GjB4AjCFRixQao9W2BvoC09GzxtjrydbEGY4GlGG6SllgTzccc5ca7lTz0A2yqRYknu6twAAAAASUVORK5CYII=" />
                   </div>
               </div>
               <div id="greeting-msg-top-down"></div>
@@ -19433,10 +19387,32 @@ FindlySDK.prototype.getTopDownTemplate = function () {
               {{/if}}\
           </div>
           <div class="skelton-load-img" style="display:none">\
-          <div class="sa-loading-container">\
-          <img alt="" src="data:image/gif;base64,R0lGODlhMgAyAPcBAAAAAAD/AAEBAQICAgMDAwUFBQYGBgcHBwgICAkJCQoKCg0NDQ8PDxAQEBERERMTExQUFBUVFRYWFhcXFxgYGBoaGhsbGxwcHB0dHR4eHh8fHyEhISIiIiMjIyQkJCUlJSYmJigoKCkpKSoqKisrKywsLC0tLS8vLzAwMDIyMjMzMzQ0NDY2Njc3Nzg4ODk5OTo6Ojs7Oz09PT4+Pj8/P0BAQEFBQUJCQkREREVFRUdHR0hISElJSUtLS0xMTE1NTU9PT1BQUFJSUlNTU1RUVFVVVVZWVldXV1hYWFtbW1xcXF1dXV5eXl9fX2FhYWJiYmNjY2RkZGVlZWZmZmhoaGlpaWpqamtra2xsbG1tbW9vb3BwcHJycnR0dHZ2dnt7e319fX5+fn9/f4CAgIGBgYSEhIWFhYiIiIuLi42NjY6OjpCQkJKSkpOTk5SUlJWVlZaWlpeXl5mZmZqampubm5ycnJ2dnZ6enqCgoKGhoaKioqOjo6SkpKWlpaenp6ioqKmpqaqqqqysrK2trbGxsbKysrOzs7S0tLa2tre3t7i4uLq6uru7u729vb6+vr+/v8DAwMHBwcLCwsTExMXFxcbGxsfHx8jIyMnJycvLy8zMzM3Nzc7OztDQ0NLS0tPT09TU1NXV1dbW1tnZ2dra2tvb29zc3N3d3d7e3uDg4OHh4eLi4uPj4+Tk5OXl5efn5+jo6Orq6uvr6+zs7O7u7u/v7/Dw8PHx8fLy8vPz8/X19fb29vf39/j4+Pn5+fr6+vz8/P39/f7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH/C05FVFNDQVBFMi4wAwEAAAAh+QQFBAABACwAAAAAMgAyAIcAAAAA/wABAQECAgIDAwMFBQUGBgYHBwcICAgJCQkKCgoNDQ0PDw8QEBARERETExMUFBQVFRUWFhYXFxcYGBgaGhobGxscHBwdHR0eHh4fHx8hISEiIiIjIyMkJCQlJSUmJiYoKCgpKSkqKiorKyssLCwtLS0vLy8wMDAyMjIzMzM0NDQ2NjY3Nzc4ODg5OTk6Ojo7Ozs9PT0+Pj4/Pz9AQEBBQUFCQkJERERFRUVHR0dISEhJSUlLS0tMTExNTU1PT09QUFBSUlJTU1NUVFRVVVVWVlZXV1dYWFhbW1tcXFxdXV1eXl5fX19hYWFiYmJjY2NkZGRlZWVmZmZoaGhpaWlqampra2tsbGxtbW1vb29wcHBycnJ0dHR2dnZ7e3t9fX1+fn5/f3+AgICBgYGEhISFhYWIiIiLi4uNjY2Ojo6QkJCSkpKTk5OUlJSVlZWWlpaXl5eZmZmampqbm5ucnJydnZ2enp6goKChoaGioqKjo6OkpKSlpaWnp6eoqKipqamqqqqsrKytra2xsbGysrKzs7O0tLS2tra3t7e4uLi6urq7u7u9vb2+vr6/v7/AwMDBwcHCwsLExMTFxcXGxsbHx8fIyMjJycnLy8vMzMzNzc3Ozs7Q0NDS0tLT09PU1NTV1dXW1tbZ2dna2trb29vc3Nzd3d3e3t7g4ODh4eHi4uLj4+Pk5OTl5eXn5+fo6Ojq6urr6+vs7Ozu7u7v7+/w8PDx8fHy8vLz8/P19fX29vb39/f4+Pj5+fn6+vr8/Pz9/f3+/v7///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8I/wCBDRNIcKDBgggPKkzIcOGwYcGGCYMokeLEiBcrYrTIcaNHjRobijzYicQBAAQEVHBxpc6rkQ1BZpzZcVgMAAAE4My508WbXB9pYoTpkOAKlAAGIFVKIOkCMrSKKqwpVOawQwx26sS5leeEPVY9Eh2ZK9YsXKw23cmygWlSlEFyjQxLtypNTVVO8gTgAZXdsVJhxmrSlOkDUDGDUl2sOKKjDHsjnBIKuLLDVzbeErDhsC5jzx97/eAZIqjl0wp39UAJp3Nj0LAzBtNkKizq24ENxv5s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"/>\
-          <div class="loading-text">Loading...</div>\
-            </div>
+          <!--<img alt="" />-->\
+          <div class="sa-loading-container">
+  <div class="row">
+    <div class = "col-3 "></div>
+    <div class = "offset-1 col-8 ">
+    <div class="row">
+       <div class = "col-2 sa-loading-tab sa-animated-background"></div>
+       {{each(key1,col1) loadingArray}}\
+       <div class = "offset-1 col-2 sa-loading-tab sa-animated-background"></div>
+      {{/each}}\
+    </div>
+    </div>
+  </div>
+  {{each(key2,col2) loadingArray}}\
+  <div class=" row">
+     <div class = "col-3 sa-loading sa-animated-background"></div>
+    <div class = "offset-1 col-8 ">
+    {{each(key3,col3) loadingArray}}\
+      {{if key3!=='3'}}
+        <div class="row sa-loading-2 sa-animated-background"></div>
+      {{/if}}\
+      {{/each}}\
+    </div>
+  </div>
+  {{/each}}\
+</div>
           </div>\
           <div id="top-down-full-results-container"></div>
       </div>
@@ -19451,11 +19427,9 @@ FindlySDK.prototype.initializeTopDown = function (
   searchExperienceConfig
 ) {
   $('body').addClass('sdk-body');
-  $('body').addClass('answer-begug-data-sdk');
   var _self = this;
   if(findlyConfig.isDev){
     _self.isDev = true;
-    _self.vars.isBuilder = true;
     if (!$("body").hasClass("builder-sdk")) {
       $("body").addClass("builder-sdk");
     }
@@ -19471,7 +19445,7 @@ FindlySDK.prototype.initializeTopDown = function (
   var dataHTML = $(FindlySDK.prototype.getTopDownTemplate()).tmplProxy({
     devMode: devMode,
     searchConfig: searchConfiguration,
-    loadingArray: [1,2,3,4,5],
+    loadingArray: [1,2,3]
   });
   var container = search_container ? $("." + search_container) : $("body");
   // var container = $('body');
@@ -19665,7 +19639,6 @@ FindlySDK.prototype.initializeTopDown = function (
     };
     _self.parentEvent(responseObject);
   })
-  // _self.tooltipBindEvent();
 };
 
 FindlySDK.prototype.getTopDownActionTemplate = function () {
@@ -20580,7 +20553,8 @@ FindlySDK.prototype.unlockBot = function () {
   var url = _self.API.unlockbotUrl;
   var bearer =
     "bearer " + this.bot?.options?.accessToken ||
-    this.API.jstBarrer ;
+    this.API.jstBarrer ||
+    "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.wrUCyDpNEwAaf4aU5Jf2-0ajbiwmTU3Yf7ST8yFJdqM";
   var headers = {};
 
   headers["Authorization"] = bearer;
@@ -21063,15 +21037,28 @@ FindlySDK.prototype.clickNavigateToUrl = function (e) {
         link.remove();
       }
     } else {
-      if ($(e.target).closest(".click-to-navigate-url").attr("href")) {
-        // window.open($(e.target).closest('.click-to-navigate-url').attr('href'), '_blank');
-        var link = document.createElement("a");
-        link.href = $(e.target)
-          .closest(".click-to-navigate-url")
-          .attr("href");
-        (link.target = "_blank"), link.click();
-        link.remove();
-      }
+      // if ($(e.target).closest(".click-to-navigate-url").attr("href")) {
+      //   // window.open($(e.target).closest('.click-to-navigate-url').attr('href'), '_blank');
+      //   var link = document.createElement("a");
+      //   link.href = $(e.target)
+      //     .closest(".click-to-navigate-url")
+      //     .attr("href");
+      //   (link.target = "_blank"), link.click();
+      //   link.remove();
+      // }
+      const pdfJsTempObj = new SearchPDFJSTemplate();
+      const pdfData = {
+        message:[{
+          component:{
+            type:'template',
+            payload:{
+              template_type:'pdfJSTemplate',
+              url:$(e.target).closest('.click-to-navigate-url').attr('href')
+            }
+          }
+        }]
+      } 
+      $('body').append(pdfJsTempObj.renderMessage.bind(_self,pdfData));
     }
   }
 };
@@ -21259,7 +21246,6 @@ FindlySDK.prototype.showMoreClick = function (showMoreData) {
     if (_self.vars.resultRankingActionPerformed == true) {
       _self.vars.resultRankingActionPerformed = false;
     }
-    payload["answerSearch"] = false;
     return new Promise((resolve, reject) => {
       _self
         .getFrequentlySearched(url, "POST", JSON.stringify(payload)).then(data => {
@@ -21718,7 +21704,7 @@ FindlySDK.prototype.getMergedData = function (settingData, responseData, searchT
           if (obj[mapping.chips]) {
             item.chips = obj[mapping.chips];
           }
-           if (obj[mapping.textField1]) {
+          if (obj[mapping.textField1]) {
             item.textField1 = obj[mapping.textField1];
           }
           if (obj[mapping.textField2]) {
@@ -21889,8 +21875,7 @@ FindlySDK.prototype.seeAllBtnClickEvent = function (e) {
   _self.vars.showingMatchedResults = true;
   e.preventDefault();
   e.stopImmediatePropagation();
-   const searchQuery = e?.currentTarget?.closest('[data-query]')?.getAttribute('data-query');
-  _self.invokeSearch(false, true,searchQuery);
+  _self.invokeSearch(false, true);
   // $('#loaderDIV').show()
 }
 FindlySDK.prototype.botActionTrigger = function (e) {
@@ -22050,7 +22035,6 @@ FindlySDK.prototype.tabFacetTrigger = function (e, facetSelected) {
       }
     }
   }
-  payload["answerSearch"] = false;
   return new Promise((resolve, reject) => {
     _self
       .getFrequentlySearched(url, "POST", JSON.stringify(payload)).then(data => {
@@ -22158,7 +22142,6 @@ var url = _self.API.searchUrl;
   } else {
     let filters = payload.filters;
   }
-  payload["answerSearch"] = false;
 return new Promise((resolve, reject) => {
   _self.getFrequentlySearched(url, "POST", JSON.stringify(payload)).then(data => {
     var totalResultsCount = 0;
@@ -22748,7 +22731,7 @@ FindlySDK.prototype.sortableFacetClick = function (event,displaySortable){
   if (_self.vars.resultRankingActionPerformed == true) {
     _self.vars.resultRankingActionPerformed = false;
   }
-  payload["answerSearch"] = false;
+
   if (_self.vars.showingMatchedResults == true) {
       _self.getFrequentlySearched(url, "POST", JSON.stringify(payload)).then(data => {
         var totalResultsCount = 0;
@@ -22920,16 +22903,6 @@ FindlySDK.prototype.setupInternalAssertionFunctionWithAPIKey = function () {
 FindlySDK.prototype.show = function (config) {
   var _self = this;
   _self.vars.isHostedSdk = true;
-  if(!$('body').find('#sa-sdk-loading').length){
-    $('body').append(`
-    <div id="sa-sdk-loading">
-    <div class="sa-loading-container">
-            <img alt="loading" src="data:image/gif;base64,R0lGODlhMgAyAPcBAAAAAAD/AAEBAQICAgMDAwUFBQYGBgcHBwgICAkJCQoKCg0NDQ8PDxAQEBERERMTExQUFBUVFRYWFhcXFxgYGBoaGhsbGxwcHB0dHR4eHh8fHyEhISIiIiMjIyQkJCUlJSYmJigoKCkpKSoqKisrKywsLC0tLS8vLzAwMDIyMjMzMzQ0NDY2Njc3Nzg4ODk5OTo6Ojs7Oz09PT4+Pj8/P0BAQEFBQUJCQkREREVFRUdHR0hISElJSUtLS0xMTE1NTU9PT1BQUFJSUlNTU1RUVFVVVVZWVldXV1hYWFtbW1xcXF1dXV5eXl9fX2FhYWJiYmNjY2RkZGVlZWZmZmhoaGlpaWpqamtra2xsbG1tbW9vb3BwcHJycnR0dHZ2dnt7e319fX5+fn9/f4CAgIGBgYSEhIWFhYiIiIuLi42NjY6OjpCQkJKSkpOTk5SUlJWVlZaWlpeXl5mZmZqampubm5ycnJ2dnZ6enqCgoKGhoaKioqOjo6SkpKWlpaenp6ioqKmpqaqqqqysrK2trbGxsbKysrOzs7S0tLa2tre3t7i4uLq6uru7u729vb6+vr+/v8DAwMHBwcLCwsTExMXFxcbGxsfHx8jIyMnJycvLy8zMzM3Nzc7OztDQ0NLS0tPT09TU1NXV1dbW1tnZ2dra2tvb29zc3N3d3d7e3uDg4OHh4eLi4uPj4+Tk5OXl5efn5+jo6Orq6uvr6+zs7O7u7u/v7/Dw8PHx8fLy8vPz8/X19fb29vf39/j4+Pn5+fr6+vz8/P39/f7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH/C05FVFNDQVBFMi4wAwEAAAAh+QQFBAABACwAAAAAMgAyAIcAAAAA/wABAQECAgIDAwMFBQUGBgYHBwcICAgJCQkKCgoNDQ0PDw8QEBARERETExMUFBQVFRUWFhYXFxcYGBgaGhobGxscHBwdHR0eHh4fHx8hISEiIiIjIyMkJCQlJSUmJiYoKCgpKSkqKiorKyssLCwtLS0vLy8wMDAyMjIzMzM0NDQ2NjY3Nzc4ODg5OTk6Ojo7Ozs9PT0+Pj4/Pz9AQEBBQUFCQkJERERFRUVHR0dISEhJSUlLS0tMTExNTU1PT09QUFBSUlJTU1NUVFRVVVVWVlZXV1dYWFhbW1tcXFxdXV1eXl5fX19hYWFiYmJjY2NkZGRlZWVmZmZoaGhpaWlqampra2tsbGxtbW1vb29wcHBycnJ0dHR2dnZ7e3t9fX1+fn5/f3+AgICBgYGEhISFhYWIiIiLi4uNjY2Ojo6QkJCSkpKTk5OUlJSVlZWWlpaXl5eZmZmampqbm5ucnJydnZ2enp6goKChoaGioqKjo6OkpKSlpaWnp6eoqKipqamqqqqsrKytra2xsbGysrKzs7O0tLS2tra3t7e4uLi6urq7u7u9vb2+vr6/v7/AwMDBwcHCwsLExMTFxcXGxsbHx8fIyMjJycnLy8vMzMzNzc3Ozs7Q0NDS0tLT09PU1NTV1dXW1tbZ2dna2trb29vc3Nzd3d3e3t7g4ODh4eHi4uLj4+Pk5OTl5eXn5+fo6Ojq6urr6+vs7Ozu7u7v7+/w8PDx8fHy8vLz8/P19fX29vb39/f4+Pj5+fn6+vr8/Pz9/f3+/v7///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8I/wCBDRNIcKDBgggPKkzIcOGwYcGGCYMokeLEiBcrYrTIcaNHjRobijzYicQBAAQEVHBxpc6rkQ1BZpzZcVgMAAAE4My508WbXB9pYoTpkOAKlAAGIFVKIOkCMrSKKqwpVOawQwx26sS5leeEPVY9Eh2ZK9YsXKw23cmygWlSlEFyjQxLtypNTVVO8gTgAZXdsVJhxmrSlOkDUDGDUl2sOKKjDHsjnBIKuLLDVzbeErDhsC5jzx97/eAZIqjl0wp39UAJp3Nj0LAzBtNkKizq24ENxv5s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"/>
-            <div class="loading-text">Loading...</div>
-              </div>
-              </div>
-    `)
-  }
 
   if (config && config.API_KEY_CONFIG && config.API_KEY_CONFIG.KEY != 'YOUR_API_KEY') {
     _self.config.botOptions["apiKey"] = config["API_KEY_CONFIG"].KEY;
@@ -22972,8 +22945,8 @@ FindlySDK.prototype.autoSelectFacetFilter = function () {
               _self.vars.selectedFiltersArr.push("checkbox-" + i + j)
             }
             var obj = {
-              fieldName: _self.vars.searchFacetFilters[i].fieldName || _self.vars.searchFacetFilters[i].facetName,
-              fieldType: _self.vars.searchFacetFilters[i].subtype || _self.vars.searchFacetFilters[i].facetType,
+              fieldName: _self.vars.searchFacetFilters[i].facetName,
+              fieldType: _self.vars.searchFacetFilters[i].facetType,
               id: "checkbox-" + i + j,
               name: _self.vars.searchFacetFilters[i].buckets[j].key
             };
@@ -23429,7 +23402,6 @@ FindlySDK.prototype.getFeedBackResult = function () {
           }
         }
       }
-      payload["answerSearch"] = false;
       return new Promise((resolve, reject) => {
         _self
           .getFrequentlySearched(url, "POST", JSON.stringify(payload)).then(data => {
@@ -23542,18 +23514,7 @@ FindlySDK.prototype.queryAnalyticsClickEvent = function(event,messageHtml){
   
   // Language Translator i18n end//
 
-// Toggle Z-index of see all container 
-FindlySDK.prototype.toggleSeeAllZindex = function (){
-      var targetDiv = $('.show-all-results-outer-wrap');
-      var currentZIndex = parseInt(targetDiv.css('z-index'));  
-      // Toggle the z-index between two values
-      if($('body').hasClass('debug') && currentZIndex === 9999 ){
-        var newZIndex = currentZIndex === 9999 ? 99999 : 9999;
-        targetDiv.css('z-index', newZIndex);
-      }
-      console.log (currentZIndex);
- }
-
+// Language Translator i18n end//
 
 FindlySDK.prototype.getQueryLevelAnalytics = function(query){
   var _self = this;
@@ -23623,37 +23584,6 @@ FindlySDK.prototype.getQueryLevelAnalyticsTemplate = function(){
   </div>\
   </script>';
 }
-FindlySDK.prototype.sendMessageToBuilder = function(){
-  var _self = this;
-  var responseObject = {
-    type: "messageData",
-    data: true
-  };
-  _self.parentEvent(responseObject)
- }
- FindlySDK.prototype.debugClickEvents = function(){
-  var _self = this;
-    if(!$("body").hasClass("debug")){
-      $("body").addClass("debug");
-        $('.tsrb-right-filters').hide()
-      var responseObject = {
-        type: "debugClick",
-      };
-      if($('.show-all-results-outer-wrap').css('display') !== 'none'){
-        $('.show-all-results-outer-wrap').css('z-index','9999')
-      }
-      else {
-        $('.show-all-results-outer-wrap').css('z-index','99999') 
-      }
-      _self.parentEvent(responseObject);
-      _self.sendMessageToBuilder();
-    }
- }
- FindlySDK.prototype.closeDebug = function(){
-  var _self = this;
-  $("#closeDebugPreview").trigger("click");
-  $("body").removeClass('debug');
- }
 
 FindlySDK.prototype.getSnippetObject = function(res){
   var _self = this;
@@ -23663,25 +23593,20 @@ if(res?.graph_answer?.payload?.center_panel){
   if(Object.keys(res.graph_answer.payload.center_panel).length>0){
     var listSnippetData = '';
     var snippetReference = [];
-    if(['paragraph_snippet','answer_snippet','image_snippet', 'image_answer_snippet'].includes(res?.graph_answer?.payload?.center_panel?.type)){
+    if(['paragraph_snippet','answer_snippet','image_snippet'].includes(res?.graph_answer?.payload?.center_panel?.type)){
       if(res?.graph_answer?.payload?.center_panel?.data[0]?.answer)
     res.graph_answer.payload.center_panel.data[0].snippet_content = res?.graph_answer?.payload?.center_panel?.data[0]?.answer;
     if(res?.graph_answer?.payload?.center_panel?.data[0]?.title)
     res.graph_answer.payload.center_panel.data[0].snippet_title = res?.graph_answer?.payload?.center_panel?.data[0]?.title;
-    if(['image_answer_snippet'].includes(res?.graph_answer?.payload?.center_panel?.type)){
-      listSnippetData = res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content
-    }else{
       listSnippetData = res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content?helpers.convertMDtoHTML(res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content) : '';
-    }
-      if(res?.graph_answer?.payload?.center_panel?.type === 'image_snippet'){
-        listSnippetData = '';
-      }
     } else if(['citation_snippet','active_citation_snippet'].includes(res?.graph_answer?.payload?.center_panel?.type)){
       if(res?.graph_answer?.payload?.center_panel?.data[0]?.answer)
     res.graph_answer.payload.center_panel.data[0].snippet_content = res?.graph_answer?.payload?.center_panel?.data[0]?.answer;
     if(res?.graph_answer?.payload?.center_panel?.data[0]?.title)
     res.graph_answer.payload.center_panel.data[0].snippet_title = res?.graph_answer?.payload?.center_panel?.data[0]?.title;
-    snippetReference = res.graph_answer.payload.center_panel.data[0].snippet_content.flatMap((item) => item.sources.filter(source => source.title))
+      res.graph_answer.payload.center_panel.data[0].snippet_content.forEach((item)=>{
+        snippetReference = [...snippetReference,...item.sources];
+      })
       var set = new Set();
       var unionArray =  snippetReference.filter(item => {
         if (!set.has(item.title)) {
@@ -23717,7 +23642,7 @@ if(res?.graph_answer?.payload?.center_panel){
     let title = res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_title?helpers.convertMDtoHTML(res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_title) : '';
     snippetObj = {'title':title,
     'answer':listSnippetData, page_url:res?.graph_answer?.payload?.center_panel?.data[0]?.url,
-    'source':res?.graph_answer?.payload?.center_panel?.data[0]?.source_title || res?.graph_answer?.payload?.center_panel?.data[0]?.source || '',
+    'source':res?.graph_answer?.payload?.center_panel?.data[0]?.source,
     'template_type':res?.graph_answer?.payload?.center_panel?.type, 
     'image_url':(res?.graph_answer?.payload?.center_panel?.data[0]?.image_url ||''),
     'searchQuery': _self.vars.searchObject.searchText,

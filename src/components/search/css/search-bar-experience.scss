@@ -29,20 +29,6 @@ body::-webkit-scrollbar {
   #top-down-full-results-container{
     height: 100%;
   }
-  .debug-results{
-    display: block;
-    background: #ffffff;
-    width: 28px;
-    height: 28px;
-    position: absolute;
-    align-items: center !important;
-    right: 20px;
-    top: 14px;
-    border-radius: 100%;
-    display: flex;
-    cursor: pointer;
-    justify-content: center;
-  }
 }
 .topdown-search-main-container .logo_img {
   position: absolute;
@@ -62,7 +48,7 @@ body::-webkit-scrollbar {
   height: 100%;
   /* width: 800px; */
   margin: 0 auto;
-  top: -15px;
+  top: 0;
 }
 .topdown-search-main-container .search-input-box .search-box-container-data .search-icon {
   position: absolute;
@@ -113,7 +99,7 @@ body::-webkit-scrollbar {
 .topdown-search-main-container .search-input-box .live_search_result_box ,.topdown-search-main-container .search-input-box .frequently_searched_box{
   background: var(--sdk-white-bg);
   box-shadow: 0px 0px 10px rgb(0 0 0 / 12%);
-  border-radius: 8px;
+  border-radius: 0px 0px 5px 5px;
   position: absolute;
   width: 800px;
   /* min-height: 125px; */
@@ -338,82 +324,6 @@ body::-webkit-scrollbar {
   right: 0;
   padding-left: 0px;
 }
-.top-down-search-background-div {
-  &.answer-begug-data-sdk{
-    background: #EEF1FF !important;
-    .skelton-load-img{
-        height:100%;
-        margin-top: 12px;
-        .sa-loading-container{
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          .loading-text{
-            padding-left:12px;
-          }
-        }
-    }
-    .all-result-container {
-        .full-results-data-container {
-            .back-search{
-                width: 28px;
-                height: 28px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                left: 20px;
-                right: auto;
-                top: 14px;
-                img{
-                  content: url('/src/components/search/images/carrot-icon.svg');              }
-            }
-        }
-    }
-    .topdown-search-main-container {
-        .debug-results{
-            background: #ffffff;
-            width: 28px;
-            height: 28px;
-            position: absolute;
-            align-items: center !important;
-            right: 20px;
-            top: 14px;
-            border-radius: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .search-input-box {
-            width: 500px;
-            .search-box-container-data {
-                .search-bar {
-                    .search-input{
-                        height: 34px;
-                        width: 500px;
-                        border: 1px solid #B9BCBF;
-                        border-radius: 150px !important;
-                    }
-                }
-            }
-        }
-        .live_search_result_box{
-            width: 500px;
-        }
-        .frequently_searched_box{
-            width: 500px;
-        }
-    }
-    .search-input-box {
-        .search-box-container-data {
-            .cancel-search{
-                top: -30px;
-                padding: 3px 5px;
-                cursor: pointer;
-                right: 6px !important;
-            }
-        }
-    }
-}
-}
 
 .top-down-search-background-div.if-full-results{
   padding-left: 0;
@@ -443,7 +353,7 @@ body::-webkit-scrollbar {
   opacity: 0.7;
 }
 .top-down-search-background-div .topdown-search-main-container .search-input-box .live_search_result_box, .top-down-search-background-div .topdown-search-main-container .search-input-box .frequently_searched_box{
-  top: 53px;
+  top: 66px;
 }
 
 .top-down-search-background-div .topdown-search-main-container .logo_img{
@@ -474,36 +384,15 @@ body::-webkit-scrollbar {
 
 .close-top-down-search-outer{
   position: fixed;
-  left: 30px;
-  top: 78px;
-  height: 40px;
-  width: 40px;
-  z-index: 99998;
-  padding: 7px 12px;
-  cursor: pointer;
-  background: var(--sdk-white-bg);
-  box-shadow: 0px 0px 4px rgba(0,0,0,.25);
-  border-radius: 50%;
-}
-  .close-top-down-search{
-    position: fixed;
-    img{
-      content: url('/src/components/search/images/carrot-icon.svg') !important;
-    }
-  }
-  .close-text{
-    position: fixed;
-    display: none;
-  }
-  .search-preview{
-    position: fixed;
-    font-style: normal;
-    font-weight: 600;
-    color: #202124;
-    left: 89px;
-    top: 89px;
+    right: 60px;
+    top: 91px;
     z-index: 99998;
-  }
+    padding: 7px 12px;
+    cursor: pointer;
+    background: var(--sdk-white-bg);
+    box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
+    border-radius: 50%;
+}
 .top-down-search-background-div .topdown-search-main-container .search-input-box .search-box-container-data .search-icon{
   top: -26px;
 }
@@ -1195,37 +1084,4 @@ body::-webkit-scrollbar {
             }
 		}
 	}
-}
-.debug {
-  .topdown-search-main-container #top-down-full-results-container{
-    width: 40.9%;
-    float: right;
-    transition: width 1s;
-  }
-  #heading{
-    margin-left: 61.2%;
-  }
-  .close-top-down-search-outer{
-    display: none;
-  }
-  .close-text{
-    color: #0D6EFD;
-    font-weight: 600;
-    position: absolute;
-    display: block;
-    right: 15px;
-    top: 84px;
-    margin-left: 94%;
-    height: 33px;
-    width: 53px;
-    z-index: 99998;
-  }
-  .close-top-down-search{
-    img{
-      display: none;
-    }
-  }
-  .search-preview{
-    display: none;
-  }
 }

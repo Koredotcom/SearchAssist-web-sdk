@@ -1,6 +1,30 @@
 (function ($) {
 
     $(document).ready(function () {
+        function getJWT(options, callback) {
+            var jsonData = {
+                "clientId": options.clientId,
+                "clientSecret": options.clientSecret,
+                "identity": options.userIdentity,
+                "aud": "",
+                "isAnonymous": false
+            };
+            return $.ajax({
+                url: options.JWTUrl,
+                type: 'post',
+                data: jsonData,
+                dataType: 'json',
+                success: function (data) {
+                    options.assertion = data.jwt;
+                        fsdk.initSearchAssistSDK(findlyConfig);
+                    if (callback) {
+                        callback(null, options);
+                    }
+                },
+                error: function (err) {
+                }
+            });
+        }
 
 //Get Assertion Token api call//
 function getAssertionToken(options, callback) {
@@ -34,11 +58,14 @@ function getAssertionToken(options, callback) {
     });
 }
 
+
         var findlyConfig = window.KoreSDK.findlyConfig;
+        // findlyConfig.botOptions.assertionFn = getJWT;
         findlyConfig.botOptions.assertionFn = getAssertionToken;
 
         var fSdk = new FindlySDK(findlyConfig);
         window.fsdk = fSdk;
+        // fsdk.initKoreSDK();
        
         $('.openSearchSDK').click(function () {
             fsdk.show(apiKey);

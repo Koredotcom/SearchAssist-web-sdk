@@ -56,9 +56,6 @@ class FullSearchResultsTemplate {
       if (isSearchSDK === null) {
         $('.show-all-results-outer-wrap').css({ 'left': '200px', 'box-shadow': '0 10px 25px 0 rgb(0 0 0 / 20%)' });
       }
-      if(msgData.message[0].component.payload.isDev && $('body').hasClass('debug')){
-        $('.show-all-results-outer-wrap').css('z-index','99999')
-       }
       if(msgData.message[0].component.payload.displayFeedback){
         FullSearchResultsTemplate.prototype.feedBackResultEvents(me, messageHtml,msgData.message[0].component.payload.feedbackData,msgData);
         }
@@ -99,11 +96,6 @@ class FullSearchResultsTemplate {
       $(messageHtml).find('#sa-sdk-sortable-facets-added-list').empty().append(sortableAddedListHtml);
       FullSearchResultsTemplate.prototype.bindSortableFacetClickEvent(me, messageHtml,sortableHtml, 'all results',sortableAddedListHtml);
     }
-    $(messageHtml)
-    .off("click", ".show-all-results-outer-wrap, .show-all-results-outer-wrap *")
-    .on("click", ".show-all-results-outer-wrap, .show-all-results-outer-wrap *", function () {
-       hostWindowInstance.toggleSeeAllZindex();
-    });
     $(messageHtml)
       .off("click", "#btn-close-show-all")
       .on("click", "#btn-close-show-all", function () {

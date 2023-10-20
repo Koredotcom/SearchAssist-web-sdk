@@ -1,4 +1,4 @@
-self["webpackHotUpdatesearch_assist_web_sdk"]("esm",{
+self["webpackHotUpdatekore_web_sdk"]("esm",{
 
 /***/ "./src/components/search/config/findly-config.ts":
 /*!*******************************************************!*\
@@ -10,36 +10,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var _a;
 var findlyConfig = {};
 var botOptionsFindly = {};
 botOptionsFindly.logLevel = "debug";
 var serverUrl = window.location.href;
 var paramUrl = "searchassist.kore.ai";
-var httpStart = 'https://';
-var wssUrl = "wss";
-if (serverUrl && (serverUrl.includes("https://") || serverUrl.includes("http://"))) {
-    paramUrl = serverUrl.split('/')[2];
-    if (serverUrl.includes("https://")) {
-        httpStart = "https://";
-        wssUrl = "wss";
-    }
-    else {
-        httpStart = "http://";
-        wssUrl = "ws";
-    }
-}
-if ((window === null || window === void 0 ? void 0 : window.JWT_OBJ) && ((_a = window === null || window === void 0 ? void 0 : window.JWT_OBJ) === null || _a === void 0 ? void 0 : _a.koreAPIUrl)) {
-    paramUrl = window.JWT_OBJ.koreAPIUrl.split("/")[2].split(':')[0];
-    if (window.JWT_OBJ.koreAPIUrl.includes("https://")) {
-        httpStart = "https://";
-        wssUrl = "wss";
-    }
-    else {
-        httpStart = "http://";
-        wssUrl = "ws";
-    }
-}
+// if(serverUrl && (serverUrl.includes("https"))){ // for installer 
+// // if(serverUrl && (serverUrl.includes(".kore.ai") || serverUrl.includes(".korebots.com"))){//for app, dev, qa, pilot, prod
+//     paramUrl=serverUrl.split('/')[2]
+// }  
+// if(window?.JWT_OBJ && window?.JWT_OBJ?.koreAPIUrl){
+//   paramUrl=window.JWT_OBJ.koreAPIUrl.split("/")[2].split(':')[0];
+// }
 botOptionsFindly.logLevel = 'debug';
 botOptionsFindly.koreAPIUrl = "https://" + paramUrl + "/searchassistapi/";
 botOptionsFindly.baseAPIServer = "https://" + paramUrl;
@@ -69,21 +51,29 @@ function generateRandomNum() {
 }
 botOptionsFindly.JWTUrl =
     "https://mk2r2rmj21.execute-api.us-east-1.amazonaws.com/dev/users/sts";
-botOptionsFindly.userIdentity = 'PLEASE_ENTER_USER_EMAIL_ID'; // Provide users email id here
+botOptionsFindly.userIdentity = koreGenerateUUID(); // Provide users email id here
 botOptionsFindly.botInfo = {
-    chatBot: "PLEASE_ENTER_APP_NAME",
-    taskBotId: "PLEASE_ENTER_APP_ID",
+    chatBot: "Please Enter here",
+    taskBotId: "Please Enter here",
 };
-botOptionsFindly.clientId = "PLEASE_ENTER_CLIENT_ID";
-botOptionsFindly.clientSecret = "PLEASE_ENTER_CLIENT_SECRET";
-botOptionsFindly.searchIndexID = "PLEASE_ENTER_SEARCHINDEX_ID";
+botOptionsFindly.clientId = "Please Enter here";
+botOptionsFindly.clientSecret = "Please Enter here";
+botOptionsFindly.searchIndexID = "Please Enter here";
 // To modify the web socket url use the following option
 // For Socket Connection
 botOptionsFindly.reWriteSocketURL = {
-    protocol: wssUrl,
+    protocol: "wss",
+    // hostname: 'searchassist-qa.kore.ai'
     hostname: paramUrl
 };
+function clearLocalStorageUserDetails() {
+    window.localStorage.setItem("userName", "");
+    window.localStorage.setItem("userLocation", "");
+    window.localStorage.setItem("gender", "");
+    window.localStorage.setItem("userAge", "");
+}
 var favicon = document.getElementById("favicon");
+// CVS Caremark configs //
 botOptionsFindly.interface = "top-down";
 findlyConfig = {
     botOptions: botOptionsFindly,
@@ -95,7 +85,7 @@ findlyConfig = {
         showTaskMenuPickerIcon: true,
         showradioOptionMenuPickerIcon: false, //set true to show Radio Option Template icon
     },
-    API_KEY_CONFIG: { 'KEY': "YOUR_API_KEY" }
+    API_KEY_CONFIG: { 'KEY': "API_KEY" }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (findlyConfig);
 
@@ -106,7 +96,7 @@ findlyConfig = {
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ /* webpack/runtime/getFullHash */
 /******/ (() => {
-/******/ 	__webpack_require__.h = () => ("dbca3f81808713e1b8d5")
+/******/ 	__webpack_require__.h = () => ("a965cf160d5c038def84")
 /******/ })();
 /******/ 
 /******/ }

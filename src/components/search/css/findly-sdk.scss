@@ -1480,9 +1480,6 @@ ngb-accordion .card-header {
 .sdk-body a, .sdk-body button, .sdk-body div, .sdk-body span, .sdk-body input{
     font-family: var(--sdk-font-family-inter-sans) !important;
 }
-.sdk-body span[class^="si-"], .sdk-body span[class*=" si-"] {
-    font-family: 'searchassist-icons' !important;
-}
 
 body::-webkit-scrollbar {
     width: 10px;
@@ -3980,7 +3977,7 @@ display: none !important;
 .sa-loading-container {
     padding: 20px;
     background-color: #ffff;
-    height: calc(100vh - 137px);
+    height: 100%;
     .row {
         margin-bottom: 20px;
         margin-left: 0px !important;
@@ -4050,44 +4047,3 @@ display: none !important;
     position: relative;
 }
         
-#sa-sdk-loading{
-    height:100%;
-    width: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 99999;
-    background: transparent;
-    .sa-loading-container{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        background: transparent;
-        .loading-text{
-          padding-left:12px;
-        }
-      }
-}
-
-#sa-sdk-results-loading{
-    height:100%;
-    width: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 99999;
-    display: none;
-    background: #fff;
-    opacity: 0.8;
-    .sa-loading-container{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        background: transparent;
-        .loading-text{
-          padding-left:12px;
-        }
-      }
-}

@@ -7,6 +7,7 @@ import searchCarouselViewTemplate from '../../templates/searchCarouselViewTempla
 import FullSearchResultsTemplate from '../../templates/fullsearchResultsTemplate/fullsearchResultsTemplate';
 import FeedBackFormTemplate from '../../templates/feedBackFormTemplate/feedBackFormTemplate';
 import korejquery from "../../../libs/korejquery";
+import SearchPDFJSTemplate from '../searchPDFJSTemplate/searchPDFJSTemplate';
 const $ = korejquery;
 
 class FinalResultsTemplate {
@@ -116,6 +117,22 @@ class FinalResultsTemplate {
       var url = $(e.target).attr("snippetURL");
       window.open(url, '_blank','noopener');
     })
+    $(messageHtml).off("click","#hrefPageLinkId").on("click", "#hrefPageLinkId", function (e: any) {
+       const page_url = e?.currentTarget?.attributes?.pageurl?.value;
+       const pdfJsTempObj = new SearchPDFJSTemplate();
+       const pdfData = {
+         message:[{
+           component:{
+             type:'template',
+             payload:{
+               template_type:'pdfJSTemplate',
+               url:page_url
+             }
+           }
+         }]
+       } 
+       $('body').append(pdfJsTempObj.renderMessage.bind(me,pdfData));
+    })
     FinalResultsTemplate.prototype.bindSnippetEvents(me,messageHtml);
     FinalResultsTemplate.prototype.tooltipBindEvent(me);
   }
@@ -137,7 +154,7 @@ class FinalResultsTemplate {
         {{/if}}\
         {{if snippetData && snippetData?.template_type}}\
         {{if snippetData.template_type =="paragraph_snippet" || snippetData.template_type =="answer_snippet"}}\
-          <div class="search-temp-one snippet-margin"  data-query = "${snippetData?.searchQuery}">\
+          <div class="search-temp-one snippet-margin">\
             <div class="top-header">\
                 <div class="top-header-with-img">\
                     <span class="logo-span"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/snippet-avathar.svg"/></span>\
@@ -161,7 +178,7 @@ class FinalResultsTemplate {
             {{if snippetData && snippetData.source}}\
             <div class="snippet-source-block">\
               <div class="snippet-source-file-name sa-sdk-title {{if !snippetData.source}} display-none{{/if}}" data-title="${snippetData.source}">{{html snippetData.source}}</div>\
-              <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name sa-sdk-title" data-title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
+              <a href="javascript:void(0)" id="hrefPageLinkId" pageUrl="${snippetData?.page_url}"><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name sa-sdk-title" data-title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
             </div>\
             {{/if}}\
             <div class="temp-footer-block">\
@@ -184,7 +201,7 @@ class FinalResultsTemplate {
         </div>\
         {{/if}}\
         {{if snippetData.template_type =="list_element_snippet" || snippetData.template_type =="headings_snippet"}}\
-    <div class="search-temp-one list-snippet-temp snippet-margin"  data-query = "${snippetData?.searchQuery}">\
+    <div class="search-temp-one list-snippet-temp snippet-margin">\
         <div class="top-header">\
             <div class="top-header-with-img">\
                 <span class="logo-span"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/snippet-avathar.svg"/></span>\
@@ -208,7 +225,7 @@ class FinalResultsTemplate {
         {{if snippetData && snippetData.source}}\
           <div class="snippet-source-block">\
             <div class="snippet-source-file-name sa-sdk-title  {{if !snippetData.source}} display-none {{/if}}" data-title="${snippetData.source}">{{html snippetData?.source}}</div>\
-            <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none {{/if}}"><span class="snippet-source-url-name">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/> </div></a>\
+            <a href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none {{/if}}"><span class="snippet-source-url-name">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/> </div></a>\
           </div>\
         {{/if}}\
         <div class="temp-footer-block">\
@@ -230,7 +247,7 @@ class FinalResultsTemplate {
     </div>\
     {{/if}}\
     {{if snippetData.template_type =="image_snippet"}}\
-          <div class="search-temp-one snippet-margin"  data-query = "${snippetData?.searchQuery}">\
+          <div class="search-temp-one snippet-margin">\
             <div class="top-header">\
                 <div class="top-header-with-img">\
                     <span class="logo-span"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/snippet-avathar.svg"/></span>\
@@ -254,64 +271,9 @@ class FinalResultsTemplate {
             {{if snippetData && snippetData.source}}\
             <div class="snippet-source-block">\
               <div class="snippet-source-file-name {{if !snippetData.source}} display-none{{/if}}">{{html snippetData.source}}</div>\
-              <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
+              <a href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
             </div>\
             {{/if}}\
-            <div class="temp-footer-block">\
-                <div class="temp-footer {{if snippetData && snippetData.snippet_type!== "generative_model"}} justify-content-end {{/if}}">\
-                    {{if snippetData && snippetData.snippet_type === "generative_model"}}\
-                    <div class="btn-link"><span class="bot-bg-purple"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/bot.svg"/></span><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_answered_by_ai">{{html langTranslator("sa_sdk_answered_by_ai")}}</span>\</div>\
-                    {{/if}}\
-                    {{if snippetData.displayFeedback == true}}\
-                    <div class="temp-right">\
-                        <div class="is-it-usefull">Is it useful?</div>\
-                        <div class="temp-fotter-actions">\
-                            <img  class="snippet-feedback  snippet-like-img" src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/like-gray.svg" />\
-                            <img class="snippet-feedback  snippet-dislike-img" src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/dislike-gary.svg" />\
-                        </div>\
-                    </div>\
-                    {{/if}}\
-                </div>\
-            </div>\
-        </div>\
-        {{/if}}\
-        {{if snippetData.template_type =="image_answer_snippet"}}\
-          <div class="search-temp-one snippet-margin sa-image-answer-temp"  data-query = "${snippetData?.searchQuery}">\
-            <div class="top-header">\
-                <div class="top-header-with-img">\
-                    <span class="logo-span"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/snippet-avathar.svg"/></span>\
-                    <div class="btn-chip"><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_Suggested_answer">{{html langTranslator("sa_sdk_Suggested_answer")}}</span>\</div>\
-                </div>\
-                {{if snippetData && snippetData.snippet_type === "generative_model"}}\
-                <div class="btn-link"><span class="bot-bg-purple"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/bot.svg"/></span><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_answered_by_ai">{{html langTranslator("sa_sdk_answered_by_ai")}}</span>\</div>\
-                {{/if}}\
-            </div>\
-            {{if snippetData && snippetData.title}}\
-              <div class="img-temp-title">{{html helpers.convertMDtoHTML(snippetData?.title)}}</div>\
-              {{/if}}\
-              <div class="img-text-container">\
-              {{if snippetData && snippetData.image_url}}\
-              <div class="snippet-image-block {{if snippetData.title==""}}snippet_margin_top_0{{/if}}"><img src="${snippetData.image_url}"/></div>\
-              {{/if}}\
-              <div class="img-text-source">\
-              {{if snippetData && snippetData.answer}}\
-              <div class="img-temp-data-desc">\
-              <div class="temp-data-desc">\
-              {{each(key, data) snippetData.answer}}\
-              {{html helpers.convertMDtoHTML(data.answer_fragment)}}\
-              {{/each}}\
-              </div>\
-              <span class="read-more-less desc-read-more">Read More</span>\
-              <span class="desc-read-less">Show Less</span>\
-              </div>\
-              {{if snippetData && snippetData.source}}\
-              <div class="snippet-source-block">\
-              <span class="snippet-source-header">Source: </span><span class="sa-sdk-title" data-title="${snippetData?.page_url}"><a class="snippet-source-url-name {{if !snippetData.page_url}} pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" target="_blank">{{html snippetData.source}}</a></span>\
-              </div>\
-              {{/if}}\
-              {{/if}}\
-              </div>\
-              </div>\
             <div class="temp-footer-block">\
                 <div class="temp-footer {{if snippetData && snippetData.snippet_type!== "generative_model"}} justify-content-end {{/if}}">\
                     {{if snippetData && snippetData.snippet_type === "generative_model"}}\
@@ -331,7 +293,7 @@ class FinalResultsTemplate {
         </div>\
         {{/if}}\
         {{if snippetData.template_type =="citation_snippet"}}\
-        <div class="search-temp-one snippet-margin"  data-query = "${snippetData?.searchQuery}">\
+        <div class="search-temp-one snippet-margin">\
         <div class="top-header">\
             <div class="top-header-with-img">\
                 <span class="logo-span"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/snippet-avathar.svg"/></span>\
@@ -346,21 +308,21 @@ class FinalResultsTemplate {
         {{/if}}\
         <div class="citation-data-desc {{if snippetData.title==""}}snippet_padding_top_0{{/if}}">\
         {{each(key, data) snippetData.answer}}\
-        <span class="snippet-answer-fragment">{{html helpers.convertMDtoHTML(data.answer_fragment)}}{{each(sourceKey, source) data.sources}}<sup class="snippet-citation"><a class="{{if !source.url}}pointer-events-none {{/if}}" href="${source.url}" target="_blank">[${source._id}]</a></sup>{{/each}}. </span>\
+        <span class="snippet-answer-fragment">{{html data.answer_fragment}}</span>{{each(sourceKey, source) data.sources}}<sup class="snippet-citation"><a href="${source.url}" target="_blank">[${source._id}]</a></sup>{{/each}}. </span>\
         {{/each}}\
         </div>\
         <div class="snippet-referene-block">\
           <div class="reference-block-header">References: </div>\
           <ol type="1" class="reference-list-temp-ul">\
                   {{each(key, item) snippetData.reference}}\
-                      <li class="reference-list-temp-li" title="{{html helpers.convertMDtoHTML(item.title)}}"><a class="{{if !item.url}}pointer-events-none {{/if}}"  href="${item.url}" target="_blank"><span>{{html helpers.convertMDtoHTML(item.title)}}</span></a></li>\
+                      <li class="reference-list-temp-li" title="{{html helpers.convertMDtoHTML(item.title)}}"><a  href="${item.url}" target="_blank"><span>{{html helpers.convertMDtoHTML(item.title)}}</span></a></li>\
                       {{/each}}\
                   </ol>\
         </div>\
         {{if snippetData && snippetData.source}}\
         <div class="snippet-source-block">\
           <div class="snippet-source-file-name {{if !snippetData.source}} display-none{{/if}}">{{html snippetData.source}}</div>\
-          <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" ><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
+          <a href="${snippetData?.page_url}" target="_blank" ><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
         </div>\
         {{/if}}\
         <div class="temp-footer-block">\
@@ -382,7 +344,7 @@ class FinalResultsTemplate {
     </div>\
     {{/if}}\
     {{if snippetData.template_type =="active_citation_snippet"}}\
-        <div class="search-temp-one active-citation-snippet snippet-margin"  data-query = "${snippetData?.searchQuery}">\
+        <div class="search-temp-one active-citation-snippet snippet-margin">\
         <div class="top-header">\
             <div class="top-header-with-img">\
                 <span class="logo-span"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/snippet-avathar.svg"/></span>\
@@ -398,21 +360,21 @@ class FinalResultsTemplate {
         <div class="citation-data-desc {{if snippetData.title==""}}snippet_padding_top_0{{/if}}">\
         {{each(key, data) snippetData.answer}}\
         <span class="snippet-answer-fragment-block fragment-hover-event {{each(itemKey, item) data.sources}} fragment-${item._id} {{/each}}"\
-          fragment="{{each(itemKey, item) data.sources}} .fragment-${item._id}, {{/each}}"><span class="sub-fragment"><span class="snippet-answer-fragment">{{html  helpers.convertMDtoHTML(data.answer_fragment)}}</span>{{each(sourceKey, source) data.sources}}<span class="snippet-citation"><a class="{{if !source.url}}pointer-events-none {{/if}}" href="${source.url}" target="_blank"><span class="reference-no">${source._id}</span></a></span>{{/each}}</span></span></span>\
+          fragment="{{each(itemKey, item) data.sources}} .fragment-${item._id}, {{/each}}"><span class="sub-fragment"><span class="snippet-answer-fragment">{{html data.answer_fragment}}</span>{{each(sourceKey, source) data.sources}}<span class="snippet-citation"><a href="${source.url}" target="_blank"><span class="reference-no">${source._id}</span></a></span>{{/each}}</span></span></span>\
         {{/each}}\
         </div>\
         <div class="active-snippet-referene-block">\
           <div class="active-reference-block-header">Sources </div>\
           <div class="active-reference-list-temp-block">\
                   {{each(key, item) snippetData.reference}}\
-                      <div class="active-reference-list-temp fragment-hover-event fragment-${key+1}"  title="{{html item.title}}" fragment=".fragment-${key+1},"><a class="{{if !item.url}}pointer-events-none {{/if}}" href="${item.url}" target="_blank"><span class="reference-no">${key+1}</span><span class="reference-title">{{html helpers.convertMDtoHTML(item.title)}}</span></a></div>\
+                      <div class="active-reference-list-temp fragment-hover-event fragment-${key+1}"  title="{{html item.title}}" fragment=".fragment-${key+1},"><a href="${item.url}" target="_blank"><span class="reference-no">${key+1}</span><span class="reference-title">{{html helpers.convertMDtoHTML(item.title)}}</span></a></div>\
                       {{/each}}\
                   </div>\
         </div>\
         {{if snippetData && snippetData.source}}\
         <div class="snippet-source-block">\
           <div class="snippet-source-file-name {{if !snippetData.source}} display-none{{/if}}">{{html snippetData.source}}</div>\
-          <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" ><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
+          <a href="${snippetData?.page_url}" target="_blank" ><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name" title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
         </div>\
         {{/if}}\
         <div class="temp-footer-block">\
@@ -434,7 +396,7 @@ class FinalResultsTemplate {
     </div>\
     {{/if}}\
     {{/if}}\
-    {{if snippetData && snippetData?.template_type && totalSearchResults}}\
+    {{if snippetData && snippetData?.template_type}}\
     <div class="show-more-results-block" ><span class="show-more-results-btn" id="sa-sdk-show-more-results-btn"><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_show_more_results">{{html langTranslator("sa_sdk_show_more_results")}}</span> </span></div>\
     {{/if}}\
       <div class="finalResults snippet-margin {{if snippetData && snippetData?.template_type}}  display-none{{/if}}">\
@@ -451,8 +413,8 @@ class FinalResultsTemplate {
             <!--{{if noResults}} <span class="text-center">No results found</span> {{/if}}-->\
             {{if showAllResults && !customSearchResult}}\
                 {{if taskPrefix !== "SUGGESTED"}}\
-                    <div class="bottom-search-show-all-results {{if totalSearchResults === 0}}d-none{{/if}}">\
-                    <span data-query = "${query}" class="pointer show-all-results" ><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_see_all">{{html langTranslator("sa_sdk_see_all")}}</span> <span class="search-results-count">(${totalSearchResults} <span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_results">{{html langTranslator("sa_sdk_results")}}</span>)</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAYAAACALL/6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACHSURBVHgBlZDBDYUwDEOdin/+sEGkMhBMACOwCSuwASMwAwMglQ3YICTAAQ6lwpdUkV9lB4iImXPmsrd537sYEELYAClA2XiHosAJLS1EVrhfjy9i9gN739ibNGenM09SJA3E1RqJNqT1t7+1U0Up51GYskm7zNaJvpht595zP83JKNdBHtoBNXcrtgi1OOQAAAAASUVORK5CYII="></span>\
+                    <div class="bottom-search-show-all-results">\
+                    <span class="pointer show-all-results" ><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_see_all">{{html langTranslator("sa_sdk_see_all")}}</span> <span class="search-results-count">(${totalSearchResults} <span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_results">{{html langTranslator("sa_sdk_results")}}</span>)</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAYAAACALL/6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACHSURBVHgBlZDBDYUwDEOdin/+sEGkMhBMACOwCSuwASMwAwMglQ3YICTAAQ6lwpdUkV9lB4iImXPmsrd537sYEELYAClA2XiHosAJLS1EVrhfjy9i9gN739ibNGenM09SJA3E1RqJNqT1t7+1U0Up51GYskm7zNaJvpht595zP83JKNdBHtoBNXcrtgi1OOQAAAAASUVORK5CYII="></span>\
                     </div>\
                 {{/if}}\
             {{/if}}\
@@ -474,16 +436,14 @@ class FinalResultsTemplate {
     let hostInstance= me.hostInstance;
     $(messageHtml).find('.temp-fotter-actions').off('click', '.snippet-like-img').on('click', '.snippet-like-img', function (event:any) {
       if(!$(event.currentTarget).closest('.snippet-like-img').hasClass('active')){
-      const searchQuery = event?.currentTarget?.closest('[data-query]')?.getAttribute('data-query');
-      hostInstance.updateFeedBackResult('thumbsUp',searchQuery,'smartAnswer')
+      hostInstance.updateFeedBackResult('thumbsUp',hostInstance.searchQuery,'smartAnswer')
       $(messageHtml).find('.snippet-feedback').removeClass('active');
       $(event.currentTarget).addClass('active');
       }
     });
     $(messageHtml).find('.temp-fotter-actions').off('click', '.snippet-dislike-img').on('click', '.snippet-dislike-img', function (event:any) {
       if(!$(event.currentTarget).closest('.snippet-dislike-img').hasClass('active')){
-      const searchQuery = event?.currentTarget?.closest('[data-query]')?.getAttribute('data-query');
-      FinalResultsTemplate.prototype.appendFeedBaackData(me,messageHtml,'smartAnswer',searchQuery)
+      FinalResultsTemplate.prototype.appendFeedBaackData(me,messageHtml,'smartAnswer')
       $(messageHtml).find('.snippet-feedback').removeClass('active');
       $(event.currentTarget).addClass('active');
       }
@@ -520,16 +480,6 @@ class FinalResultsTemplate {
         $(messageHtml).find('.desc-read-more').removeClass('display-none').addClass('display-block');
       });
     }
-    $(messageHtml).find('.snippet-image-block').off('click', 'img').on('click', 'img', function (event:any) {
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      const src = event?.currentTarget?.closest('[src]')?.getAttribute('src');
-      $('body').append(`<div id="snippet-preview-img"> <img src="${src}"/> <span class="preview-close-icon"> X </span></div>`);
-      $('#snippet-preview-img').off('click', '.preview-close-icon').on('click', '.preview-close-icon', function (event:any) {
-      $('#snippet-preview-img').remove();
-      });
-      return;
-      });
     FinalResultsTemplate.prototype.bindFragmentHoverEvent(me,messageHtml)
     $(messageHtml).off('click', '#sa-sdk-show-more-results-btn').on('click', '#sa-sdk-show-more-results-btn', function (event:any) {
       $(event.currentTarget).parent().next().closest('.finalResults').removeClass('display-none');
@@ -537,7 +487,7 @@ class FinalResultsTemplate {
     });
   }
 
-  appendFeedBaackData(me: any, messageHtml: any,feedBackType:any,searchQuery:any){
+  appendFeedBaackData(me: any, messageHtml: any,feedBackType:any){
     let hostWindowInstance = me.hostInstance;
     let $ = me.hostInstance.$;
     let feedbackMsgData = {
@@ -546,7 +496,7 @@ class FinalResultsTemplate {
           type: 'template',
           payload: {
             template_type: "feedbackFormTemplate",
-            query: searchQuery?searchQuery:hostWindowInstance?.vars?.searchObject.searchText || '',
+            query: hostWindowInstance?.vars?.searchObject.searchText || '',
             feedBackType:feedBackType,
             langTranslator: me?.langTranslator
           }

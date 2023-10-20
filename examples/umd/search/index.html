@@ -9,33 +9,16 @@
 </head>
 
 <body>
+
     <script src="../../../dist/umd/kore-web-sdk-umd-search.js"></script>
-
     <script>
-        //chat window declaration
-        var findlyConfig = KoreSearchSDK.KRSearchConfig;
-        var findlyChatWindow = KoreSearchSDK.KRSearch;
-
-        //create chat window instance
-        var chatWindowInstance = new findlyChatWindow();
-
-        //configure bot configurations
-        var botOptions = findlyConfig.botOptions;
-
-        botOptions.JWTUrl = "PLEASE_ENTER_JWTURL_HERE";
-        botOptions.userIdentity = 'PLEASE_ENTER_USER_EMAIL_ID' // Provide users email id here
-        botOptions.botInfo = {
-            chatBot: "PLEASE_ENTER_APP_NAME",
-            taskBotId: "PLEASE_ENTER_APP_ID",
-        };
-        botOptions.clientId = "PLEASE_ENTER_CLIENT_ID";
-        botOptions.clientSecret = "PLEASE_ENTER_CLIENT_SECRET";
-        botOptions.searchIndexID = "PLEASE_ENTER_SEARCHINDEX_ID";
-
-        //OR  Enter API_key
-        botOptions.API_KEY_CONFIG = { 'KEY': "YOUR_API_KEY" }
-        //show chatwindow
-        chatWindowInstance.show(findlyConfig);
+        KoreSearchSDK.KRSearchConfig.API_KEY_CONFIG.KEY = "f6d22eb680cc40878e29c04dda49fbf7945873ddd3ec484189df3c5776e7316fst16";
+        var envURL = 'searchassist-qa.kore.ai';
+        KoreSearchSDK.KRSearchConfig.botOptions.koreAPIUrl = "https://" + envURL + "/searchassistapi/";
+        KoreSearchSDK.KRSearchConfig.botOptions.baseAPIServer = "https://" + envURL;
+        KoreSearchSDK.KRSearchConfig.botOptions.reWriteSocketURL.hostname = envURL;
+        var findlySDK = new KoreSearchSDK.KRSearch(KoreSearchSDK.KRSearchConfig);
+        findlySDK.show(KoreSearchSDK.KRSearchConfig);
 
     </script>
 </body>

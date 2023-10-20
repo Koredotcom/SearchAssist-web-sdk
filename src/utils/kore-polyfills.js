@@ -96,7 +96,8 @@ function addPolyFils () {
       wrapper.innerHTML = this;
   
       var setFlags = {
-        isValid: true
+        isValid: true,
+        key: "",
       };
       try {
         if (
