@@ -1,14 +1,38 @@
 let findlyConfig:any = {};
+interface JWT_OBJ {
+  koreAPIUrl: string;
+}
 
+declare global {
+  interface Window {
+      JWT_OBJ: JWT_OBJ;
+  }
+}
 let botOptionsFindly: any = {};
 botOptionsFindly.logLevel = "debug";
 var serverUrl = window.location.href;
 var paramUrl="searchassist.kore.ai";
-if(serverUrl && (serverUrl.includes("https"))){ // for installer 
-    paramUrl=serverUrl.split('/')[2]
+var httpStart = 'https://';
+var wssUrl = "wss";
+if(serverUrl && (serverUrl.includes("https://") || serverUrl.includes("http://"))){
+paramUrl=serverUrl.split('/')[2];
+if(serverUrl.includes("https://")){
+httpStart = "https://";
+wssUrl = "wss";
+}else{
+httpStart = "http://";
+wssUrl = "ws";
+}
 }  
 if(window?.JWT_OBJ && window?.JWT_OBJ?.koreAPIUrl){
   paramUrl=window.JWT_OBJ.koreAPIUrl.split("/")[2].split(':')[0];
+    if(window.JWT_OBJ.koreAPIUrl.includes("https://")){
+      httpStart = "https://";
+      wssUrl = "wss";
+    }else{
+      httpStart = "http://";
+      wssUrl = "ws";
+    }
 }
 botOptionsFindly.logLevel = 'debug';
 botOptionsFindly.koreAPIUrl = "https://"+paramUrl+"/searchassistapi/";
@@ -55,7 +79,7 @@ botOptionsFindly.searchIndexID = "PLEASE_ENTER_SEARCHINDEX_ID";
 // To modify the web socket url use the following option
 // For Socket Connection
 botOptionsFindly.reWriteSocketURL = {
-  protocol: "wss",
+  protocol:  wssUrl,
   hostname:paramUrl
 };
 

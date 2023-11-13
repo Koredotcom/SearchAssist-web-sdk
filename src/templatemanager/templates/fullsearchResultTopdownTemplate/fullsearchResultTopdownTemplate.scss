@@ -299,6 +299,7 @@
                 font-size: 14px;
                 line-height: 17px;
                 margin-bottom: 17px;
+                text-transform: capitalize;
             }
             .kr-sg-checkbox{
                 margin-bottom: 10px;
@@ -430,6 +431,7 @@
                 .actions-content{
                     &.manually_added_pin {
                         .tooltiptext{
+                            white-space: nowrap;
                             width: 186px !important;
                             left: -150px !important;
                             &::after{
@@ -487,11 +489,15 @@
                     position: absolute;
                     display: none;
                     right: 72px;
-                    top: -32px;
+                    top: -31px;
                     z-index: 1;
                     padding: 3px 5px;
                     cursor: pointer;
-                }
+                    img{
+                        width: 13px;
+                        height: 13px;
+                    }
+              }
             }
         }
         .conversation-container{
@@ -674,6 +680,9 @@
                             background: var(--sdk-white-bg);
                             box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
                             border-radius: 50%;
+                            img{
+                                content: url('/src/components/search/images/carrot-icon.svg');
+                            }
                         }
                         .all-product-details {
                             .filters-added-data{
@@ -904,9 +913,9 @@
             border: 1px solid var(--sdk-border-mischka-color);
             box-sizing: border-box;
             border-radius: 8px;
-            margin-top: 8px;
+            margin-top: -5px;
             height: auto;
-            padding: 14px 12px;
+            padding: 10px 10px;
             display: inline-flex;
             align-items: center;
             .greeting-img {
@@ -1064,7 +1073,7 @@
                     padding: 0px 10px;
                     border-right: 1px solid var(--sdk-border-iron-color);
                     flex-shrink: 0;
-                    margin-top: 70px;
+                    margin-top: 21px;
                     max-height: calc(100vh - 248px);
                     overflow: auto;
                     position: relative;
@@ -1127,7 +1136,7 @@
                 }
                 .all-product-details {
                     width: calc(100% - 230px);
-                    height: calc(100vh - 156px);
+                    height: calc(100vh - 223px);
                     float: left;
                     position: relative;
                     .content-data-sec{
@@ -1491,6 +1500,7 @@
                         .tooltip-appearnces-clicks{
                             &:hover{
                                 .tooltip_text{
+                                    white-space: nowrap;
                                     visibility: visible;
                                     opacity: 1;
                                 }
@@ -1542,6 +1552,9 @@
             padding: 5px;
             width: 278px !important;
             float: left;
+            .content-info-grid{
+                width: 278px !important;
+            }
         }
         .scroll-top-container{
             position: fixed;
@@ -1614,9 +1627,9 @@
     }
     .sa-sortable-dropdown {
         position: absolute;
-        width: 100%;
+        width: 200px;
         z-index: 1;
-        top: 34px;
+        top: 52px;
         border: 0px;
         background: #FFFFFF;
         box-shadow: 0px 4px 8px rgba(32, 33, 36, 0.15);
@@ -1655,6 +1668,9 @@ $color_1: #9AA0A6;
             background: var(--sdk-white-bg);
             box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
             border-radius: 50%;
+            img{
+                content: url('/src/components/search/images/carrot-icon.svg');
+            }
         }
         .feedback-template-positions {
             background: #F3F8FF;
@@ -1690,6 +1706,14 @@ $color_1: #9AA0A6;
                 margin: 0px 20px 0 13px;
             }
         }
+        .search-temp-one{
+            .snippet-image-block{
+                img {
+                    max-height: 261px;
+                    width: initial;
+                }
+            }
+        }  
     }
 }
 #query-feedback{
