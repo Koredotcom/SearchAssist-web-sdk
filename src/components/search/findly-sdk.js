@@ -21676,12 +21676,26 @@ FindlySDK.prototype.getMergedData = function (settingData, responseData, searchT
               return messageData;
             }
           }
+          _self.sanitize = function(input) {
+            var output = input.replace(/<script[^>]*?>.*?<\/script>/gi, '').
+                   replace(/<[\/\!]*?[^<>]*?>/gi, '').
+                   replace(/<style[^>]*?>.*?<\/style>/gi, '').
+                   replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '').
+                   replace(/&nbsp;/g, '');
+              return output;
+          };
           _self.designDataWithMappings = function (data, mapping) {
             var dataArr = [];
             if (data && data.length && mapping && Object.values(mapping).length) {
               data.forEach((obj) => {
                 var item = {};
                 var chips = [];
+                ['heading','description'].forEach((eleTitle)=>{
+                  if(mapping[eleTitle] === 'file_preview'){
+                    obj[mapping[eleTitle]] = _self.sanitize(obj[mapping[eleTitle]]);
+                  }
+                })
+                
                 if (obj[mapping.heading]) {
                   item.heading = obj[mapping.heading].toString();
                 }
