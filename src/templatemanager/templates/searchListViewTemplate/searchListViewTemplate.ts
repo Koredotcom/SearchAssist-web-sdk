@@ -445,7 +445,7 @@ class SearchListViewTemplate {
                 {{if data.description.length}}\
                 <div class="desc_text_info {{if !data.heading || !data.heading.length}}two-line-desc{{else}}text-truncate{{/if}}">{{html helpers.convertMDtoHTML(data.description)}}</div>\
                 {{/if}}\
-                {{if data.description1.length}}\
+                {{if data.description1}}\
                 <div class="desc_text_info {{if !data.heading || !data.heading.length}}two-line-desc{{else}}text-truncate{{/if}}">{{html helpers.convertMDtoHTML(data.description1)}}</div>\
               {{/if}}\
             </div>\
