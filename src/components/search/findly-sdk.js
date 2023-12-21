@@ -23215,7 +23215,7 @@ FindlySDK.prototype.getFeedBackResult = function () {
   var _self = this;
   var url = _self.API.feedbackPostUrl;
   var payload = {
-    "feedbackLevel": feedbackType,
+    "feedbackLevel": feedbackType.type,
     "event": type,
     "indexPipelineId": _self.vars.experimentsObject.indexPipelineId,
     "searchIndexId":_self.config.botOptions ? _self.config.botOptions.searchIndexID : '',
@@ -23225,6 +23225,9 @@ FindlySDK.prototype.getFeedBackResult = function () {
     "relay": "default",
     "searchRequestId": _self.vars.previousSearchObj.requestId,
     "streamId":  _self.API.streamId
+ }
+ if(feedbackType?.type === 'smartAnswer'){
+  payload = {...payload,...feedbackType?.snippet_data}
  }
  if(feedbackButton || feedbackInputText){
   payload.comments = {};
@@ -23263,7 +23266,7 @@ FindlySDK.prototype.getFeedBackResult = function () {
   if (type === 'thumbsUp') {
   $('.thumbs-up-top-down-black').hide();
   if(!$('.thumbs-up-top-down-blue').is(":visible")){
-    _self.updateFeedBackResult(type, text,'query');
+    _self.updateFeedBackResult(type, text,{type:'query'});
     }
   $('.thumbs-up-top-down-blue').show();
   $('.thumbs-down-top-down-black').show();
@@ -23279,7 +23282,7 @@ FindlySDK.prototype.getFeedBackResult = function () {
           payload: {
             template_type: "feedbackFormTemplate",
             query: _self.vars?.searchObject.searchText || '',
-            feedBackType:'query',
+            feedBackType:{type:'query'},
             langTranslator:langTranslator
           }
         }
@@ -23754,7 +23757,12 @@ if(res?.graph_answer?.payload?.center_panel){
     'image_url':(res?.graph_answer?.payload?.center_panel?.data[0]?.image_url ||''),
     'searchQuery': _self.vars.searchObject.searchText,
     'displayFeedback':_self.vars.feedBackExperience.smartAnswer,
-    'snippet_type':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_type //generative_model
+    'snippet_type':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_type, //generative_model
+    'snippet_feedback_data':{
+      'answer':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content,
+      'model':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_type,
+      'snippetEnabled': true}
+      
   }; 
     if(['citation_snippet','active_citation_snippet'].includes(res?.graph_answer?.payload?.center_panel?.type)){
       snippetObj['reference']=snippetReference;

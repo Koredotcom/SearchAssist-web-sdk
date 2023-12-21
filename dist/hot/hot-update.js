@@ -4,9 +4,12 @@ self["webpackHotUpdatesearch_assist_web_sdk"]("esm",{
 /*!*******************************************************!*\
   !*** ./src/components/search/config/findly-config.ts ***!
   \*******************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 var _a;
 var findlyConfig = {};
 var botOptionsFindly = {};
@@ -94,7 +97,7 @@ findlyConfig = {
     },
     API_KEY_CONFIG: { 'KEY': "YOUR_API_KEY" }
 };
-/* harmony default export */ __webpack_exports__["default"] = (findlyConfig);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (findlyConfig);
 
 
 /***/ })
@@ -103,7 +106,7 @@ findlyConfig = {
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ /* webpack/runtime/getFullHash */
 /******/ (() => {
-/******/ 	__webpack_require__.h = () => ("ff1d848a4bdebe4242b7")
+/******/ 	__webpack_require__.h = () => ("e3cacafbfd5ffa587bd5")
 /******/ })();
 /******/ 
 /******/ }
