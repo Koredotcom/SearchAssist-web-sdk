@@ -6068,6 +6068,7 @@ FindlySDK.prototype.searchEventBinding = function (
           if($("body").hasClass("debug")){
             var responseObject = {
               type: "debugClick",
+              requestId: _self.vars.requestId,
               loading:true
             };
             _self.parentEvent(responseObject)
@@ -23659,7 +23660,8 @@ FindlySDK.prototype.sendMessageToBuilder = function(){
   var _self = this;
   var responseObject = {
     type: "messageData",
-    data: true
+    data: true,
+    requestId: _self.vars.requestId
   };
   _self.parentEvent(responseObject)
  }
@@ -23670,6 +23672,7 @@ FindlySDK.prototype.sendMessageToBuilder = function(){
         $('.tsrb-right-filters').hide()
       var responseObject = {
         type: "debugClick",
+        requestId: _self.vars.requestId
       };
       if($('.show-all-results-outer-wrap').css('display') !== 'none'){
         $('.show-all-results-outer-wrap').css('z-index','9999')
