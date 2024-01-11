@@ -837,7 +837,7 @@ class FullSearchResultsTemplate {
     if (type === 'thumbsUp') {
     $('.thumbs-up-top-down-black').hide();
     if(!$('.thumbs-up-top-down-blue').is(":visible")){
-      hostWindowInstance.updateFeedBackResult(type, text,'query');
+      hostWindowInstance.updateFeedBackResult(type, text,{type:'query'});
       }
     $('.thumbs-up-top-down-blue').show();
     $('.thumbs-down-top-down-black').show();

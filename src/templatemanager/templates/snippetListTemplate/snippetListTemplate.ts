@@ -112,7 +112,7 @@ class SnippetListTemplate {
           payload: {
             template_type: "feedbackFormTemplate",
             query: snippetData.searchQuery,
-            feedBackType:'smartAnswer',
+            feedBackType:{type:'smartAnswer',snippet_data:snippetData?.snippet_feedback_data},
             langTranslator:msgData?.message?.[0]?.component?.payload?.langTranslator
           }
         }
