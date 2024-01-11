@@ -10231,6 +10231,7 @@ FindlySDK.prototype.bindSocketEvents = function () {
     var tempData = JSON.parse(message.data);
     if(tempData && tempData.type === "bot_response"){
       _self.vars.allMessageData = tempData?.message[0]?.component?.payload
+      _self.vars.requestId = tempData?.message[0]?.component?.payload?.requestId
       _self.sendMessageToBuilder();
     }
     if (tempData.from === "bot" && tempData.type === "bot_response") {
