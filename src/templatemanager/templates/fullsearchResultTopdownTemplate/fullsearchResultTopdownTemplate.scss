@@ -425,6 +425,10 @@
                     }
                 }
             }
+            #snippet-demo-template{
+                position: relative;
+                z-index: 2;
+            }
         }
         .customization {
             .customization-tile {
