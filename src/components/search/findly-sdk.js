@@ -23229,6 +23229,11 @@ FindlySDK.prototype.getFeedBackResult = function () {
     "streamId":  _self.API.streamId
  }
  if(feedbackType?.type === 'smartAnswer'){
+  if (Array.isArray(feedbackType.snippet_data.graphAnswer)) {
+    const concatenatedAnswer = feedbackType.snippet_data.graphAnswer.map(item => item.answer_fragment).join(' ');
+    feedbackType.snippet_data.graphAnswer = concatenatedAnswer;
+  }
+  
   payload = {...payload,...feedbackType?.snippet_data}
  }
  if(feedbackButton || feedbackInputText){
@@ -23763,7 +23768,7 @@ if(res?.graph_answer?.payload?.center_panel){
     'displayFeedback':_self.vars.feedBackExperience.smartAnswer,
     'snippet_type':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_type, //generative_model
     'snippet_feedback_data':{
-      'answer':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content,
+      'graphAnswer':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content,
       'model':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_type,
       'snippetEnabled': true}
       
