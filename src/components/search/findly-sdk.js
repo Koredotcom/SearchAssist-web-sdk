@@ -21679,11 +21679,17 @@ FindlySDK.prototype.getMergedData = function (settingData, responseData, searchT
             }
           }
           _self.sanitize = function(input) {
-            var output = input.replace(/<script[^>]*?>.*?<\/script>/gi, '').
-                   replace(/<[\/\!]*?[^<>]*?>/gi, '').
-                   replace(/<style[^>]*?>.*?<\/style>/gi, '').
-                   replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '').
-                   replace(/&nbsp;/g, '');
+            var output = input.replace(/alert\s*\([^)]*\)/g,'').replace(/eval\s*\([^)]*\)/g,'').replace(/rt\s*\([^)]*\)/g,'').replace(/<script[^>]*?>.*?<\/script>/gi, '').
+            replace(/<[\/\!]*?[^<>]*?>/gi, '').
+            replace(/<style[^>]*?>.*?<\/style>/gi, '').
+            replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '').
+            replace(/&nbsp;/g, '').replace(/onmouseover=/g,'').
+                   replace(/javascript:/g,'').replace(/onerror=alert/g,'').
+                   replace(/onerror=/g,'').replace(/onload=/g,'').
+                   replace(/onclick=/g,'').replace(/onmouseout=/g,'').replace(/width=/g,'').
+                   replace(/height=/g,'').replace(/src=/g,'').replace(/href=/g,'').
+                   replace(/iframe/g,'').replace(/IFRAME/g,'').
+                   replace(/video/g,''). replace(/alert/g,'').replace(/onstart/g,'').replace(/alt=/g,'').replace(/prompt\s*\([^)]*\)/g,'');
               return output;
           };
           _self.designDataWithMappings = function (data, mapping) {

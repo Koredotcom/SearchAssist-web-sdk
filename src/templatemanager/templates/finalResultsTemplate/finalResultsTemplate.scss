@@ -908,6 +908,9 @@ margin-bottom: 10px;
         z-index: 99999;
         transform: rotate(45deg) !important;
     }
+    img,video,svg{
+        display: none !important;
+    }
 }
 .snippet_margin_top_0{
     margin-top: 0px !important;
