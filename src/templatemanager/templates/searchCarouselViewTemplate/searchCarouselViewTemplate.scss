@@ -777,4 +777,15 @@
         z-index: 99999;
         transform: rotate(45deg) !important;
     }
+    img,video,svg{
+        display: none !important;
+    }
+}
+.content-info-grid{
+    .desc_text_info{
+        img,video,svg{
+            width: 50px !important;
+            height: 50px !important;
+        }
+    }
 }
