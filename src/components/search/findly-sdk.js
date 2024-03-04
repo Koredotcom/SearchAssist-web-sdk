@@ -23235,7 +23235,6 @@ FindlySDK.prototype.getFeedBackResult = function () {
     "streamId":  _self.API.streamId
  }
  if(feedbackType?.type === 'smartAnswer'){
-  //feedbackType.snippet_data.graphAnswer="Log into your IDFC FIRST Bank Mobile Banking app/Internet banking account,Click on 'Credit Card',Click on 'Unblock' and then click on 'Confirm'"
   if (Array.isArray(feedbackType.snippet_data.graphAnswer)) {
     const concatenateAnswer = (items) => items.map(item => item.answer_fragment || item).join(',');    
     feedbackType.snippet_data.graphAnswer = concatenateAnswer(feedbackType.snippet_data.graphAnswer);
