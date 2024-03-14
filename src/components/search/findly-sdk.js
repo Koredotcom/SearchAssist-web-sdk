@@ -23236,10 +23236,9 @@ FindlySDK.prototype.getFeedBackResult = function () {
  }
  if(feedbackType?.type === 'smartAnswer'){
   if (Array.isArray(feedbackType.snippet_data.graphAnswer)) {
-    const concatenateAnswer = (items) => items.map(item => (item.answer_fragment || item) && item.answer_fragment !== "" ? item.answer_fragment : "").join('');
+    const concatenateAnswer = (items) => items.map(item => item.answer_fragment || item || "").join('');
     feedbackType.snippet_data.graphAnswer = concatenateAnswer(feedbackType.snippet_data.graphAnswer);
 }
-
 payload = { ...payload, ...feedbackType?.snippet_data };
 
  }
