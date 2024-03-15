@@ -17,7 +17,7 @@ class SnippetImageTemplate {
             });
             me.feedBackTemplateObj = new FeedBackFormTemplate();
             setTimeout(()=>{
-              SnippetImageTemplate.prototype.bindSnippetEvents(me, me.messageHtml,msgData?.message?.[0]?.component?.payload?.snippetData);
+              SnippetImageTemplate.prototype.bindSnippetEvents(me, me.messageHtml,msgData?.message?.[0]?.component?.payload?.snippetData,msgData);
             },500)
             return me.messageHtml;
         }
@@ -72,7 +72,7 @@ class SnippetImageTemplate {
       </script>';
         return snipppetImageTemplate;
     }
-    bindSnippetEvents(me:any,messageHtml:any,snippetData:any){
+    bindSnippetEvents(me:any,messageHtml:any,snippetData:any,msgData:any){
       let $ = me.hostInstance.$;
       let hostInstance= me.hostInstance;
       $(messageHtml).find('.temp-fotter-actions').off('click', '.snippet-like-img').on('click', '.snippet-like-img', function (event:any) {
@@ -85,7 +85,7 @@ class SnippetImageTemplate {
 
       $(messageHtml).find('.temp-fotter-actions').off('click', '.snippet-dislike-img').on('click', '.snippet-dislike-img', function (event:any) {
         if(!$(event.currentTarget).closest('.snippet-dislike-img').hasClass('active')){
-          SnippetImageTemplate.prototype.appendFeedBaackData(me,messageHtml,snippetData)
+          SnippetImageTemplate.prototype.appendFeedBaackData(me,messageHtml,snippetData,msgData)
         $(messageHtml).find('.snippet-feedback').removeClass('active');
         $(event.currentTarget).addClass('active');
       }
@@ -106,7 +106,7 @@ class SnippetImageTemplate {
         $(e.currentTarget).parent().find('.sdk-tooltip-container').remove();
         })
       }
-      appendFeedBaackData(me: any, messageHtml: any,snippetData:any){
+      appendFeedBaackData(me: any, messageHtml: any,snippetData:any,msgData:any){
         let $ = me.hostInstance.$;
         let feedbackMsgData = {
           message: [{
@@ -115,7 +115,8 @@ class SnippetImageTemplate {
               payload: {
                 template_type: "feedbackFormTemplate",
                 query: snippetData.searchQuery,
-                feedBackType:{type:'smartAnswer',snippet_data:snippetData?.snippet_feedback_data}
+                feedBackType:{type:'smartAnswer',snippet_data:snippetData?.snippet_feedback_data},
+                langTranslator:msgData?.message?.[0]?.component?.payload?.langTranslator,
               }
             }
           }]
