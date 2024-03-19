@@ -1205,6 +1205,7 @@ body::-webkit-scrollbar {
 				justify-content: space-between;
 				position: sticky;
 				top: 0;
+        z-index: 1;
 			}
             .tsrb-right-filters {
                 display: flex;
