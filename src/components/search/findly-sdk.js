@@ -23776,8 +23776,7 @@ if(res?.graph_answer?.payload?.center_panel){
     'snippet_feedback_data':{
       'graphAnswer':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content,
       'model':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_type,
-      'snippetEnabled': true,
-      'modelName':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_model_name
+      'snippetEnabled': true
     }
       
   }; 
