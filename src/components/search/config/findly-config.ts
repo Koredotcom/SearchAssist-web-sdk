@@ -11,29 +11,29 @@ declare global {
 let botOptionsFindly: any = {};
 botOptionsFindly.logLevel = "debug";
 var serverUrl = window.location.href;
-var paramUrl="searchassist.kore.ai";
+var paramUrl="searchassist-qa.kore.ai";
 var httpStart = 'https://';
 var wssUrl = "wss";
-if(serverUrl && (serverUrl.includes("https://") || serverUrl.includes("http://"))){
-paramUrl=serverUrl.split('/')[2];
-if(serverUrl.includes("https://")){
-httpStart = "https://";
-wssUrl = "wss";
-}else{
-httpStart = "http://";
-wssUrl = "ws";
-}
-}  
-if(window?.JWT_OBJ && window?.JWT_OBJ?.koreAPIUrl){
-  paramUrl=window.JWT_OBJ.koreAPIUrl.split("/")[2].split(':')[0];
-    if(window.JWT_OBJ.koreAPIUrl.includes("https://")){
-      httpStart = "https://";
-      wssUrl = "wss";
-    }else{
-      httpStart = "http://";
-      wssUrl = "ws";
-    }
-}
+// if(serverUrl && (serverUrl.includes("https://") || serverUrl.includes("http://"))){
+// paramUrl=serverUrl.split('/')[2];
+// if(serverUrl.includes("https://")){
+// httpStart = "https://";
+// wssUrl = "wss";
+// }else{
+// httpStart = "http://";
+// wssUrl = "ws";
+// }
+// }  
+// if(window?.JWT_OBJ && window?.JWT_OBJ?.koreAPIUrl){
+//   paramUrl=window.JWT_OBJ.koreAPIUrl.split("/")[2].split(':')[0];
+//     if(window.JWT_OBJ.koreAPIUrl.includes("https://")){
+//       httpStart = "https://";
+//       wssUrl = "wss";
+//     }else{
+//       httpStart = "http://";
+//       wssUrl = "ws";
+//     }
+// }
 botOptionsFindly.logLevel = 'debug';
 botOptionsFindly.koreAPIUrl = "https://"+paramUrl+"/searchassistapi/";
 botOptionsFindly.baseAPIServer = "https://"+paramUrl;
@@ -96,7 +96,7 @@ findlyConfig = {
     showTaskMenuPickerIcon: true, //set true to show TaskMenu Template icon
     showradioOptionMenuPickerIcon: false, //set true to show Radio Option Template icon
   },
-  API_KEY_CONFIG:{'KEY':"YOUR_API_KEY"}
+  API_KEY_CONFIG:{'KEY':"ea143ff0415743ccb4b19cfaa00eac6748c7ac0c87d649658091e6bdf4e14b37stfa"}
 };
 
 export default findlyConfig;
