@@ -23570,10 +23570,10 @@ FindlySDK.prototype.queryAnalyticsClickEvent = function(event,messageHtml){
   FindlySDK.prototype.getSetI18nLangData = function (selectedlang){
     window.addEventListener('message', (event) => {
       if (event?.data?.type === 'localStorageData' && event.origin === event?.data?.originUrlValue) {
-        localStorage.setItem('appLanguage', JSON.stringify(event?.data?.languageValue));
+        localStorage.setItem('queryParamLang', JSON.stringify(event?.data?.languageValue));
       }
     });
-    let lang = selectedlang || window.localStorage.getItem('appLanguage') || 'en';
+    let lang = selectedlang || window.localStorage.getItem('queryParamLang') || 'en';
     if(lang !== 'en')$('body').addClass('SDK'+lang)
     sdk_i18n = lang=='en'?enJsonObj:(lang=='ja'?jaJsonObj:koJsonObj);
 }
