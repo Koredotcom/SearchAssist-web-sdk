@@ -74,7 +74,7 @@ class SnippetParagraphTemplate {
       let hostInstance= me.hostInstance;
           $(messageHtml).find('.temp-fotter-actions').off('click', '.snippet-like-img').on('click', '.snippet-like-img', function (event:any) {
             if(!$(event.currentTarget).closest('.snippet-like-img').hasClass('active')){
-            hostInstance.updateFeedBackResult('thumbsUp',snippetData.searchQuery,'smartAnswer')
+            hostInstance.updateFeedBackResult('thumbsUp',snippetData.searchQuery,{type:'smartAnswer',snippet_data:snippetData?.snippet_feedback_data})
             $(messageHtml).find('.snippet-feedback').removeClass('active');
             $(event.currentTarget).addClass('active');
           }
@@ -120,7 +120,7 @@ class SnippetParagraphTemplate {
             payload: {
               template_type: "feedbackFormTemplate",
               query: snippetData.searchQuery,
-              feedBackType:'smartAnswer',
+              feedBackType:{type:'smartAnswer',snippet_data:snippetData?.snippet_feedback_data},
               langTranslator:msgData?.message?.[0]?.component?.payload?.langTranslator
             }
           }

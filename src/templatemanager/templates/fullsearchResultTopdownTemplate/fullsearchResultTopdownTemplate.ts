@@ -18,10 +18,13 @@ class FullSearchResultTopdownTemplate {
     let me: any = this;
     let $ = me.hostInstance.$;
     me.helpersObj = helpers?.helpers;
-    if (msgData?.message[0] && msgData.message[0].component && msgData.message[0].component?.payload && msgData.message[0].component?.payload?.template_type == 'fullSearchResultTopdownTemplate') {
+        if (msgData?.message[0] && msgData.message[0].component && msgData.message[0].component?.payload && msgData.message[0].component?.payload?.template_type == 'fullSearchResultTopdownTemplate') {
       if (!msgData.message[0].component.payload.helpers) {
         msgData.message[0].component.payload['helpers'] = me.helpersObj;
       }
+      if (msgData?.message[0]?.component?.payload?.langTranslator) {
+        me.langTranslator = msgData.message[0].component.payload.langTranslator;
+     }
       me.messageFullResultHtml = $(FullSearchResultTopdownTemplate.prototype.getTemplateString(msgData.message[0].component.payload.template_type)).tmpl(msgData.message[0].component.payload);
       me.snippetListTemplateObj = new SnippetListTemplate();
       me.snippetParagraphTemplateObj = new SnippetParagraphTemplate();
@@ -102,7 +105,7 @@ class FullSearchResultTopdownTemplate {
     FullSearchResultTopdownTemplate.prototype.searchFacetsList(me, messageHtml, hostWindowInstance.vars.selectedFacetsList, msgData.message[0].component.payload.facetPosition);
     if(msgData.message[0].component.payload.sortableFacetList && msgData.message[0].component.payload.sortableFacetList.length){
       let sortableHtml = $(FullSearchResultTopdownTemplate.prototype.getTopDownSortableFacetsTabs()).tmpl({ sortablefacets: msgData.message[0].component.payload.sortableFacetList,
-        displaySortable: msgData.message[0].component.payload.displaySortable});
+        displaySortable: msgData.message[0].component.payload.displaySortable, langTranslator : msgData.message[0].component.payload.langTranslator});
       $(messageHtml).find('#sa-sdk-sortable-dropdown').empty().append(sortableHtml);
       FullSearchResultTopdownTemplate.prototype.bindSortableFacetClickEvent(me, messageHtml,sortableHtml,msgData.message[0].component.payload.sortableFacetList)
     }
@@ -397,7 +400,7 @@ class FullSearchResultTopdownTemplate {
             FullSearchResultTopdownTemplate.prototype.searchFacetsList(me, messageHtml, hostWindowInstance.vars.selectedFacetsList, response.isFilterAlignedTop);
             if(response.sortableFacetList && response.sortableFacetList.length){
               let sortableHtml = $(FullSearchResultTopdownTemplate.prototype.getTopDownSortableFacetsTabs()).tmpl({ sortablefacets: response.sortableFacetList,
-                displaySortable: response.displaySortable});
+                displaySortable: response.displaySortable,langTranslator :me.langTranslator});
               $(messageHtml).find('#sa-sdk-sortable-dropdown').empty().append(sortableHtml);
               FullSearchResultTopdownTemplate.prototype.bindSortableFacetClickEvent(me, messageHtml,sortableHtml,response.sortableFacetList)
             }
@@ -689,7 +692,8 @@ class FullSearchResultTopdownTemplate {
     let $ = me.hostInstance.$;
     var dataHTML = $(FullSearchResultTopdownTemplate.prototype.getSelectedFactedListTopDownTemplate()).tmplProxy({
       selectedFacets: selectedFacetsList,
-      isTopFacets: isTopFacet
+      isTopFacets: isTopFacet,
+      langTranslator:me.langTranslator
     });
     $(messageHtml).find("#show-filters-added-data").empty().append(dataHTML);
     if ((selectedFacetsList || []).length) {
@@ -877,7 +881,7 @@ class FullSearchResultTopdownTemplate {
     if (type === 'thumbsUp') {
     $('.thumbs-up-top-down-black').hide();
     if(!$('.thumbs-up-top-down-blue').is(":visible")){
-      hostWindowInstance.updateFeedBackResult(type, text,'query');
+      hostWindowInstance.updateFeedBackResult(type, text,{type:'query'});
       }
     $('.thumbs-up-top-down-blue').show();
     $('.thumbs-down-top-down-black').show();
@@ -893,7 +897,7 @@ class FullSearchResultTopdownTemplate {
           payload: {
             template_type: "feedbackFormTemplate",
             query: hostWindowInstance?.vars?.searchObject.searchText || '',
-            feedBackType:'query',
+            feedBackType:{type:'query'},
             langTranslator:msgData.message[0].component.payload.langTranslator
           }
         }

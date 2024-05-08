@@ -92,7 +92,7 @@ class FullSearchResultsTemplate {
   }, 100);
     if(msgData.message[0].component.payload.sortableFacetList && msgData.message[0].component.payload.sortableFacetList.length){
       let sortableHtml = $(FullSearchResultsTemplate.prototype.getBottomUpSortableFacetsTabs()).tmpl({ sortablefacets: msgData.message[0].component.payload.sortableFacetList,
-        displaySortable: msgData.message[0].component.payload.displaySortable});
+        displaySortable: msgData.message[0].component.payload.displaySortable, langTranslator:me.langTranslator});
       $(messageHtml).find('#sa-sdk-sortable-dropdown-bottom-up').empty().append(sortableHtml);
       let sortableAddedListHtml =  $(FullSearchResultsTemplate.prototype.getBottomUpSortableFacetsAddedlist()).tmpl({
         displaySortable: msgData.message[0].component.payload.displaySortable});
@@ -772,7 +772,7 @@ class FullSearchResultsTemplate {
         }
         if(response.sortableFacetList && response.sortableFacetList.length){
           let sortableHtml = $(FullSearchResultsTemplate.prototype.getBottomUpSortableFacetsTabs()).tmpl({ sortablefacets: response.sortableFacetList,
-            displaySortable: response.displaySortable});
+            displaySortable: response.displaySortable,langTranslator:me.langTranslator});
             $(messageHtml).find('#sa-sdk-sortable-dropdown-bottom-up').empty().append(sortableHtml);
             let sortableAddedListHtml =  $(FullSearchResultsTemplate.prototype.getBottomUpSortableFacetsAddedlist()).tmpl({
               displaySortable: response.displaySortable});
@@ -809,7 +809,7 @@ class FullSearchResultsTemplate {
             }
             if(response.sortableFacetList && response.sortableFacetList.length){
               let sortableHtml = $(FullSearchResultsTemplate.prototype.getBottomUpSortableFacetsTabs()).tmpl({ sortablefacets: response.sortableFacetList,
-                displaySortable: response.displaySortable});
+                displaySortable: response.displaySortable, langTranslator:me.langTranslator});
                 $(messageHtml).find('#sa-sdk-sortable-dropdown-bottom-up').empty().append(sortableHtml);
                 let sortableAddedListHtml =  $(FullSearchResultsTemplate.prototype.getBottomUpSortableFacetsAddedlist()).tmpl({
                   displaySortable: response.displaySortable});
@@ -837,7 +837,7 @@ class FullSearchResultsTemplate {
     if (type === 'thumbsUp') {
     $('.thumbs-up-top-down-black').hide();
     if(!$('.thumbs-up-top-down-blue').is(":visible")){
-      hostWindowInstance.updateFeedBackResult(type, text,'query');
+      hostWindowInstance.updateFeedBackResult(type, text,{type:'query'});
       }
     $('.thumbs-up-top-down-blue').show();
     $('.thumbs-down-top-down-black').show();

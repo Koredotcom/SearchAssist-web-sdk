@@ -18,7 +18,7 @@ class SnippetImageAnswerTemplate {
             });
             me.feedBackTemplateObj = new FeedBackFormTemplate();
             setTimeout(()=>{
-              SnippetImageAnswerTemplate.prototype.bindSnippetEvents(me, me.messageHtml,msgData?.message?.[0]?.component?.payload?.snippetData);
+              SnippetImageAnswerTemplate.prototype.bindSnippetEvents(me, me.messageHtml,msgData?.message?.[0]?.component?.payload?.snippetData,msgData);
             },500)
             return me.messageHtml;
         }
@@ -82,12 +82,12 @@ class SnippetImageAnswerTemplate {
       </script>';
         return snipppetImageTemplate;
     }
-    bindSnippetEvents(me:any,messageHtml:any,snippetData:any){
+    bindSnippetEvents(me:any,messageHtml:any,snippetData:any,msgData:any){
       let $ = me.hostInstance.$;
       let hostInstance= me.hostInstance;
       $(messageHtml).find('.temp-fotter-actions').off('click', '.snippet-like-img').on('click', '.snippet-like-img', function (event:any) {
         if(!$(event.currentTarget).closest('.snippet-like-img').hasClass('active')){
-        hostInstance.updateFeedBackResult('thumbsUp',snippetData.searchQuery,'smartAnswer')
+        hostInstance.updateFeedBackResult('thumbsUp',snippetData.searchQuery,{type:'smartAnswer',snippet_data:snippetData?.snippet_feedback_data})
         $(messageHtml).find('.snippet-feedback').removeClass('active');
         $(event.currentTarget).addClass('active');
       }
@@ -95,7 +95,7 @@ class SnippetImageAnswerTemplate {
 
       $(messageHtml).find('.temp-fotter-actions').off('click', '.snippet-dislike-img').on('click', '.snippet-dislike-img', function (event:any) {
         if(!$(event.currentTarget).closest('.snippet-dislike-img').hasClass('active')){
-          SnippetImageAnswerTemplate.prototype.appendFeedBaackData(me,messageHtml,snippetData)
+          SnippetImageAnswerTemplate.prototype.appendFeedBaackData(me,messageHtml,snippetData,msgData)
         $(messageHtml).find('.snippet-feedback').removeClass('active');
         $(event.currentTarget).addClass('active');
       }
@@ -149,7 +149,7 @@ class SnippetImageAnswerTemplate {
         $(e.currentTarget).parent().find('.sdk-tooltip-container').remove();
         })
       }
-      appendFeedBaackData(me: any, messageHtml: any,snippetData:any){
+      appendFeedBaackData(me: any, messageHtml: any,snippetData:any, msgData: any){
         let $ = me.hostInstance.$;
         let feedbackMsgData = {
           message: [{
@@ -158,7 +158,8 @@ class SnippetImageAnswerTemplate {
               payload: {
                 template_type: "feedbackFormTemplate",
                 query: snippetData.searchQuery,
-                feedBackType:'smartAnswer'
+                feedBackType:{type:'smartAnswer',snippet_data:snippetData?.snippet_feedback_data},
+                langTranslator:msgData?.message?.[0]?.component?.payload?.langTranslator
               }
             }
           }]

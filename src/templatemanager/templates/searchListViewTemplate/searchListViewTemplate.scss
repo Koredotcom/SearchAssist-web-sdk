@@ -405,6 +405,7 @@
         margin-bottom: 0px;
     }
     .accordion-content-info{
+        
         background: #FFFFFF;
         box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.1);
         border-radius: 6px;
@@ -1464,5 +1465,25 @@
         z-index: 99999;
         transform: rotate(45deg) !important;
     }
+    img,video,svg{
+        display: none !important;
+    }
 }
+.accordion-content-info{
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    img{
+        max-width: 100%;
+    }
+}
+.content-info{
+    .desc_text_info{
+        img,video,svg{
+            width: 50px !important;
+            height: 50px !important;
+        }
+    }
+}
+
 

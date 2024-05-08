@@ -31,12 +31,11 @@ class SearchGridViewTemplate {
         hostWindowInstance.showMoreClick(showMoreData).then((result: any) => {
           const listHTML = $(SearchGridViewTemplate.prototype.getTemplateString(result?.message[0].component.payload.template_type)).tmpl(result?.message[0].component.payload);
           $(listHTML).find(".show-more-list").remove();
-          $(
-            ".full-search-data-container [templateName=" +
-            showMoreData.templateName +
-            "]"
-          ).before($(listHTML).find(".search-list-template-grid-img-title").children());
+          $(".full-search-data-container [templateName=" + showMoreData.templateName + "]").before($(listHTML).find(".parent-grid-template").children());
           SearchGridViewTemplate.prototype.bindEvents(me, listHTML);
+          if ((Number($(".full-search-data-container [templateName=" + showMoreData.templateName + "]").attr('pageNumber')) + 1) * 5 >= result?.message[0].component.payload.doc_count) {
+            $(".full-search-data-container [templateName=" + showMoreData.templateName + "]").hide();
+          }
         })
         $(e.currentTarget).attr("pageNumber", Number($(e.currentTarget).attr("pageNumber")) + 1);
         });

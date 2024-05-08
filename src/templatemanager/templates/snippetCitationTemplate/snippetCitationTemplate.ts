@@ -17,7 +17,7 @@ class SnippetCitationTemplate {
             });
             me.feedBackTemplateObj = new FeedBackFormTemplate();
             setTimeout(()=>{
-              SnippetCitationTemplate.prototype.bindSnippetEvents(me, me.messageHtml,msgData?.message?.[0]?.component?.payload?.snippetData);
+              SnippetCitationTemplate.prototype.bindSnippetEvents(me, me.messageHtml,msgData?.message?.[0]?.component?.payload?.snippetData, msgData);
             },500)
             return me.messageHtml;
         }
@@ -46,7 +46,7 @@ class SnippetCitationTemplate {
           <div class="reference-block-header">References: </div>\
           <ol type="1" class="reference-list-temp-ul">\
                   {{each(key, item) snippetData.reference}}\
-                      <li class="reference-list-temp-li" title="{{html helpers.convertMDtoHTML(item.title)}}" ><a  class="{{if !item.url}}pointer-events-none {{/if}}" href="${item.url}" target="_blank"><span>{{html helpers.convertMDtoHTML(item.title)}}</span></a></li>\
+                      <li class="reference-list-temp-li" title="${item.title}" ><a  class="{{if !item.url}}pointer-events-none {{/if}}" href="${item.url}" target="_blank"><span>{{html helpers.convertMDtoHTML(item.title)}}</span></a></li>\
                       {{/each}}\
                   </ol>\
         </div>\
@@ -77,12 +77,12 @@ class SnippetCitationTemplate {
       </script>';
         return snipppetCitationTemplate;
     }
-    bindSnippetEvents(me:any,messageHtml:any,snippetData:any){
+    bindSnippetEvents(me:any,messageHtml:any,snippetData:any,msgData:any){
       let $ = me.hostInstance.$;
       let hostInstance= me.hostInstance;
       $(messageHtml).find('.temp-fotter-actions').off('click', '.snippet-like-img').on('click', '.snippet-like-img', function (event:any) {
         if(!$(event.currentTarget).closest('.snippet-like-img').hasClass('active')){
-        hostInstance.updateFeedBackResult('thumbsUp',snippetData.searchQuery,'smartAnswer')
+        hostInstance.updateFeedBackResult('thumbsUp',snippetData.searchQuery,{type:'smartAnswer',snippet_data:snippetData?.snippet_feedback_data})
         $(messageHtml).find('.snippet-feedback').removeClass('active');
         $(event.currentTarget).addClass('active');
       }
@@ -90,7 +90,7 @@ class SnippetCitationTemplate {
 
       $(messageHtml).find('.temp-fotter-actions').off('click', '.snippet-dislike-img').on('click', '.snippet-dislike-img', function (event:any) {
         if(!$(event.currentTarget).closest('.snippet-dislike-img').hasClass('active')){
-          SnippetCitationTemplate.prototype.appendFeedBaackData(me,messageHtml,snippetData)
+          SnippetCitationTemplate.prototype.appendFeedBaackData(me,messageHtml,snippetData,msgData)
         $(messageHtml).find('.snippet-feedback').removeClass('active');
         $(event.currentTarget).addClass('active');
       }
@@ -111,7 +111,7 @@ class SnippetCitationTemplate {
         $(e.currentTarget).parent().find('.sdk-tooltip-container').remove();
         })
       }
-      appendFeedBaackData(me: any, messageHtml: any,snippetData:any){
+      appendFeedBaackData(me: any, messageHtml: any,snippetData:any, msgData: any) {
         let $ = me.hostInstance.$;
         let feedbackMsgData = {
           message: [{
@@ -120,7 +120,8 @@ class SnippetCitationTemplate {
               payload: {
                 template_type: "feedbackFormTemplate",
                 query: snippetData.searchQuery,
-                feedBackType:'smartAnswer'
+                feedBackType:{type:'smartAnswer',snippet_data:snippetData?.snippet_feedback_data},
+                langTranslator:msgData?.message?.[0]?.component?.payload?.langTranslator
               }
             }
           }]

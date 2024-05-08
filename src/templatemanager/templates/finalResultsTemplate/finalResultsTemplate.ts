@@ -116,7 +116,7 @@ class FinalResultsTemplate {
       var url = $(e.target).attr("snippetURL");
       window.open(url, '_blank','noopener');
     })
-    FinalResultsTemplate.prototype.bindSnippetEvents(me,messageHtml);
+    FinalResultsTemplate.prototype.bindSnippetEvents(me,messageHtml,msgData.message[0].component.payload);
     FinalResultsTemplate.prototype.tooltipBindEvent(me);
   }
   getTemplateString(type: any) {
@@ -353,7 +353,7 @@ class FinalResultsTemplate {
           <div class="reference-block-header">References: </div>\
           <ol type="1" class="reference-list-temp-ul">\
                   {{each(key, item) snippetData.reference}}\
-                      <li class="reference-list-temp-li" title="{{html helpers.convertMDtoHTML(item.title)}}"><a class="{{if !item.url}}pointer-events-none {{/if}}"  href="${item.url}" target="_blank"><span>{{html helpers.convertMDtoHTML(item.title)}}</span></a></li>\
+                      <li class="reference-list-temp-li" title="${item.title}"><a class="{{if !item.url}}pointer-events-none {{/if}}"  href="${item.url}" target="_blank"><span>{{html helpers.convertMDtoHTML(item.title)}}</span></a></li>\
                       {{/each}}\
                   </ol>\
         </div>\
@@ -469,13 +469,13 @@ class FinalResultsTemplate {
     let me: any = this;
     me.hostInstance.botActionTrigger(event);
   };
-  bindSnippetEvents(me:any,messageHtml:any){
+  bindSnippetEvents(me:any,messageHtml:any,payload:any){
     let $ = me.hostInstance.$;
     let hostInstance= me.hostInstance;
     $(messageHtml).find('.temp-fotter-actions').off('click', '.snippet-like-img').on('click', '.snippet-like-img', function (event:any) {
       if(!$(event.currentTarget).closest('.snippet-like-img').hasClass('active')){
       const searchQuery = event?.currentTarget?.closest('[data-query]')?.getAttribute('data-query');
-      hostInstance.updateFeedBackResult('thumbsUp',searchQuery,'smartAnswer')
+      hostInstance.updateFeedBackResult('thumbsUp',searchQuery,{type:'smartAnswer',snippet_data:payload?.snippetData?.snippet_feedback_data})
       $(messageHtml).find('.snippet-feedback').removeClass('active');
       $(event.currentTarget).addClass('active');
       }
@@ -483,7 +483,7 @@ class FinalResultsTemplate {
     $(messageHtml).find('.temp-fotter-actions').off('click', '.snippet-dislike-img').on('click', '.snippet-dislike-img', function (event:any) {
       if(!$(event.currentTarget).closest('.snippet-dislike-img').hasClass('active')){
       const searchQuery = event?.currentTarget?.closest('[data-query]')?.getAttribute('data-query');
-      FinalResultsTemplate.prototype.appendFeedBaackData(me,messageHtml,'smartAnswer',searchQuery)
+      FinalResultsTemplate.prototype.appendFeedBaackData(me,messageHtml,{type:'smartAnswer',snippet_data:payload?.snippetData?.snippet_feedback_data},searchQuery)
       $(messageHtml).find('.snippet-feedback').removeClass('active');
       $(event.currentTarget).addClass('active');
       }
@@ -548,7 +548,7 @@ class FinalResultsTemplate {
             template_type: "feedbackFormTemplate",
             query: searchQuery?searchQuery:hostWindowInstance?.vars?.searchObject.searchText || '',
             feedBackType:feedBackType,
-            langTranslator: me?.langTranslator
+            langTranslator: me?.langTranslator,
           }
         }
       }]

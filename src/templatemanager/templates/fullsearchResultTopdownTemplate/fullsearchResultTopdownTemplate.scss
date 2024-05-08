@@ -425,6 +425,10 @@
                     }
                 }
             }
+            #snippet-demo-template{
+                position: relative;
+                z-index: 2;
+            }
         }
         .customization {
             .customization-tile {
@@ -1024,6 +1028,7 @@
                         }
                         .tab-sec{
                             padding: 20px 10px 0px;
+                            background: #fff;
                         }
                         .content-data-sec{
                             padding: 9px 15px 0 20px;

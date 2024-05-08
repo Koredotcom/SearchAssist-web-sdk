@@ -1338,6 +1338,9 @@ body{
         max-height: 70px;
         .recentSearch{
             &.tile_with_header{
+                &:hover {
+                        background: #EFF0F1;
+                    }
                 cursor: pointer;
                 width: 100%;
                 position: relative;
@@ -1359,7 +1362,7 @@ body{
                     img{
                         position: absolute;
                         left: 7px;
-                        top: 8px;
+                        top: 10px;
                     }
                 }
                 &:hover{
@@ -3608,7 +3611,7 @@ body{
                 img{
                     position: absolute;
                     left: 7px;
-                    top: 10px;
+                    top: 9px;
                 }
             }
         }
