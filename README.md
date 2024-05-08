@@ -32,6 +32,9 @@ Configure KRSearchConfig
  KRSearchConfig.botOptions.clientSecret = "PLEASE_ENTER_CLIENT_SECRET";
  KRSearchConfig.botOptions.searchIndexID = "PLEASE_ENTER_SEARCHINDEX_ID";
 
+ KRSearchConfig.botOptions.koreAPIUrl = 'PLEASE_ENTER_YOUR_API_URL'+'/searchassistapi/';
+ KRSearchConfig.botOptions.baseAPIServer = 'PLEASE_ENTER_YOUR_API_URL';
+
  /* 
  Important Note: These keys are provided here for quick demos to generate JWT token at client side but not for Production environment.
  Refer below document for JWT token generation at server side. Client Id and Client secret should maintained at server end.
