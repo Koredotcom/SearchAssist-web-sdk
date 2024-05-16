@@ -1,6 +1,6 @@
 {
   "name": "search-assist-web-sdk",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Kore.ai offers Bots SDKs as a set of platform-specific client libraries that provide a quick and convenient way to integrate Kore.ai Bots chat capability into custom applications",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,15 +15,14 @@
     "prettier-v": "./node_modules/.bin/prettier --debug-check 'src/**/*.{ts,js}'",
     "prettier-fix": "./node_modules/.bin/prettier --write 'src/**/*.{ts,js}'"
   },
-  "main": "dist/kore-web-sdk.esm.browser",
-  "types": "dist/kore-web-sdk.esm.browser",
+  "main": "dist/kore-web-sdk.esm.browser.js",
   "bin": {
     "kore-web-sdk": "dist/kore-web-sdk.esm.browser.js"
   },
   "module": "dist/kore-web-sdk.esm.browser.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:Koredotcom/SearchAssist-web-sdk#1.0.0"
+    "url": "git@github.com:Koredotcom/SearchAssist-web-sdk#2.0.0"
   },
   "author": "Pavan Kumar Ichapurapu",
   "license": "MIT",
