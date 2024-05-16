@@ -327,6 +327,7 @@ FindlySDK.prototype.initVariables = function () {
   vars.showingMatchedResults = false;
   vars.isSocketInitialize = false;
   vars.isHostedSdk = false;
+  vars.hostedSDKConfig={};
   vars.isSocketReInitialize = true;
   vars.locationObject = {};
   vars.allMessageData = {};
@@ -10475,6 +10476,10 @@ FindlySDK.prototype.sendMessage = function (chatInput, renderMsg, msgObject, isb
         _self.bot.options.botInfo.customData["userContext"] || {};
       _self.vars.isCustomDataInitialize = true;
     }
+    let loginUserContext = '';
+    if (window.localStorage.getItem("loginUserContext")){
+       loginUserContext = JSON.parse(window.localStorage.getItem("loginUserContext"));
+    }
     var contextObj = $("#contextjsonfield").val();
     if (contextObj) {
       contextObj.trim();
@@ -10486,6 +10491,8 @@ FindlySDK.prototype.sendMessage = function (chatInput, renderMsg, msgObject, isb
         }
       }
       _self.bot.options.botInfo.customData["userContext"] = contextObj;
+     if(loginUserContext) _self.bot.options.botInfo.customData["userContext"]  = {..._self.bot.options.botInfo.customData["userContext"],...loginUserContext};
+      
     } else {
       if (!window.localStorage.getItem("userName")) {
         _self.customData;
@@ -10499,6 +10506,7 @@ FindlySDK.prototype.sendMessage = function (chatInput, renderMsg, msgObject, isb
           user_age: window.localStorage.getItem("userAge"),
         };
       }
+      if(loginUserContext) _self.bot.options.botInfo.customData["userContext"]  = {..._self.bot.options.botInfo.customData["userContext"],...loginUserContext};
     }
   }
 
@@ -22937,7 +22945,6 @@ FindlySDK.prototype.setJWT = function (jwtToken) {
 FindlySDK.prototype.setupInternalAssertionFunctionWithAPIKey = function () {
   var _self = this;
   _self.getJWTByAPIKey(_self.config.botOptions).then(function (res) {
-    _self.config.botOptions.callback(null, _self.config.botOptions);
     // _self.emit(_self.EVENTS.JWT_SUCCESS, res);
     _self.setJWT(res.jwt);
     _self.config.botOptions.searchIndexID = res.botInfo.searchIndexId;
@@ -22945,9 +22952,17 @@ FindlySDK.prototype.setupInternalAssertionFunctionWithAPIKey = function () {
       _self.config.botOptions.botInfo.chatBot = res.botInfo.name;
       _self.config.botOptions.botInfo.taskBotId = res.botInfo._id;
       _self.config.botOptions.clientId = res.botInfo.clientId;
-      _self.config.botOptions.clientSecretId = res.botInfo.clientSecretId;
+      _self.config.botOptions.clientSecret = res.botInfo.clientSecretId;
     }
-    if (res.identity) {
+    let loginUserContext = '';
+  if (window.localStorage.getItem("loginUserContext")){
+     loginUserContext = JSON.parse(window.localStorage.getItem("loginUserContext"));
+     _self.config.botOptions.userIdentity = loginUserContext?.user_email;
+     _self.setupInternalAssertionFunction();
+  }else {
+    _self.config.botOptions.callback(null, _self.config.botOptions);
+  }
+    if (res.identity && !loginUserContext) {
       _self.config.botOptions.userIdentity = res.identity;
     }
     if (_self.vars.isHostedSdk) {
@@ -22960,6 +22975,7 @@ FindlySDK.prototype.setupInternalAssertionFunctionWithAPIKey = function () {
 FindlySDK.prototype.show = function (config) {
   var _self = this;
   _self.vars.isHostedSdk = true;
+  _self.vars.hostedSDKConfig = config;
   if(!$('body').find('#sa-sdk-loading').length){
     $('body').append(`
     <div id="sa-sdk-loading">
@@ -22991,6 +23007,7 @@ FindlySDK.prototype.show = function (config) {
 FindlySDK.prototype.getAssertionToken = function (options, callback) {
   var _self = this;
   options.callback = callback;
+  
   if (_self.config && _self.config.API_KEY_CONFIG && _self.config.API_KEY_CONFIG.KEY !== 'YOUR_API_KEY') {
     _self.setupInternalAssertionFunctionWithAPIKey();
   } else {
@@ -23161,6 +23178,12 @@ FindlySDK.prototype.backToSearchClickEvent = function (event) {
       $(".full-search-data-container").empty();
       $(".skelton-load-img").hide();
       _self.destroy();
+      if(event==='refresh'){
+        $(".start-search-icon-div").remove(); 
+        $(".search-container").remove(); 
+        $("#introText").remove();
+        _self.show(_self.vars.hostedSDKConfig);
+      }
 }
 FindlySDK.prototype.getFeedBackResult = function () {
   var _self = this;
