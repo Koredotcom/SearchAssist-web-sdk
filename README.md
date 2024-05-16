@@ -11,7 +11,7 @@ With just few lines of code, you can embed our SearchAssist SDK into your applic
 First, install searchassist SDK via the [npm](https://www.npmjs.com/get-npm) package manager:
 
 ```bash
-npm install --save git+ssh://github.com/Koredotcom/SearchAssist-web-sdk#1.0.0
+npm install --save git+ssh://github.com/Koredotcom/SearchAssist-web-sdk#2.0.0
 ```
 
 Get KRSearch and KRSearchConfig
