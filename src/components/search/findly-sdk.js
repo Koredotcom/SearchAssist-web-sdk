@@ -23713,8 +23713,9 @@ if(res?.graph_answer?.payload?.center_panel){
   if(Object.keys(res.graph_answer.payload.center_panel).length>0){
     var listSnippetData = '';
     var snippetReference = [];
+    if( res?.graph_answer?.payload?.center_panel?.type==='no_answer_snippet') return snippetObj;
     if(['paragraph_snippet','answer_snippet','image_snippet', 'image_answer_snippet'].includes(res?.graph_answer?.payload?.center_panel?.type)){
-      if(res?.graph_answer?.payload?.center_panel?.data[0]?.answer)
+      if(res?.graph_answer?.payload?.center_panel?.data[0]?.answer && !res.graph_answer.payload.center_panel.data[0].snippet_content?.length)
     res.graph_answer.payload.center_panel.data[0].snippet_content = res?.graph_answer?.payload?.center_panel?.data[0]?.answer;
     if(res?.graph_answer?.payload?.center_panel?.data[0]?.title)
     res.graph_answer.payload.center_panel.data[0].snippet_title = res?.graph_answer?.payload?.center_panel?.data[0]?.title;
@@ -23727,7 +23728,7 @@ if(res?.graph_answer?.payload?.center_panel){
         listSnippetData = '';
       }
     } else if(['citation_snippet','active_citation_snippet'].includes(res?.graph_answer?.payload?.center_panel?.type)){
-      if(res?.graph_answer?.payload?.center_panel?.data[0]?.answer)
+      if(res?.graph_answer?.payload?.center_panel?.data[0]?.answer && !res.graph_answer.payload.center_panel.data[0].snippet_content?.length)
     res.graph_answer.payload.center_panel.data[0].snippet_content = res?.graph_answer?.payload?.center_panel?.data[0]?.answer;
     if(res?.graph_answer?.payload?.center_panel?.data[0]?.title)
     res.graph_answer.payload.center_panel.data[0].snippet_title = res?.graph_answer?.payload?.center_panel?.data[0]?.title;
