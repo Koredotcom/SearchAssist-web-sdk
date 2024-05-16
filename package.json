@@ -15,9 +15,9 @@
     "prettier-v": "./node_modules/.bin/prettier --debug-check 'src/**/*.{ts,js}'",
     "prettier-fix": "./node_modules/.bin/prettier --write 'src/**/*.{ts,js}'"
   },
-  "main": "dist/kore-web-sdk.esm.browser.js",
+  "main": "dist/kore-web-sdk.esm.browser",
   "bin": {
-    "kore-web-sdk": "dist/kore-web-sdk.esm.browser.js"
+    "kore-web-sdk": "dist/kore-web-sdk.esm.browser"
   },
   "module": "dist/kore-web-sdk.esm.browser.js",
   "repository": {
