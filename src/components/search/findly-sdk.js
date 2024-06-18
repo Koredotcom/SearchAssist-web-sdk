@@ -23232,11 +23232,11 @@ FindlySDK.prototype.getFeedBackResult = function () {
  }
  if(feedbackType?.type === 'smartAnswer'){
   if (Array.isArray(feedbackType.snippet_data.graphAnswer)) {
-    const concatenatedAnswer = feedbackType.snippet_data.graphAnswer.map(item => item.answer_fragment).join(' ');
-    feedbackType.snippet_data.graphAnswer = concatenatedAnswer;
-  }
-  
-  payload = {...payload,...feedbackType?.snippet_data}
+    const concatenateAnswer = (items) => items.map(item => item.answer_fragment || item || "").join('');
+    feedbackType.snippet_data.graphAnswer = concatenateAnswer(feedbackType.snippet_data.graphAnswer);
+}
+payload = { ...payload, ...feedbackType?.snippet_data };
+
  }
  if(feedbackButton || feedbackInputText){
   payload.comments = {};
@@ -23709,8 +23709,9 @@ if(res?.graph_answer?.payload?.center_panel){
   if(Object.keys(res.graph_answer.payload.center_panel).length>0){
     var listSnippetData = '';
     var snippetReference = [];
+    if( res?.graph_answer?.payload?.center_panel?.type==='no_answer_snippet') return snippetObj;
     if(['paragraph_snippet','answer_snippet','image_snippet', 'image_answer_snippet'].includes(res?.graph_answer?.payload?.center_panel?.type)){
-      if(res?.graph_answer?.payload?.center_panel?.data[0]?.answer)
+      if(res?.graph_answer?.payload?.center_panel?.data[0]?.answer && !res.graph_answer.payload.center_panel.data[0].snippet_content?.length)
     res.graph_answer.payload.center_panel.data[0].snippet_content = res?.graph_answer?.payload?.center_panel?.data[0]?.answer;
     if(res?.graph_answer?.payload?.center_panel?.data[0]?.title)
     res.graph_answer.payload.center_panel.data[0].snippet_title = res?.graph_answer?.payload?.center_panel?.data[0]?.title;
@@ -23723,7 +23724,7 @@ if(res?.graph_answer?.payload?.center_panel){
         listSnippetData = '';
       }
     } else if(['citation_snippet','active_citation_snippet'].includes(res?.graph_answer?.payload?.center_panel?.type)){
-      if(res?.graph_answer?.payload?.center_panel?.data[0]?.answer)
+      if(res?.graph_answer?.payload?.center_panel?.data[0]?.answer && !res.graph_answer.payload.center_panel.data[0].snippet_content?.length)
     res.graph_answer.payload.center_panel.data[0].snippet_content = res?.graph_answer?.payload?.center_panel?.data[0]?.answer;
     if(res?.graph_answer?.payload?.center_panel?.data[0]?.title)
     res.graph_answer.payload.center_panel.data[0].snippet_title = res?.graph_answer?.payload?.center_panel?.data[0]?.title;
@@ -23772,7 +23773,9 @@ if(res?.graph_answer?.payload?.center_panel){
     'snippet_feedback_data':{
       'graphAnswer':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_content,
       'model':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_type,
-      'snippetEnabled': true}
+      'snippetEnabled': true,
+      'modelName':res?.graph_answer?.payload?.center_panel?.data[0]?.snippet_model_name
+    }
       
   }; 
     if(['citation_snippet','active_citation_snippet'].includes(res?.graph_answer?.payload?.center_panel?.type)){
