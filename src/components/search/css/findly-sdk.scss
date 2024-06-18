@@ -3856,11 +3856,15 @@ display: none !important;
     background-position: center;
     background-size: cover;
     cursor: pointer;
-    background-color: #fff;
-    box-shadow: 14px 4px 64px 12px rgb(18 61 101 / 40%), -16px -16px 64px 0 rgb(255 255 255 / 80%), inset -8px -6px 80px 0 rgb(255 255 255 / 18%);
+    background: transparent;
+    // background-color: #fff;
     img{
         width: 40px;
-    height: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: transparent;
+        box-shadow: 14px 4px 64px 12px rgb(18 61 101 / 40%), -16px -16px 64px 0 rgba(65, 58, 58, 0.8), inset -8px -6px 80px 0 rgb(255 255 255 / 18%);
+
     }
 }
 //Feedback CSS Starts
