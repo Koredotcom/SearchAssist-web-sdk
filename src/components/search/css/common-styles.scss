@@ -4699,6 +4699,10 @@ li{
     }
     .start-search-icon-div{
         display: block;
+        width: fit-content;
+        height: auto;
+    background: transparent;
+    text-align: end;
         &.hideStartIcon{
             display: none !important;
         }
@@ -4709,6 +4713,12 @@ li{
         box-sizing: border-box;
         border-radius: 6px;
         padding: 13px 20px 14px;
+        margin-bottom: 28px;
+        position: absolute;
+        width: max-content;
+        right: 0 !important;
+        bottom: 25px !important;
+        pointer-events: none;
         &::before{
             border-bottom: 1px solid #E0E1E9;
             content: "";
@@ -4717,8 +4727,8 @@ li{
             position: absolute;
             background: #eff0f1;
             color: #3c4043;
-            right: 20px;
-            bottom: -8px;
+            right: 16px;
+            bottom: -7.6px;
             border-right: 1px solid #E0E1E9;
             transform: rotate(45deg);
         }

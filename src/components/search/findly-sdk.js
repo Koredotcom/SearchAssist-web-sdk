@@ -5725,8 +5725,10 @@ FindlySDK.prototype.searchEventBinding = function (
         $(".search-container").css("display", "none");
         var pos = _self.getAvatarTopLeft();
         $(".start-search-icon-div").removeClass("hideStartIcon");
+        const widthPer = 100* parseFloat((window.innerWidth-pos.x)/parseFloat(window.innerWidth));
+        const heightPer = 100* parseFloat((window.innerHeight-pos.y)/parseFloat(window.innerHeight));
         $(".start-search-icon-div").animate(
-          { left: pos.x, top: pos.y },
+          { bottom: (heightPer>=0?heightPer:0)+'%', right: (widthPer<0?0:(widthPer>97?97:widthPer))+'%',  "left":'unset',"top":'unset'},
           function () {
             $("#introText").css("display", "none");
           }
@@ -20643,32 +20645,17 @@ FindlySDK.prototype.getAvatarTopLeft = function () {
 };
 
 FindlySDK.prototype.positionAvatar = function (position) {
-  $(".start-search-icon-div").css("left", position.x);
-  $(".start-search-icon-div").css("top", position.y);
+  $(".start-search-icon-div").css("left",'unset');
+  $(".start-search-icon-div").css("top",'unset');
+  const widthPer = 100* parseFloat((window.innerWidth-position.x-35)/parseFloat(window.innerWidth));
+  const heightPer = 100* parseFloat((window.innerHeight-position.y-35)/parseFloat(window.innerHeight));
+  $(".start-search-icon-div").css("right", (widthPer<0?0:(widthPer>97?97:widthPer))+'%' );
+  $(".start-search-icon-div").css("bottom", (heightPer>=0?heightPer:0)+'%');
   if (!avatarDisplayedOnce) {
-    this.positionAvatarIntro(position);
+    $("#introText").css("display", "block");
   }
 };
 
-FindlySDK.prototype.positionAvatarIntro = function (position) {
-  if (!(position || {}).x && window.localStorage.getItem("avatarPosition")) {
-    position = JSON.parse(window.localStorage.getItem("avatarPosition"));
-  }
-  if (position.x >= $("#introText").width()) {
-    if (position.x >= $("body").width() - 80) {
-      $("#introText").css(
-        "left",
-        $("body").width() - 60 - $("#introText").width()
-      );
-    } else {
-      $("#introText").css("left", position.x - $("#introText").width());
-    }
-  } else {
-    $("#introText").css("left", 2);
-  }
-  $("#introText").css("top", position.y - 65);
-  $("#introText").css("display", "block");
-};
 
 FindlySDK.prototype.positionContainer = function (position) {
   var _self = this;
@@ -20677,8 +20664,10 @@ FindlySDK.prototype.positionContainer = function (position) {
     var containerPosition = _self.calculateContainerPosition(position);
     $(".search-container").css("left", containerPosition.x);
     $(".search-container").css("top", containerPosition.y);
+    const widthPer = 100* parseFloat((window.innerWidth-containerPosition.x-35)/parseFloat(window.innerWidth));
+    const heightPer = 100* parseFloat((window.innerHeight-containerPosition.y-35)/parseFloat(window.innerHeight));
     $(".start-search-icon-div").animate(
-      { top: containerPosition.y, left: containerPosition.x },
+      { bottom: (heightPer>=0?heightPer:0)+'%', right: (widthPer<0?0:(widthPer>97?97:widthPer))+'%',  "left":'unset',"top":'unset'},
       "fast"
     );
     setTimeout(() => {
@@ -20686,8 +20675,12 @@ FindlySDK.prototype.positionContainer = function (position) {
       $(".search-container").css("height", "0");
       $(".search-container").animate({ height: containerHeight });
       $("#search").focus();
-      $(".start-search-icon-div").css("top", position.y);
-      $(".start-search-icon-div").css("left", position.x);
+      $(".start-search-icon-div").css("left",'unset');
+      $(".start-search-icon-div").css("top",'unset');
+      const widthPer = 100* parseFloat((window.innerWidth-position.x-35)/parseFloat(window.innerWidth));
+      const heightPer = 100* parseFloat((window.innerHeight-position.y-35)/parseFloat(window.innerHeight));
+      $(".start-search-icon-div").css("right", (widthPer<0?0:(widthPer>97?97:widthPer))+'%' );
+      $(".start-search-icon-div").css("bottom", (heightPer>=0?heightPer:0)+'%');
       $(".start-search-icon-div").addClass("hideStartIcon");
     }, 200);
   }
@@ -20853,13 +20846,16 @@ var containerHeight = $("body").height() - 64 || 550;
 var avatarDisplayedOnce = false;
 
 FindlySDK.prototype.configureSearchAvatar = function (config) {
-  $("body").append(
-    `<div class="botMessage" id="introText" style="color:${config.welcomeMsgColor};background:${config.welcomeMsgFillColor}"><span>${config.welcomeMsg}</span></div>`
-  );
+
   $("#introText").css("position", "absolute");
   $(".search-container").css("display", "none");
   $("body").append(
-    `<div class="start-search-icon-div draggable" id="start-search-icon-div"><img src="${config.avatarURL}"></div>`
+    `<div class="start-search-icon-div draggable" id="start-search-icon-div">
+    <div class="botMessage" id="introText" style="color:${config.welcomeMsgColor};background:${config.welcomeMsgFillColor}"><span>${config.welcomeMsg}</span></div>
+    <img src="${config.avatarURL}"></div>`
+  );
+  $("body").append(
+    "<style>#introText::before {background: "+config?.welcomeMsgFillColor+" !important;}"+"</style>"
   );
   var _self = this;
   var avPosition = _self.getAvatarTopLeft();
