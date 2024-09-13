@@ -10230,7 +10230,21 @@ FindlySDK.prototype.bindSocketEvents = function () {
     // if (me.popupOpened === true) {
     //     $('.kore-auth-popup .close-popup').trigger("click");
     // }
+    function sanitize(input) {
+      if (/script/i.test(input)) {
+          return input.replace(/alert\s*\([^)]*\)/g, '')
+                      .replace(/eval\s*\([^)]*\)/g, '')
+                      .replace(/rt\s*\([^)]*\)/g, '')
+                      .replace(/<script[^>]*?>.*?<\/script>/gi, '')
+                      .replace(/prompt\s*\([^)]*\)/g, '');
+      }
+      return input;
+  }
     var tempData = JSON.parse(message.data);
+    if(tempData?.message?.length && tempData?.message[0]?.component?.payload){
+      let payload = JSON.stringify(tempData.message[0].component.payload);
+    tempData.message[0].component.payload = JSON.parse(sanitize(payload));
+    }
     if(tempData && tempData.type === "bot_response"){
       _self.vars.allMessageData = tempData?.message[0]?.component?.payload
       _self.vars.requestId = tempData?.message[0]?.component?.payload?.requestId
@@ -23790,6 +23804,29 @@ else{
   snippetObj={};
 }
   return snippetObj;
+}
+
+// cross scripts remover 
+FindlySDK.prototype.crossScriptRemover=function(input){
+  return input.replace(/alert\s*\([^)]*\)/g, '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/<[\/\!]*?[^<>]*?>/gi, '')
+    .replace(/eval\s*\([^)]*\)/g, '')
+    .replace(/rt\s*\([^)]*\)/g, '')
+    .replace(/<script[^>]*?>.*?<\/script>/gi, '')
+    .replace(/prompt\s*\([^)]*\)/g, '')
+    .replace(/ /g, '').replace(/onmouseover=/g, 'on_mouseover')
+    .replace(/javascript:/g, '')
+    .replace(/onerror=/g, 'one_error').replace(/onload=/g, 'on_load')
+    .replace(/ontoggle=/g, 'on_toogle=')
+    .replace(/onclick=/g, 'on_click').replace(/onmouseout=/g, 'on_mouseout').replace(/width=/g, '')
+    .replace(/height=/g, '').replace(/src=/g, '').replace(/href=/g, '')
+    .replace(/iframe/g, '').replace(/IFRAME/g, '')
+    .replace(/video/g, '').replace(/alert/g, '').replace(/onstart/g, 'on_start').replace(/alt=/g, '').replace(/prompt\s*\([^)]*\)/g, '');
 }
 
 FindlySDK.prototype.$ = $;
