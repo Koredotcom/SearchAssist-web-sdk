@@ -10144,36 +10144,7 @@ FindlySDK.prototype.getGreetingMsgTemplate = function () {
       </script> ';
   return greetingMsg;
 };
-FindlySDK.prototype.getJWT = function (options, callback) {
-  var jsonData = {
-    // clientId: options.clientId,
-    // clientSecret: options.clientSecret,
-    // identity: options.userIdentity,
-    // aud: "",
-    // isAnonymous: false,
-  };
-  var bearer =  "bearer " + this.bot?.options?.accessToken || '';
-var headers = {};
-headers["AccountId"]= "60547150f60ec050f4dfea8b";
-headers["Authorization"] = bearer;
-headers["Content-Type"] = "application/json;charset=UTF-8";
-headers["state"] = "configured";
-  return $.ajax({
-    url: options.JWTUrl,
-    type: "post",
-    data: jsonData,
-    dataType: "json",
-    headers: headers,
-    success: function (data) {
-      options.assertion = data.jwt;
-      if (callback) {
-        callback(null, options);
-      }
-    },
-    error: function (err) { },
-  });
-};
-// FindlySDK.prototype.initKoreSDK = function () {
+
 FindlySDK.prototype.initKoreSDK = function (config) {
   var _self = this;
   config = config || _self.config.botOptions;
@@ -10208,9 +10179,16 @@ FindlySDK.prototype.resetSocketDisconnection = function () {
       _self.vars.isSocketInitialize = false;
       _self.vars.isSocketReInitialize = false;
       $(".typingIndicatorContent").css("display", "none");
+      // Send the message to the parent window
+      const message = { action: 'connectionTimeoutEvent', payload: {  } };
+    window?.parent?.postMessage(message, '*');
     }
   }, _disconnectTime);
 };
+
+FindlySDK.prototype.enableDisableSearch = function(type){
+  $(".search-bar").css("pointer-events",type == 'disable'?"none":"initial");
+}
 FindlySDK.prototype.resetPingMessage = function () {
   var _self = this;
   clearTimeout(_pingTimer);
@@ -21392,15 +21370,15 @@ FindlySDK.prototype.countTotalResults = function (res, totalResultsCount) {
 FindlySDK.prototype.getJWT = function (options, callback) {
   var me = this;
   var jsonData = {
-    // clientId: options.clientId,
-    // clientSecret: options.clientSecret,
-    // identity: options.userIdentity,
-    // aud: "",
-    // isAnonymous: false,
+    clientId: options.clientId,
+    clientSecret: options.clientSecret,
+    identity: options.userIdentity,
+    aud: "",
+    isAnonymous: false
   };
+  jsonData = JSON.stringify(jsonData);
   var bearer =  "bearer " + this.bot?.options?.accessToken ||'';
 var headers = {};
-headers["AccountId"]= "60547150f60ec050f4dfea8b";
 headers["Authorization"] = bearer;
 headers["Content-Type"] = "application/json;charset=UTF-8";
 headers["state"] = "configured";
@@ -21412,9 +21390,12 @@ headers["state"] = "configured";
     headers: headers,
     success: function (data) {
       options.assertion = data.jwt;
-      if(!me.vars.sdkInitialized){
-      me.initSearchAssistSDK(me.config);
-      me.vars.sdkInitialized= true;
+      if(!me?.vars?.sdkInitialized){
+        if(me?.initSearchAssistSDK){
+          me?.initSearchAssistSDK(me?.config);
+          me['vars'].sdkInitialized= true;
+        }
+     
       }
       if (callback) {
         callback(null, options);
@@ -22881,7 +22862,6 @@ var headers = {};
       "isAnonymous": false
     };
   }
-
 
   return $.ajax({
     url: options.JWTUrl,
