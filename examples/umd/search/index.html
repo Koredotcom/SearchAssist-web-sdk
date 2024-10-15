@@ -10,34 +10,45 @@
 
 <body>
     <script src="../../../dist/umd/kore-web-sdk-umd-search.js"></script>
-
     <script>
-        //chat window declaration
-        var findlyConfig = KoreSearchSDK.KRSearchConfig;
-        var findlyChatWindow = KoreSearchSDK.KRSearch;
 
+        //chat window declaration
+        // var findlyConfig = KoreSearchSDK.KRSearchConfig;
+        // var findlyChatWindow = KoreSearchSDK.KRSearch(KoreSearchSDK.KRSearchConfig);
+        // KoreSearchSDK.KRSearchConfig.botOptions.API_KEY_CONFIG = { 'KEY': "cc3c0094cfba4896b45862eb3c0de193f7eb28efb4d746769b775092a7ef6d34stda" }
         //create chat window instance
-        var chatWindowInstance = new findlyChatWindow();
+        var chatWindowInstance = new KoreSearchSDK.KRSearch(KoreSearchSDK.KRSearchConfig);
 
         //configure bot configurations
-        var botOptions = findlyConfig.botOptions;
+        // var botOptions = findlyConfig.botOptions;
 
-        botOptions.JWTUrl = "PLEASE_ENTER_JWTURL_HERE";
-        botOptions.userIdentity = 'PLEASE_ENTER_USER_EMAIL_ID' // Provide users email id here
-        botOptions.botInfo = {
-            chatBot: "PLEASE_ENTER_APP_NAME",
-            taskBotId: "PLEASE_ENTER_APP_ID",
-        };
-        botOptions.clientId = "PLEASE_ENTER_CLIENT_ID";
-        botOptions.clientSecret = "PLEASE_ENTER_CLIENT_SECRET";
-        botOptions.searchIndexID = "PLEASE_ENTER_SEARCHINDEX_ID";
+        // botOptions.JWTUrl = "PLEASE_ENTER_JWTURL_HERE";
+        // botOptions.userIdentity = 'PLEASE_ENTER_USER_EMAIL_ID' // Provide users email id here
+        // botOptions.botInfo = {
+        //     chatBot: "PLEASE_ENTER_APP_NAME",
+        //     taskBotId: "PLEASE_ENTER_APP_ID",
+        // };
+        // botOptions.clientId = "PLEASE_ENTER_CLIENT_ID";
+        // botOptions.clientSecret = "PLEASE_ENTER_CLIENT_SECRET";
+        // botOptions.searchIndexID = "PLEASE_ENTER_SEARCHINDEX_ID";
 
-        //OR  Enter API_key
-        botOptions.API_KEY_CONFIG = { 'KEY': "YOUR_API_KEY" }
+        // //OR  Enter API_key
+        // findlyConfig.botOptions.API_KEY_CONFIG = { 'KEY': "cc3c0094cfba4896b45862eb3c0de193f7eb28efb4d746769b775092a7ef6d34stda" }
         //show chatwindow
-        chatWindowInstance.show(findlyConfig);
-
+        chatWindowInstance.show(KoreSearchSDK.KRSearchConfig);
+        
     </script>
+    <script>
+        // Listen for messages from the sdk
+        window.addEventListener('message', (event) => {
+          // You can verify the origin of the message here
+          if(event?.data?.action === "connectionTimeoutEvent"){
+            alert('Connection timeout has been reached');
+            chatWindowInstance?.sendMessageToSearch('bot',{text:'Connection timeout has been reached'} )
+          }
+            
+        });
+      </script>
 </body>
 
 </html>
