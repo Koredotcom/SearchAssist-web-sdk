@@ -21369,19 +21369,24 @@ FindlySDK.prototype.countTotalResults = function (res, totalResultsCount) {
 
 FindlySDK.prototype.getJWT = function (options, callback) {
   var me = this;
-  var jsonData = {
-    clientId: options.clientId,
-    clientSecret: options.clientSecret,
-    identity: options.userIdentity,
-    aud: "",
-    isAnonymous: false
-  };
-  jsonData = JSON.stringify(jsonData);
-  var bearer =  "bearer " + this.bot?.options?.accessToken ||'';
+  var jsonData = {}
+
 var headers = {};
-headers["Authorization"] = bearer;
-headers["Content-Type"] = "application/json;charset=UTF-8";
-headers["state"] = "configured";
+  if(me?.isDev){
+    var bearer = "bearer " + this.bot?.options?.accessToken ||
+    this.API.jstBarrer;
+    headers["Authorization"] = bearer;
+    headers["Content-Type"] = "application/json;charset=UTF-8";
+    headers["state"] = "configured";
+  }else{
+    jsonData = {
+      "clientId": options.clientId,
+      "clientSecret": options.clientSecret,
+      "identity": options.userIdentity,
+      "aud": "",
+      "isAnonymous": false
+    };
+  }
   return $.ajax({
     url: options.JWTUrl,
     type: "post",
