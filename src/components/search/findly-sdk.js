@@ -15,7 +15,7 @@ import './css/findly-sdk.scss';
 import './css/common-styles.scss';
 import './css/search-bar-experience.scss';
 import './css/fonts/inter.css';
-import './css/bootstrap.min.css';
+// import './css/bootstrap.min.css';
 import '../../libs/perfectscroll/css/perfect-scrollbar.min.css';
 import enJsonObj from '../../libs/languageConversion/i18n/en.json'
 import jaJsonObj from '../../libs/languageConversion/i18n/ja.json'
