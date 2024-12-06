@@ -20790,9 +20790,9 @@ FindlySDK.prototype.searchHistroy = function (findlyConfig) {
             langTranslator:langTranslator
           });
           $('#histroyChatContainer').append(templateMessageBubble);
-          $('#searchChatContainer').animate({ scrollTop: ($('#searchChatContainer').scrollTop() + $('.userMessage').first().parent().position().top - 0) }, 500)
 
         })
+        $('#searchChatContainer').animate({ scrollTop: ($('#searchChatContainer').scrollTop() + $('.userMessage').first().parent().position().top - 0) }, 500)
         $('#histroyChatContainer').off('click', '.search-agin-tag').on('click', '.search-agin-tag', function (e) {
           var seachQuery = $(e.target).closest('.search-agin-tag').attr('title');
           $('#search').val(seachQuery).focus();
