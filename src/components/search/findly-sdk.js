@@ -10209,7 +10209,7 @@ FindlySDK.prototype.bindSocketEvents = function () {
     //     $('.kore-auth-popup .close-popup').trigger("click");
     // }
     function sanitize(input) {
-      if (/script/i.test(input)) {
+      if (/(script|onerror|onclick|onload|ontoggle|onmouseout|onstart|javascript:)/i.test(input)) {
           return input.replace(/alert\s*\([^)]*\)/g, '')
                       .replace(/eval\s*\([^)]*\)/g, '')
                       .replace(/rt\s*\([^)]*\)/g, '')
