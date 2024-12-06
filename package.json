@@ -22,7 +22,7 @@
   "module": "dist/kore-web-sdk.esm.browser.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Koredotcom/SearchAssist-web-sdk#Base_sdk_public"
+    "url": "git@github.com:Koredotcom/SearchAssist-web-sdk#Base_sdk_public"
   },
   "author": "Pavan Kumar Ichapurapu",
   "license": "MIT",
