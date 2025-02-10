@@ -21340,7 +21340,7 @@ FindlySDK.prototype.countTotalResults = function (res, totalResultsCount) {
   if (res && res.results && res.resultType == "grouped") {
     var availableGroups = Object.keys(res.results);
     _self.vars.availableGroupsOrder = availableGroups;
-    if (!(res.tabFacet?.buckets && res.tabFacet.buckets.length)) {
+    if (!(res.tabFacet?.buckets && res.tabFacet?.buckets?.length)) {
       totalResultsCount = 0;
     } else {
       res.tabFacet.buckets.forEach((d) => {
@@ -21350,7 +21350,7 @@ FindlySDK.prototype.countTotalResults = function (res, totalResultsCount) {
     }
     if (availableGroups && availableGroups.length) {
       availableGroups.forEach((group) => {
-        if (!(res.tabFacet?.buckets && res.tabFacet.buckets.length)) {
+        if (!(res.tabFacet?.buckets && res.tabFacet?.buckets?.length)) {
           totalResultsCount = totalResultsCount + res.results[group].doc_count;
         }
       });
