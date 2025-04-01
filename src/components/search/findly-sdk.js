@@ -20647,15 +20647,31 @@ FindlySDK.prototype.positionAvatar = function (position) {
     $("#introText").css("display", "block");
   }
 };
+FindlySDK.prototype.pxToPercentage = function($element) {
+  var parentWidth = $element.parent().width();  
+  var parentHeight = $element.parent().height(); 
+  var elementWidth = $element.width();  
+  var elementHeight = $element.height();
 
+  var widthPercentage = (elementWidth / parentWidth) * 100;
+  var heightPercentage = (elementHeight / parentHeight) * 100;
+
+  return {
+      width: widthPercentage.toFixed(2) + "%",
+      height: heightPercentage.toFixed(2) + "%"
+  };
+}
 
 FindlySDK.prototype.positionContainer = function (position) {
   var _self = this;
   if (position && Object.values(position).length) {
     // set x and y to container
     var containerPosition = _self.calculateContainerPosition(position);
-    $(".search-container").css("left", containerPosition.x);
-    $(".search-container").css("top", containerPosition.y);
+    const widthPer1 = 100* parseFloat((containerPosition.x)/parseFloat(window.innerWidth));
+    $(".search-container").animate(
+      { bottom:'5%', left: widthPer1+'%',"top":'unset'},
+      "fast"
+    );  
     const widthPer = 100* parseFloat((window.innerWidth-containerPosition.x-35)/parseFloat(window.innerWidth));
     const heightPer = 100* parseFloat((window.innerHeight-containerPosition.y-35)/parseFloat(window.innerHeight));
     $(".start-search-icon-div").animate(
@@ -20665,6 +20681,11 @@ FindlySDK.prototype.positionContainer = function (position) {
     setTimeout(() => {
       $(".search-container").css("display", "block");
       $(".search-container").css("height", "0");
+      var searchBarPercentage = _self.pxToPercentage($(".search-bar"));
+      var percentages = _self.pxToPercentage($(".search-container"));
+      $(".search-container").animate({ width: percentages.width });
+      $(".search-bar").animate({ width: searchBarPercentage.width });
+      $(".search").animate({ width: searchBarPercentage.width });
       $(".search-container").animate({ height: containerHeight });
       $("#search").focus();
       $(".start-search-icon-div").css("left",'unset');
