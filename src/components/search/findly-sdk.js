@@ -22977,6 +22977,7 @@ FindlySDK.prototype.show = function (config) {
   }else{
     _self.isDev = false;
   }
+  if(config?.socketTimeOut) _disconnectTime = config.socketTimeOut;
   if(config.botOptions){
     _self.config.botOptions = {..._self.config.botOptions, ...config.botOptions}
   }
