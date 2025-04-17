@@ -12507,7 +12507,7 @@ var meetingArray = [];
 var _pingTimer,
   _pingTime = 30000;
 var _disconnectBotTimer,
-  _disconnectTime = 900000;
+  _disconnectTime = 1800000;
 var indicatorTimer;
 var websockeRrefreshed = false;
 var mainTemplateBdr,
