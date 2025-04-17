@@ -12507,7 +12507,7 @@ var meetingArray = [];
 var _pingTimer,
   _pingTime = 30000;
 var _disconnectBotTimer,
-  _disconnectTime = 900000;
+  _disconnectTime = 1800000;
 var indicatorTimer;
 var websockeRrefreshed = false;
 var mainTemplateBdr,
@@ -22977,6 +22977,7 @@ FindlySDK.prototype.show = function (config) {
   }else{
     _self.isDev = false;
   }
+  if(config?.socketTimeOut) _disconnectTime = config.socketTimeOut;
   if(config.botOptions){
     _self.config.botOptions = {..._self.config.botOptions, ...config.botOptions}
   }
