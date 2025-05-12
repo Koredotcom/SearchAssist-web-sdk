@@ -1019,6 +1019,7 @@ body{
     }
     #searchBox {
         display: none;
+        position: relative;
         border-radius: 6px;
         #searchChatContainer{
             .emojione {
@@ -4427,6 +4428,7 @@ li{
     background: #FFFFFF;
     position: absolute;
     bottom: 40px;
+    top: 61px;
     z-index:100;
     width: 100%;
     .defalut-message-babble {
