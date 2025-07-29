@@ -21352,6 +21352,8 @@ FindlySDK.prototype.countTotalResults = function (res, totalResultsCount) {
       availableGroups.forEach((group) => {
         if (!(res.tabFacet?.buckets && res.tabFacet?.buckets?.length)) {
           totalResultsCount = totalResultsCount + res.results[group].doc_count;
+        }else if((res.tabFacet?.buckets && res.tabFacet?.buckets?.length) && _self.vars.totalNumOfResults === 0){
+          totalResultsCount = totalResultsCount + res.results[group].doc_count;
         }
       });
     }
