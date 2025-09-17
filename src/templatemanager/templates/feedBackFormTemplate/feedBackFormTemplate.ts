@@ -1,5 +1,6 @@
 import helpers from '../../../utils/helpers';
 import './feedBackFormTemplate.scss';
+import icons from '../../../utils/icons'
 
 class FeedBackFormTemplate {
     renderMessage(msgData: any) {
@@ -11,6 +12,7 @@ class FeedBackFormTemplate {
             'feedbackData': msgData?.message?.[0]?.component?.payload?.query,
             'feedBackType':msgData?.message?.[0]?.component?.payload?.feedBackType,
             'helpers': helpersObj.helpers,
+            'icons': icons,
              langTranslator: msgData.message[0].component.payload.langTranslator
         });
         setTimeout(()=>{
@@ -28,7 +30,7 @@ class FeedBackFormTemplate {
               <div class="temp-feed-back-header-samll"><span class="sdk-i18n-lang"  sdk-i18n-key="sa_sdk_feedback_for">{{html langTranslator("sa_sdk_feedback_for")}}</span></div>\
               <div class="temp-feed-back-header-large" title="${feedbackData}">“${feedbackData}”</div>\
           </div>\
-          <div class="close-feedback"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/feedback-close.png"/></div>\
+          <div class="close-feedback"><img src="${icons.feedback_close}"/></div>\
           <div class="temp-right-indicator-block"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/feedback-right-pointer.png"/></div>\
       </div>\
       <div class="temp-break-line"></div>\

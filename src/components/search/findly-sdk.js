@@ -21,6 +21,7 @@ import enJsonObj from '../../libs/languageConversion/i18n/en.json'
 import jaJsonObj from '../../libs/languageConversion/i18n/ja.json'
 import koJsonObj from '../../libs/languageConversion/i18n/ko.json'
 import './css/lang.scss'
+import icons from '../../utils/icons'
 // import "../../../node_modules/jquery-ui/dist/jquery-ui.min";
 import '../../../node_modules/jquery-ui/ui/widgets/draggable.js';
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -9978,7 +9979,7 @@ FindlySDK.prototype.showSearchExperience = function (findlyConfig,response){
     _self.initialize(findlyConfig);
     _self.showSearch(null, response, _self.isDev);
     var searchConfig = {
-      avatarURL: "https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/bubble_icon.svg",
+      avatarURL: icons.bubble_icon,
       welcomeMsg:
         ((response || {}).interactionsConfig || {}).welcomeMsg ||
         "Hello! How can I help you today?",
