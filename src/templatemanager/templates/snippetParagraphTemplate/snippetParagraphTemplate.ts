@@ -2,6 +2,7 @@
 import helpers from '../../../utils/helpers';
 import './snippetParagraphTemplate.scss';
 import FeedBackFormTemplate from '../../templates/feedBackFormTemplate/feedBackFormTemplate';
+import icons from '../../../utils/icons';
 class SnippetParagraphTemplate {
     renderMessage(msgData: any) {
         let me: any = this;
@@ -13,6 +14,7 @@ class SnippetParagraphTemplate {
                 'snippetData': msgData?.message?.[0]?.component?.payload?.snippetData,
                 'helpers': helpersObj.helpers,
                 'displayFeedback':msgData?.message?.[0]?.component?.payload?.feedbackDisplay,
+                'icons': icons,
                 langTranslator:msgData?.message?.[0]?.component?.payload?.langTranslator
             });
             me.feedBackTemplateObj = new FeedBackFormTemplate();
@@ -31,7 +33,7 @@ class SnippetParagraphTemplate {
               <div class="btn-chip sdk-i18n-lang" sdk-i18n-key="sa_sdk_Suggested_answer">{{html langTranslator("sa_sdk_Suggested_answer")}}</div>\
               </div>-->\
           {{if snippetData && snippetData.snippet_type === "generative_model"}}\
-          <div class="btn-link"><span class="bot-bg-purple"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/bot.svg"/></span><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_answered_by_ai">{{html langTranslator("sa_sdk_answered_by_ai")}}</span>\</div>\
+          <div class="btn-link"><span class="bot-bg-purple"><img src="${icons.ai_bot}"/></span><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_answered_by_ai">{{html langTranslator("sa_sdk_answered_by_ai")}}</span>\</div>\
           {{/if}}\
       </div>\
       {{if snippetData && snippetData.title}}<div class="paragraph-temp-header sa-sdk-title" data-title="${snippetData?.title}">{{html helpers.convertMDtoHTML(snippetData?.title)}}</div>{{/if}}\
@@ -46,19 +48,19 @@ class SnippetParagraphTemplate {
       {{if snippetData && snippetData.source}}\
       <div class="snippet-source-block">\
         <div class="snippet-source-file-name {{if !snippetData.source}} display-none{{/if}}">{{html snippetData.source}}</div>\
-        <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name sa-sdk-title" data-title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/external-link.svg"/></div></a>\
+        <a class="{{if !snippetData.page_url}}pointer-events-none {{/if}}" href="${snippetData?.page_url}" target="_blank" target="_blank"><div class="snippet-source-url {{if !snippetData.page_url}} display-none{{/if}}"><span class="snippet-source-url-name sa-sdk-title" data-title="${snippetData?.page_url}">${snippetData?.page_url}</span><img src="${icons.external_link}"/></div></a>\
       </div>\
       {{/if}}\
       <div class="temp-footer-block">\
           <div class="temp-footer {{if snippetData && snippetData.snippet_type !== "generative_model"}} justify-content-end {{/if}}">\
               {{if snippetData && snippetData.snippet_type === "generative_model"}}\
-              <div class="btn-link"><span class="bot-bg-purple"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/bot.svg"/></span><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_answered_by_ai">{{html langTranslator("sa_sdk_answered_by_ai")}}</span>\</div>\
+              <div class="btn-link"><span class="bot-bg-purple"><img src="${icons.ai_bot}"/></span><span class="sdk-i18n-lang" sdk-i18n-key="sa_sdk_answered_by_ai">{{html langTranslator("sa_sdk_answered_by_ai")}}</span>\</div>\
               {{/if}}\
               {{if displayFeedback}}\
               <div class="temp-right">\
               <div class="is-it-usefull sdk-i18n-lang"  sdk-i18n-key="sa_sdk_is_useful">{{html langTranslator("sa_sdk_is_useful")}}</div>\                  <div class="temp-fotter-actions">\
-                      <img  class="snippet-feedback  snippet-like-img" src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/like-gray.svg" />\
-                      <img class="snippet-feedback  snippet-dislike-img" src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/snippet_imgs/dislike-gary.svg" />\
+                      <img  class="snippet-feedback  snippet-like-img" src="${icons["like-gray"]}" />\
+                      <img class="snippet-feedback  snippet-dislike-img" src="${icons["dislike-gary"]}" />\
                   </div>\
               </div>\
               <div id="snippet-feedback-template"></div>\
