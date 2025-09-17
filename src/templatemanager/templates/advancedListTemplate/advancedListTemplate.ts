@@ -1,6 +1,7 @@
 
 import helpers from '../../../utils/helpers';
 import './advancedListTemplate.scss';
+import icons from '../../../utils/icons';
 class AdvancedListTemplate {
     renderMessage(msgData: any) {
         let me: any = this;
@@ -10,7 +11,8 @@ class AdvancedListTemplate {
         if (msgData?.message?.[0]?.component?.payload?.template_type === "advancedListTemplate") {
             me.messageHtml = $(me.getTemplateString('advancedListTemplate')).tmpl({
                 'msgData': msgData,
-                'helpers': helpersObj.helpers
+                'helpers': helpersObj.helpers,
+                'icons': icons
             });
             me.bindEvents(me.messageHtml,msgData);
             return me.messageHtml;
