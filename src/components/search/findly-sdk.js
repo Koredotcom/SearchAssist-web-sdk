@@ -2422,7 +2422,7 @@ FindlySDK.prototype.getSearchTemplate = function (type) {
           </div>\
           {{/if}}\
           {{if msgData && msgData.isSearchResultsMessage===true}}\
-            <div class="sdk-results-customize-icon"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/rangeslider.svg"><span class="tooltiptext-top"><span class="tooltiptext-top sdk-i18n-lang" sdk-i18n-key="sa_sdk_customize_results">{{html langTranslator("sa_sdk_customize_results")}}</span></span></div>\
+            <div class="sdk-results-customize-icon"><img src="${icons.rangeslider}"><span class="tooltiptext-top"><span class="tooltiptext-top sdk-i18n-lang" sdk-i18n-key="sa_sdk_customize_results">{{html langTranslator("sa_sdk_customize_results")}}</span></span></div>\
           {{/if}}\
           {{if msgData && msgData.from==="searchResult"}}\
             <div class="serachContent"><span>{{html helpers.convertMDtoHTML(msgData.text)}}</span></div>\
