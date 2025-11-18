@@ -135,7 +135,7 @@ class FinalResultsTemplate {
                 <span class="bot_info_text">{{html helpers.convertMDtoHTML(infoText)}}</span>\
                 </div>\
           </div>\
-            <div class="sdk-results-customize-icon"><img src="https://koregeneric.s3.amazonaws.com/SearchAssist_UI_Img/Icons/rangeslider.svg"><span class="tooltiptext-top sdk-i18n-lang" sdk-i18n-key="sa_sdk_customize_results">{{html langTranslator("sa_sdk_customize_results")}}</span></div>\
+            <div class="sdk-results-customize-icon"><img src="${icons.rangeslider}"><span class="tooltiptext-top sdk-i18n-lang" sdk-i18n-key="sa_sdk_customize_results">{{html langTranslator("sa_sdk_customize_results")}}</span></div>\
           </div>\
         {{/if}}\
         {{if snippetData && snippetData?.template_type}}\
