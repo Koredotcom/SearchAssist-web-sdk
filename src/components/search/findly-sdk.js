@@ -23657,7 +23657,7 @@ FindlySDK.prototype.getQueryLevelAnalyticsTemplate = function(){
     <div class="header-sec">\
         <div class="title sdk-i18n-lang" sdk-i18n-lang" sdk-i18n-key="sa_sdk_query_analytics">{{html langTranslator("sa_sdk_query_analytics")}}</div>\
         <div class="close-analytics" id="close-analytics-Cross">\
-            <img src="data:img/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMuNzI2NTYgMy4wMjM0NEwzLjAyMzQ0IDMuNzI2NTZMNy4yOTI5NyA4TDMuMDIzNDQgMTIuMjY5NUwzLjcyNjU2IDEyLjk4MDVMOCA4LjcwNzAzTDEyLjI2OTUgMTIuOTgwNUwxMi45ODA1IDEyLjI2OTVMOC43MDcwMyA4TDEyLjk4MDUgMy43MjY1NkwxMi4yNjk1IDMuMDIzNDRMOCA3LjI5Mjk3TDMuNzI2NTYgMy4wMjM0NFoiIGZpbGw9ImJsYWNrIi8+Cjwvc3ZnPgo="/>\
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMuNzI2NTYgMy4wMjM0NEwzLjAyMzQ0IDMuNzI2NTZMNy4yOTI5NyA4TDMuMDIzNDQgMTIuMjY5NUwzLjcyNjU2IDEyLjk4MDVMOCA4LjcwNzAzTDEyLjI2OTUgMTIuOTgwNUwxMi45ODA1IDEyLjI2OTVMOC43MDcwMyA4TDEyLjk4MDUgMy43MjY1NkwxMi4yNjk1IDMuMDIzNDRMOCA3LjI5Mjk3TDMuNzI2NTYgMy4wMjM0NFoiIGZpbGw9ImJsYWNrIi8+Cjwvc3ZnPgo="/>\
         </div>\
     </div>\
     <div class="analytics-counts" >\
